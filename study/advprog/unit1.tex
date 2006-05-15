@@ -1,0 +1,117 @@
+\documentclass{article}
+% \usepackage[utf8]{inputenc}
+\usepackage[austrian]{babel}
+\usepackage[round]{natbib}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title{My First Document}
+\author{Me (KH)}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  Das ist eine kurze Zusammenfassung.
+\end{abstract}
+
+\tableofcontents
+
+\section{Whatever}
+
+\section{Introduction}
+\label{sec:intro}
+
+This is      my    first \LaTeX{} file.
+
+This is a new paragraph.
+
+% Das ist sehr schön.
+Das ist sehr sch\"on, ausserdem: \"a \`a \'a \v{a} \H{a}, au\ss{}erdem.
+Wie sagte schon Pythagoras: $a^2 + b^2 = c^2$ oder eigentlich
+\begin{math}\alpha^2 + \beta^2 = \gamma^2\end{math}.
+
+\section{Results}
+
+Und jetzt eine Gleichung:
+$$ \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-t^2/2} dt = 1 $$
+oder auch
+\begin{displaymath}
+  \int_{-\infty}^{\infty} \left\{ \frac{1}{\sqrt{2\pi}} \right] e^{-t^2/2} dt = 1
+\end{displaymath}
+
+As already discussed in Section~\ref{sec:intro}, bla bla bla.
+
+\subsection{Foo Bar}
+
+{\Large UUU} {\tiny zzz} {\Huge AAA}
+
+\textbf{Fett} und \textit{Italics} und \textsf{Sans Serif} und
+\texttt{Typewriter}.
+
+Zum betonen: \emph{text}.
+
+\begin{itemize}
+ \item Erstes.    Bla bla bla bla bla bla
+  bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+  bla bla bla bla bla bla bla bla bla bla
+
+  So mache ich einen Absatz.
+ \item Zweites
+\end{itemize}
+
+\begin{enumerate}
+ \item Erstes
+  \begin{enumerate}
+ \item Erstes
+ \item Zweites
+\end{enumerate}
+
+ \item Zweites
+\end{enumerate}
+
+Und jetzt wollen wir die LVA-Teilnehmer kurz beschreiben.
+\begin{description}
+ \item[Reinhard] ist heute sp\"ater gekommen.  Bla bla bla bla bla bla
+  bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+  bla bla bla bla bla bla bla bla bla bla
+
+  So mache ich einen Absatz.
+  
+ \item[Alex] stellt immer subtile Fragen.
+\end{description}
+
+\begin{verbatim}
+x <- 1
+y <- 2
+FOO <- function(x) { writeLines("Hello world.") }
+\end{verbatim}
+
+Und jetzt verweisen wir auf \cite{test:Walchhofer:2005}.
+
+\section{Using R}
+
+\begin{verbatim}
+R> x <- runif(100)
+R> summary(x)
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+0.003579 0.224800 0.529800 0.499800 0.731900 0.985700 
+\end{verbatim}
+
+Here we show how to include graphics.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{testbild.pdf}  
+  \caption{Das ist ein Histogramm von 100 gleichverteilten Zufallszahlen.}
+  \label{fig:testbild}
+\end{figure}
+
+For more info, see \url{http://statmath.wu-wien.ac.at/courses/}
+
+\bibliographystyle{plainnat}
+\bibliography{unit1}
+
+
+\end{document}

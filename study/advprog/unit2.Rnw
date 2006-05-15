@@ -1,0 +1,43 @@
+\documentclass[a4paper]{article}
+
+\begin{document}
+This is text.
+
+<<init,eval=FALSE,echo=FALSE>>=
+x <- 1
+y <- 2
+x ^ 2 + y ^ 2
+@ 
+
+This is more text.
+
+And now for a simple function.
+
+<<>>=
+foo <- function() writeLines("Hallo.")
+foo
+@ 
+
+This function is very simple.  As an example of its usage:
+
+<<>>=
+<<init>>
+foo()
+@ 
+
+So, it simply prints ``Hallo.''.
+
+\begin{figure}
+  \centering
+<<fig=TRUE,echo=FALSE>>=
+hist(rnorm(1000))
+@ 
+\end{figure}
+
+<<fig=TRUE>>=
+hist(runif(1000))
+@ 
+
+
+
+\end{document}

@@ -1,0 +1,1650 @@
+
+R : Copyright 2006, The R Foundation for Statistical Computing
+Version 2.3.0 Patched (2006-05-06 r37988)
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+R> options(STERM='iESS', editor='emacsclient')
+R> foo <- function(x, ...) UseMethod("foo")
+R> foo
+function(x, ...) UseMethod("foo")
+R> foo(1)
+Error in foo(1) : no applicable method for "foo"
+R> class(1)
+[1] "numeric"
+R> foo.numeric <- function(x, ...) writeLines("Hallo.")
+R> foo(1)
+Hallo.
+R> foo(1:10)
+Hallo.
+R> length(1 : 10)
+[1] 10
+R> class(1 : 10)
+[1] "integer"
+R> foo(pi)
+Hallo.
+R> foo(TRUE)
+Error in foo(TRUE) : no applicable method for "foo"
+R> class(TRUE)
+[1] "logical"
+R> foo
+function(x, ...) UseMethod("foo")
+R> foo.numeric
+function(x, ...) writeLines("Hallo.")
+R> foo.logical <- function(x, ...) x
+R> foo(1)
+Hallo.
+R> foo(TRUE)
+[1] TRUE
+R> foo.default <- function(x, ...) stop("You cannot be serious.")
+R> foo(1)
+Hallo.
+R> foo(TRUE)
+[1] TRUE
+R> foo("Daniel")
+Error in foo.default("Daniel") : You cannot be serious.
+R> foo.default <- function(x, ...) writeLines("You cannot be serious.")
+R> foo("Daniel")
+You cannot be serious.
+R> class(foo)
+[1] "function"
+R> foo(foo)
+You cannot be serious.
+R> foo.integer <- function(x, ...) writeLines("Hallo2 ...")
+R> foo(1)
+Hallo.
+R> class(1)
+[1] "numeric"
+R> typeof(1)
+[1] "double"
+R> foo(1 : 10)
+Hallo2 ...
+R> foo.bar <- function(x, ...) writeLines("I am a bar.")
+R> x <- 1 : 10
+R> class(x) <- "bar"
+R> foo(x)
+I am a bar.
+R> class(x)
+[1] "bar"
+R> class(x) <- c("bar", "numeric")
+R> foo(x)
+I am a bar.
+R> rm(foo.bar)
+R> foo(x)
+Hallo.
+R> class(x)
+[1] "bar"     "numeric"
+R> rm(foo.numeric)
+R> foo(x)
+You cannot be serious.
+R> x <- 1 : 10
+R> class(x) <- "logical"
+R> foo(x)
+ [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+R> y <- "Daniel"
+R> class(y) <- "numeric")
+Error: syntax error in "class(y) <- "numeric")"
+R> class(y) <- "numeric"
+Warning message:
+NAs introduced by coercion 
+R> class(y) <- c("character", "numeric")
+R> print
+function (x, ...) 
+UseMethod("print")
+<environment: namespace:base>
+R> methods("print")
+  [1] print.acf*                         print.anova                       
+  [3] print.aov*                         print.aovlist*                    
+  [5] print.ar*                          print.Arima*                      
+  [7] print.arima0*                      print.AsIs                        
+  [9] print.Bibtex*                      print.by                          
+ [11] print.check_code_usage_in_package* print.check_demo_index*           
+ [13] print.checkDocFiles*               print.checkDocStyle*              
+ [15] print.checkFF*                     print.check_make_vars*            
+ [17] print.check_package_depends*       print.check_package_description*  
+ [19] print.check_Rd_files_in_Rd_db*     print.check_Rd_xrefs*             
+ [21] print.checkReplaceFuns*            print.checkS3methods*             
+ [23] print.checkTnF*                    print.check_vignette_index*       
+ [25] print.checkVignettes*              print.citation*                   
+ [27] print.citationList*                print.classRepresentation*        
+ [29] print.codoc*                       print.codocClasses*               
+ [31] print.codocData*                   print.colorConverter*             
+ [33] print.condition                    print.connection                  
+ [35] print.data.frame                   print.Date                        
+ [37] print.default                      print.dendrogram*                 
+ [39] print.density                      print.difftime                    
+ [41] print.dist*                        print.DLLInfo                     
+ [43] print.DLLInfoList                  print.DLLRegisteredRoutines       
+ [45] print.dummy_coef*                  print.dummy_coef_list*            
+ [47] print.ecdf*                        print.factanal*                   
+ [49] print.factor                       print.family                      
+ [51] print.formula                      print.ftable                      
+ [53] print.getAnywhere*                 print.glm                         
+ [55] print.hclust*                      print.help_files_with_topic*      
+ [57] print.hexmode                      print.HoltWinters*                
+ [59] print.hsearch*                     print.htest*                      
+ [61] print.infl                         print.integrate                   
+ [63] print.isoreg*                      print.kmeans*                     
+ [65] print.Latex*                       print.libraryIQR                  
+ [67] print.listof                       print.lm                          
+ [69] print.loadings*                    print.loess*                      
+ [71] print.logLik                       print.ls_str*                     
+ [73] print.medpolish*                   print.MethodsFunction*            
+ [75] print.MethodsList*                 print.mtable*                     
+ [77] print.NativeRoutineList            print.nls*                        
+ [79] print.noquote                      print.octmode                     
+ [81] print.packageDescription*          print.packageInfo                 
+ [83] print.packageIQR*                  print.packageStatus*              
+ [85] print.package_version              print.pairwise.htest*             
+ [87] print.POSIXct                      print.POSIXlt                     
+ [89] print.power.htest*                 print.ppr*                        
+ [91] print.prcomp*                      print.princomp*                   
+ [93] print.recordedplot*                print.restart                     
+ [95] print.RGBcolorConverter*           print.rle                         
+ [97] print.sessionInfo*                 print.simple.list                 
+ [99] print.smooth.spline*               print.socket*                     
+[101] print.stepfun*                     print.stl*                        
+[103] print.StructTS*                    print.subdir_tests*               
+[105] print.summary.aov*                 print.summary.aovlist*            
+[107] print.summary.glm*                 print.summary.lm*                 
+[109] print.summary.loess*               print.summary.manova*             
+[111] print.summary.nls*                 print.summary.ppr*                
+[113] print.summary.prcomp*              print.summary.princomp*           
+[115] print.summary.table                print.table                       
+[117] print.tables_aov*                  print.terms                       
+[119] print.ts                           print.tskernel*                   
+[121] print.TukeyHSD*                    print.tukeyline*                  
+[123] print.tukeysmooth*                 print.undoc*                      
+[125] print.vignette*                    print.xgettext*                   
+[127] print.xngettext*                   print.xtabs*                      
+
+   Non-visible functions are asterisked
+R> x
+ [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+R> class(x)
+[1] "logical"
+R> print(x)
+ [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+R> class(x) <- "bar"
+R> print.bar <- function(x, ...) cat("A bar object of length", length(x), "\n")
+R> x
+A bar object of length 10 
+R> methods(plot)
+ [1] plot.acf*           plot.data.frame*    plot.Date*         
+ [4] plot.decomposed.ts* plot.default        plot.dendrogram*   
+ [7] plot.density        plot.ecdf           plot.factor*       
+[10] plot.formula*       plot.hclust*        plot.histogram*    
+[13] plot.HoltWinters*   plot.isoreg*        plot.lm            
+[16] plot.medpolish*     plot.mlm            plot.POSIXct*      
+[19] plot.POSIXlt*       plot.ppr*           plot.prcomp*       
+[22] plot.princomp*      plot.profile.nls*   plot.spec          
+[25] plot.spec.coherency plot.spec.phase     plot.stepfun       
+[28] plot.stl*           plot.table*         plot.ts            
+[31] plot.tskernel*      plot.TukeyHSD      
+
+   Non-visible functions are asterisked
+R> methods(summary)
+ [1] summary.aov            summary.aovlist        summary.connection    
+ [4] summary.data.frame     summary.Date           summary.default       
+ [7] summary.ecdf*          summary.factor         summary.glm           
+[10] summary.infl           summary.lm             summary.loess*        
+[13] summary.manova         summary.matrix         summary.mlm           
+[16] summary.nls*           summary.packageStatus* summary.POSIXct       
+[19] summary.POSIXlt        summary.ppr*           summary.prcomp*       
+[22] summary.princomp*      summary.stepfun        summary.stl*          
+[25] summary.table          summary.tukeysmooth*  
+
+   Non-visible functions are asterisked
+R> summary.aov
+function (object, intercept = FALSE, split, expand.split = TRUE, 
+    keep.zero.df = TRUE, ...) 
+{
+    splitInteractions <- function(split, factors, names, asgn, 
+        df.names) {
+        ns <- names(split)
+        for (i in unique(asgn)) {
+            if (i == 0 || names[i + 1] %in% ns) 
+                next
+            f <- rownames(factors)[factors[, i] > 0]
+            sp <- f %in% ns
+            if (any(sp)) {
+                if (sum(sp) > 1) {
+                  old <- split[f[sp]]
+                  nn <- f[sp]
+                  names(nn) <- nn
+                  marg <- lapply(nn, function(x) df.names[asgn == 
+                    (match(x, names) - 1)])
+                  term.coefs <- strsplit(df.names[asgn == i], 
+                    ":", fixed = TRUE)
+                  ttc <- sapply(term.coefs, function(x) x[sp])
+                  rownames(ttc) <- nn
+                  splitnames <- apply(expand.grid(lapply(old, 
+                    names)), 1, function(x) paste(x, collapse = "."))
+                  names(splitnames) <- splitnames
+                  tmp <- sapply(nn, function(i) names(old[[i]])[match(ttc[i, 
+                    ], marg[[i]])])
+                  tmp <- apply(tmp, 1, function(x) paste(x, collapse = "."))
+                  new <- lapply(splitnames, function(x) match(x, 
+                    tmp))
+                  split[[names[i + 1]]] <- new[sapply(new, function(x) length(x) > 
+                    0)]
+                }
+                else {
+                  old <- split[[f[sp]]]
+                  marg.coefs <- df.names[asgn == (match(f[sp], 
+                    names) - 1)]
+                  term.coefs <- strsplit(df.names[asgn == i], 
+                    ":", fixed = TRUE)
+                  ttc <- sapply(term.coefs, function(x) x[sp])
+                  new <- lapply(old, function(x) seq(along = ttc)[ttc %in% 
+                    marg.coefs[x]])
+                  split[[names[i + 1]]] <- new
+                }
+            }
+        }
+        split
+    }
+    asgn <- object$assign[object$qr$pivot[1:object$rank]]
+    uasgn <- unique(asgn)
+    nterms <- length(uasgn)
+    effects <- object$effects
+    if (!is.null(effects)) 
+        effects <- as.matrix(effects)[seq(along = asgn), , drop = FALSE]
+    rdf <- object$df.resid
+    nmeffect <- c("(Intercept)", attr(object$terms, "term.labels"))
+    coef <- as.matrix(object$coef)
+    resid <- as.matrix(object$residuals)
+    wt <- object$weights
+    if (!is.null(wt)) 
+        resid <- resid * wt^0.5
+    nresp <- NCOL(resid)
+    ans <- vector("list", nresp)
+    if (nresp > 1) {
+        names(ans) <- character(nresp)
+        for (y in 1:nresp) {
+            cn <- colnames(resid)[y]
+            if (is.null(cn) || cn == "") 
+                cn <- y
+            names(ans)[y] <- paste(" Response", cn)
+        }
+    }
+    if (!is.null(effects) && !missing(split)) {
+        ns <- names(split)
+        if (!is.null(Terms <- object$terms)) {
+            if (!is.list(split)) 
+                stop("the 'split' argument must be a list")
+            if (!all(ns %in% nmeffect)) 
+                stop("unknown name(s) in the 'split' list")
+        }
+        if (expand.split) {
+            df.names <- names(coef(object))
+            split <- splitInteractions(split, attr(Terms, "factors"), 
+                nmeffect, asgn, df.names)
+            ns <- names(split)
+        }
+    }
+    for (y in 1:nresp) {
+        if (is.null(effects)) {
+            nterms <- 0
+            df <- ss <- ms <- numeric(0)
+            nmrows <- character(0)
+        }
+        else {
+            df <- ss <- numeric(0)
+            nmrows <- character(0)
+            for (i in seq(nterms)) {
+                ai <- (asgn == uasgn[i])
+                df <- c(df, sum(ai))
+                ss <- c(ss, sum(effects[ai, y]^2))
+                nmi <- nmeffect[1 + uasgn[i]]
+                nmrows <- c(nmrows, nmi)
+                if (!missing(split) && !is.na(int <- match(nmi, 
+                  ns))) {
+                  df <- c(df, unlist(lapply(split[[int]], length)))
+                  if (is.null(nms <- names(split[[int]]))) 
+                    nms <- paste("C", seq(along = split[[int]]), 
+                      sep = "")
+                  ss <- c(ss, unlist(lapply(split[[int]], function(i, 
+                    e) sum(e[i]^2), effects[ai, y])))
+                  nmrows <- c(nmrows, paste("  ", nmi, ": ", 
+                    nms, sep = ""))
+                }
+            }
+        }
+        if (rdf > 0) {
+            df <- c(df, rdf)
+            ss <- c(ss, sum(resid[, y]^2))
+            nmrows <- c(nmrows, "Residuals")
+        }
+        nt <- length(df)
+        ms <- ifelse(df > 0, ss/df, NA)
+        x <- list(Df = df, "Sum Sq" = ss, "Mean Sq" = ms)
+        if (rdf > 0) {
+            TT <- ms/ms[nt]
+            TP <- pf(TT, df, rdf, lower.tail = FALSE)
+            TT[nt] <- TP[nt] <- NA
+            x$"F value" <- TT
+            x$"Pr(>F)" <- TP
+        }
+        class(x) <- c("anova", "data.frame")
+        row.names(x) <- format(nmrows)
+        if (!keep.zero.df) 
+            x <- x[df > 0, ]
+        pm <- pmatch("(Intercept)", row.names(x), 0)
+        if (!intercept && pm > 0) 
+            x <- x[-pm, ]
+        ans[[y]] <- x
+    }
+    class(ans) <- c("summary.aov", "listof")
+    ans
+}
+<environment: namespace:stats>
+R> methods(summary)
+ [1] summary.aov            summary.aovlist        summary.connection    
+ [4] summary.data.frame     summary.Date           summary.default       
+ [7] summary.ecdf*          summary.factor         summary.glm           
+[10] summary.infl           summary.lm             summary.loess*        
+[13] summary.manova         summary.matrix         summary.mlm           
+[16] summary.nls*           summary.packageStatus* summary.POSIXct       
+[19] summary.POSIXlt        summary.ppr*           summary.prcomp*       
+[22] summary.princomp*      summary.stepfun        summary.stl*          
+[25] summary.table          summary.tukeysmooth*  
+
+   Non-visible functions are asterisked
+R> getAnywhere("summary.nls")
+A single object matching 'summary.nls' was found
+It was found in the following places
+  registered S3 method for summary from namespace stats
+  namespace:stats
+with value
+
+function (object, correlation = FALSE, symbolic.cor = FALSE, 
+    ...) 
+{
+    r <- as.vector(object$m$resid())
+    w <- object$weights
+    n <- if (!is.null(w)) 
+        sum(w > 0)
+    else length(r)
+    param <- coef(object)
+    pnames <- names(param)
+    p <- length(param)
+    rdf <- n - p
+    resvar <- if (rdf <= 0) 
+        NaN
+    else deviance(object)/rdf
+    XtXinv <- chol2inv(object$m$Rmat())
+    dimnames(XtXinv) <- list(pnames, pnames)
+    se <- sqrt(diag(XtXinv) * resvar)
+    ans <- list(formula = formula(object), residuals = r, sigma = sqrt(resvar), 
+        df = c(p, rdf), cov.unscaled = XtXinv)
+    tval <- param/se
+    param <- cbind(param, se, tval, 2 * pt(abs(tval), rdf, lower.tail = FALSE))
+    dimnames(param) <- list(pnames, c("Estimate", "Std. Error", 
+        "t value", "Pr(>|t|)"))
+    ans$coefficients <- param
+    ans$parameters <- param
+    if (correlation && rdf > 0) {
+        ans$correlation <- (XtXinv * resvar)/outer(se, se)
+        ans$symbolic.cor <- symbolic.cor
+    }
+    class(ans) <- "summary.nls"
+    ans
+}
+<environment: namespace:stats>
+R> summary.nls
+Error: object "summary.nls" not found
+R> getAnywhere("summary.nls")
+A single object matching 'summary.nls' was found
+It was found in the following places
+  registered S3 method for summary from namespace stats
+  namespace:stats
+with value
+
+function (object, correlation = FALSE, symbolic.cor = FALSE, 
+    ...) 
+{
+    r <- as.vector(object$m$resid())
+    w <- object$weights
+    n <- if (!is.null(w)) 
+        sum(w > 0)
+    else length(r)
+    param <- coef(object)
+    pnames <- names(param)
+    p <- length(param)
+    rdf <- n - p
+    resvar <- if (rdf <= 0) 
+        NaN
+    else deviance(object)/rdf
+    XtXinv <- chol2inv(object$m$Rmat())
+    dimnames(XtXinv) <- list(pnames, pnames)
+    se <- sqrt(diag(XtXinv) * resvar)
+    ans <- list(formula = formula(object), residuals = r, sigma = sqrt(resvar), 
+        df = c(p, rdf), cov.unscaled = XtXinv)
+    tval <- param/se
+    param <- cbind(param, se, tval, 2 * pt(abs(tval), rdf, lower.tail = FALSE))
+    dimnames(param) <- list(pnames, c("Estimate", "Std. Error", 
+        "t value", "Pr(>|t|)"))
+    ans$coefficients <- param
+    ans$parameters <- param
+    if (correlation && rdf > 0) {
+        ans$correlation <- (XtXinv * resvar)/outer(se, se)
+        ans$symbolic.cor <- symbolic.cor
+    }
+    class(ans) <- "summary.nls"
+    ans
+}
+<environment: namespace:stats>
+R> methods("summary")
+ [1] summary.aov            summary.aovlist        summary.connection    
+ [4] summary.data.frame     summary.Date           summary.default       
+ [7] summary.ecdf*          summary.factor         summary.glm           
+[10] summary.infl           summary.lm             summary.loess*        
+[13] summary.manova         summary.matrix         summary.mlm           
+[16] summary.nls*           summary.packageStatus* summary.POSIXct       
+[19] summary.POSIXlt        summary.ppr*           summary.prcomp*       
+[22] summary.princomp*      summary.stepfun        summary.stl*          
+[25] summary.table          summary.tukeysmooth*  
+
+   Non-visible functions are asterisked
+R> summary.lm
+function (object, correlation = FALSE, symbolic.cor = FALSE, 
+    ...) 
+{
+    z <- object
+    p <- z$rank
+    if (p == 0) {
+        r <- z$residuals
+        n <- length(r)
+        w <- z$weights
+        if (is.null(w)) {
+            rss <- sum(r^2)
+        }
+        else {
+            rss <- sum(w * r^2)
+            r <- sqrt(w) * r
+        }
+        resvar <- rss/(n - p)
+        ans <- z[c("call", "terms")]
+        class(ans) <- "summary.lm"
+        ans$aliased <- is.na(coef(object))
+        ans$residuals <- r
+        ans$df <- c(0, n, length(ans$aliased))
+        ans$coefficients <- matrix(NA, 0, 4)
+        dimnames(ans$coefficients) <- list(NULL, c("Estimate", 
+            "Std. Error", "t value", "Pr(>|t|)"))
+        ans$sigma <- sqrt(resvar)
+        ans$r.squared <- ans$adj.r.squared <- 0
+        return(ans)
+    }
+    Qr <- object$qr
+    if (is.null(z$terms) || is.null(Qr)) 
+        stop("invalid 'lm' object:  no 'terms' nor 'qr' component")
+    n <- NROW(Qr$qr)
+    rdf <- n - p
+    if (is.na(z$df.residual) || rdf != z$df.residual) 
+        warning("residual degrees of freedom in object suggest this is not an \"lm\" fit")
+    p1 <- 1:p
+    r <- z$residuals
+    f <- z$fitted
+    w <- z$weights
+    if (is.null(w)) {
+        mss <- if (attr(z$terms, "intercept")) 
+            sum((f - mean(f))^2)
+        else sum(f^2)
+        rss <- sum(r^2)
+    }
+    else {
+        mss <- if (attr(z$terms, "intercept")) {
+            m <- sum(w * f/sum(w))
+            sum(w * (f - m)^2)
+        }
+        else sum(w * f^2)
+        rss <- sum(w * r^2)
+        r <- sqrt(w) * r
+    }
+    resvar <- rss/rdf
+    R <- chol2inv(Qr$qr[p1, p1, drop = FALSE])
+    se <- sqrt(diag(R) * resvar)
+    est <- z$coefficients[Qr$pivot[p1]]
+    tval <- est/se
+    ans <- z[c("call", "terms")]
+    ans$residuals <- r
+    ans$coefficients <- cbind(est, se, tval, 2 * pt(abs(tval), 
+        rdf, lower.tail = FALSE))
+    dimnames(ans$coefficients) <- list(names(z$coefficients)[Qr$pivot[p1]], 
+        c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
+    ans$aliased <- is.na(coef(object))
+    ans$sigma <- sqrt(resvar)
+    ans$df <- c(p, rdf, NCOL(Qr$qr))
+    if (p != attr(z$terms, "intercept")) {
+        df.int <- if (attr(z$terms, "intercept")) 
+            1
+        else 0
+        ans$r.squared <- mss/(mss + rss)
+        ans$adj.r.squared <- 1 - (1 - ans$r.squared) * ((n - 
+            df.int)/rdf)
+        ans$fstatistic <- c(value = (mss/(p - df.int))/resvar, 
+            numdf = p - df.int, dendf = rdf)
+    }
+    else ans$r.squared <- ans$adj.r.squared <- 0
+    ans$cov.unscaled <- R
+    dimnames(ans$cov.unscaled) <- dimnames(ans$coefficients)[c(1, 
+        1)]
+    if (correlation) {
+        ans$correlation <- (R * resvar)/outer(se, se)
+        dimnames(ans$correlation) <- dimnames(ans$cov.unscaled)
+        ans$symbolic.cor <- symbolic.cor
+    }
+    class(ans) <- "summary.lm"
+    ans
+}
+<environment: namespace:stats>
+R> y <- runif(100)
+R> x <- 1 : 100
+R> z <- lm(y ~ x)
+R> z
+
+Call:
+lm(formula = y ~ x)
+
+Coefficients:
+(Intercept)            x  
+  0.4722177    0.0005092  
+
+R> class(z)
+[1] "lm"
+R> unclass(z)
+$coefficients
+ (Intercept)            x 
+0.4722177254 0.0005091535 
+
+$residuals
+            1             2             3             4             5 
+-0.1029774593 -0.1414525214 -0.1187093283 -0.0111171492  0.5123901004 
+            6             7             8             9            10 
+-0.3879424204 -0.4631326660  0.3675026650 -0.0586934709 -0.3851386136 
+           11            12            13            14            15 
+ 0.2581074715 -0.3315198321 -0.1558767777 -0.0628418764  0.1949782371 
+           16            17            18            19            20 
+-0.4048311722  0.2295379293  0.3111757862  0.2226374453  0.2696155084 
+           21            22            23            24            25 
+-0.1877915083  0.3174296904 -0.2792613394  0.3024996803  0.4131696281 
+           26            27            28            29            30 
+-0.0275345285  0.1151358576  0.0584366749 -0.2347283042  0.0009252996 
+           31            32            33            34            35 
+-0.3919061976 -0.0178836206  0.1464687905  0.1855714306  0.3117626013 
+           36            37            38            39            40 
+ 0.0455364637 -0.4873191694 -0.1357409332  0.2335530796  0.1665983962 
+           41            42            43            44            45 
+-0.3706672593  0.2389955558  0.1681856647 -0.3057042619 -0.3380283882 
+           46            47            48            49            50 
+-0.0740160803  0.0330430335 -0.3898343039 -0.0179905085 -0.3071445725 
+           51            52            53            54            55 
+ 0.0314280151  0.3694145125  0.0522029433 -0.1630232631 -0.0454954882 
+           56            57            58            59            60 
+ 0.0953420819  0.1714304604 -0.2124885760 -0.0321909676  0.2967454655 
+           61            62            63            64            65 
+ 0.4501239180 -0.0856059901 -0.4002525749  0.3596448959  0.0879717529 
+           66            67            68            69            70 
+-0.3790306833 -0.0521058171  0.4364945938 -0.1088864499  0.3446330656 
+           71            72            73            74            75 
+ 0.1370540109  0.4569613943  0.4688952631  0.2585639928 -0.2204779519 
+           76            77            78            79            80 
+-0.1853765320  0.3661926284 -0.1369446172  0.4179348809  0.0597277849 
+           81            82            83            84            85 
+-0.4881744205 -0.2945904479  0.2691001089  0.2204264497  0.0042783306 
+           86            87            88            89            90 
+ 0.1315411570 -0.3680453557 -0.4779723626 -0.0317865539 -0.2870833158 
+           91            92            93            94            95 
+-0.3663656659 -0.3695001057 -0.1502712435  0.3145322730  0.4636808160 
+           96            97            98            99           100 
+-0.1369171264 -0.0316052790  0.0673185671 -0.3015990769  0.0806777761 
+
+$effects
+ (Intercept)            x                                                     
+-4.979299761  0.146972600 -0.092273557  0.014921548  0.538031724 -0.362697871 
+                                                                              
+-0.438285191  0.391953066 -0.034640144 -0.361482360  0.281366651 -0.308657727 
+                                                                              
+-0.133411747 -0.040773919  0.216649120 -0.383557363  0.250414664  0.331655447 
+                                                                              
+ 0.242720032  0.289301021 -0.168503070  0.336321055 -0.260767049  0.320596897 
+                                                                              
+ 0.430869770 -0.010231460  0.132041852  0.074945595 -0.218616458  0.016640072 
+                                                                              
+-0.376588500 -0.002962997  0.160992340  0.199697906  0.325492003  0.058868791 
+                                                                              
+-0.474383916 -0.123202754  0.245694185  0.178342428 -0.359320302  0.249945439 
+                                                                              
+ 0.178738474 -0.295548527 -0.328269727 -0.064654493  0.042007547 -0.381266865 
+                                                                              
+-0.009820143 -0.299371282  0.038804232  0.376393655  0.058785012 -0.156838268 
+                                                                              
+-0.039707568  0.100732928  0.176424233 -0.207891877 -0.027991343  0.300548016 
+                                                                              
+ 0.453529394 -0.082597588 -0.397641247  0.361859150  0.089788933 -0.377610577 
+                                                                              
+-0.051082785  0.437120552 -0.108657566  0.344464875  0.136488747  0.455999056 
+                                                                              
+ 0.467535851  0.256807506 -0.222631512 -0.187927166  0.363244920 -0.140289400 
+                                                                              
+ 0.414193024  0.055588854 -0.492710425 -0.299523527  0.263769956  0.214699223 
+                                                                              
+-0.001845970  0.125019782 -0.374963805 -0.485287886 -0.039499151 -0.295192987 
+                                                                              
+-0.374872411 -0.378403925 -0.159572137  0.304834305  0.453585774 -0.147409242 
+                                                    
+-0.042494469  0.056032303 -0.313282415  0.068597364 
+
+$rank
+[1] 2
+
+$fitted.values
+        1         2         3         4         5         6         7         8 
+0.4727269 0.4732360 0.4737452 0.4742543 0.4747635 0.4752726 0.4757818 0.4762910 
+        9        10        11        12        13        14        15        16 
+0.4768001 0.4773093 0.4778184 0.4783276 0.4788367 0.4793459 0.4798550 0.4803642 
+       17        18        19        20        21        22        23        24 
+0.4808733 0.4813825 0.4818916 0.4824008 0.4829099 0.4834191 0.4839283 0.4844374 
+       25        26        27        28        29        30        31        32 
+0.4849466 0.4854557 0.4859649 0.4864740 0.4869832 0.4874923 0.4880015 0.4885106 
+       33        34        35        36        37        38        39        40 
+0.4890198 0.4895289 0.4900381 0.4905473 0.4910564 0.4915656 0.4920747 0.4925839 
+       41        42        43        44        45        46        47        48 
+0.4930930 0.4936022 0.4941113 0.4946205 0.4951296 0.4956388 0.4961479 0.4966571 
+       49        50        51        52        53        54        55        56 
+0.4971662 0.4976754 0.4981846 0.4986937 0.4992029 0.4997120 0.5002212 0.5007303 
+       57        58        59        60        61        62        63        64 
+0.5012395 0.5017486 0.5022578 0.5027669 0.5032761 0.5037852 0.5042944 0.5048035 
+       65        66        67        68        69        70        71        72 
+0.5053127 0.5058219 0.5063310 0.5068402 0.5073493 0.5078585 0.5083676 0.5088768 
+       73        74        75        76        77        78        79        80 
+0.5093859 0.5098951 0.5104042 0.5109134 0.5114225 0.5119317 0.5124409 0.5129500 
+       81        82        83        84        85        86        87        88 
+0.5134592 0.5139683 0.5144775 0.5149866 0.5154958 0.5160049 0.5165141 0.5170232 
+       89        90        91        92        93        94        95        96 
+0.5175324 0.5180415 0.5185507 0.5190598 0.5195690 0.5200782 0.5205873 0.5210965 
+       97        98        99       100 
+0.5216056 0.5221148 0.5226239 0.5231331 
+
+$assign
+[1] 0 1
+
+$qr
+$qr
+    (Intercept)             x
+1         -10.0 -5.050000e+02
+2           0.1  2.886607e+02
+3           0.1  1.489638e-01
+4           0.1  1.454995e-01
+5           0.1  1.420353e-01
+6           0.1  1.385710e-01
+7           0.1  1.351067e-01
+8           0.1  1.316424e-01
+9           0.1  1.281782e-01
+10          0.1  1.247139e-01
+11          0.1  1.212496e-01
+12          0.1  1.177853e-01
+13          0.1  1.143211e-01
+14          0.1  1.108568e-01
+15          0.1  1.073925e-01
+16          0.1  1.039282e-01
+17          0.1  1.004640e-01
+18          0.1  9.699970e-02
+19          0.1  9.353542e-02
+20          0.1  9.007115e-02
+21          0.1  8.660687e-02
+22          0.1  8.314260e-02
+23          0.1  7.967832e-02
+24          0.1  7.621405e-02
+25          0.1  7.274977e-02
+26          0.1  6.928550e-02
+27          0.1  6.582122e-02
+28          0.1  6.235695e-02
+29          0.1  5.889267e-02
+30          0.1  5.542840e-02
+31          0.1  5.196412e-02
+32          0.1  4.849985e-02
+33          0.1  4.503557e-02
+34          0.1  4.157130e-02
+35          0.1  3.810702e-02
+36          0.1  3.464275e-02
+37          0.1  3.117847e-02
+38          0.1  2.771420e-02
+39          0.1  2.424992e-02
+40          0.1  2.078565e-02
+41          0.1  1.732137e-02
+42          0.1  1.385710e-02
+43          0.1  1.039282e-02
+44          0.1  6.928550e-03
+45          0.1  3.464275e-03
+46          0.1 -1.084124e-17
+47          0.1 -3.464275e-03
+48          0.1 -6.928550e-03
+49          0.1 -1.039282e-02
+50          0.1 -1.385710e-02
+51          0.1 -1.732137e-02
+52          0.1 -2.078565e-02
+53          0.1 -2.424992e-02
+54          0.1 -2.771420e-02
+55          0.1 -3.117847e-02
+56          0.1 -3.464275e-02
+57          0.1 -3.810702e-02
+58          0.1 -4.157130e-02
+59          0.1 -4.503557e-02
+60          0.1 -4.849985e-02
+61          0.1 -5.196412e-02
+62          0.1 -5.542840e-02
+63          0.1 -5.889267e-02
+64          0.1 -6.235695e-02
+65          0.1 -6.582122e-02
+66          0.1 -6.928550e-02
+67          0.1 -7.274977e-02
+68          0.1 -7.621405e-02
+69          0.1 -7.967832e-02
+70          0.1 -8.314260e-02
+71          0.1 -8.660687e-02
+72          0.1 -9.007115e-02
+73          0.1 -9.353542e-02
+74          0.1 -9.699970e-02
+75          0.1 -1.004640e-01
+76          0.1 -1.039282e-01
+77          0.1 -1.073925e-01
+78          0.1 -1.108568e-01
+79          0.1 -1.143211e-01
+80          0.1 -1.177853e-01
+81          0.1 -1.212496e-01
+82          0.1 -1.247139e-01
+83          0.1 -1.281782e-01
+84          0.1 -1.316424e-01
+85          0.1 -1.351067e-01
+86          0.1 -1.385710e-01
+87          0.1 -1.420353e-01
+88          0.1 -1.454995e-01
+89          0.1 -1.489638e-01
+90          0.1 -1.524281e-01
+91          0.1 -1.558924e-01
+92          0.1 -1.593566e-01
+93          0.1 -1.628209e-01
+94          0.1 -1.662852e-01
+95          0.1 -1.697495e-01
+96          0.1 -1.732137e-01
+97          0.1 -1.766780e-01
+98          0.1 -1.801423e-01
+99          0.1 -1.836066e-01
+100         0.1 -1.870708e-01
+attr(,"assign")
+[1] 0 1
+
+$qraux
+[1] 1.100000 1.152428
+
+$pivot
+[1] 1 2
+
+$tol
+[1] 1e-07
+
+$rank
+[1] 2
+
+attr(,"class")
+[1] "qr"
+
+$df.residual
+[1] 98
+
+$xlevels
+list()
+
+$call
+lm(formula = y ~ x)
+
+$terms
+y ~ x
+attr(,"variables")
+list(y, x)
+attr(,"factors")
+  x
+y 0
+x 1
+attr(,"term.labels")
+[1] "x"
+attr(,"order")
+[1] 1
+attr(,"intercept")
+[1] 1
+attr(,"response")
+[1] 1
+attr(,".Environment")
+<environment: R_GlobalEnv>
+attr(,"predvars")
+list(y, x)
+attr(,"dataClasses")
+        y         x 
+"numeric" "numeric" 
+
+$model
+              y   x
+1   0.369749420   1
+2   0.331783511   2
+3   0.355035858   3
+4   0.463137190   4
+5   0.987153593   5
+6   0.087330226   6
+7   0.012649134   7
+8   0.843793618   8
+9   0.418106636   9
+10  0.092170647  10
+11  0.735925885  11
+12  0.146807735  12
+13  0.322959943  13
+14  0.416503998  14
+15  0.674833265  15
+16  0.075533009  16
+17  0.710411264  17
+18  0.792558274  18
+19  0.704529087  19
+20  0.752016303  20
+21  0.295118440  21
+22  0.800848792  22
+23  0.204666916  23
+24  0.786937089  24
+25  0.898116190  25
+26  0.457921187  26
+27  0.601100727  27
+28  0.544910698  28
+29  0.252254872  29
+30  0.488417629  30
+31  0.096095286  31
+32  0.470627016  32
+33  0.635488581  33
+34  0.675100374  34
+35  0.801800699  35
+36  0.536083714  36
+37  0.003737235  37
+38  0.355824624  38
+39  0.725627791  39
+40  0.659182261  40
+41  0.122425759  41
+42  0.732597727  42
+43  0.662296990  43
+44  0.188916217  44
+45  0.157101244  45
+46  0.421622705  46
+47  0.529190972  47
+48  0.106822788  48
+49  0.479175737  49
+50  0.190530827  50
+51  0.529612568  51
+52  0.868108219  52
+53  0.551405803  53
+54  0.336688750  54
+55  0.454725679  55
+56  0.596072402  56
+57  0.672669934  57
+58  0.289260051  58
+59  0.470066813  59
+60  0.799512400  60
+61  0.953400006  61
+62  0.418179251  62
+63  0.104041820  63
+64  0.864448444  64
+65  0.593284454  65
+66  0.126791172  66
+67  0.454225191  67
+68  0.943334756  68
+69  0.398462866  69
+70  0.852491535  70
+71  0.645421633  71
+72  0.965838170  72
+73  0.978281192  73
+74  0.768459076  74
+75  0.289926284  75
+76  0.325536858  76
+77  0.877615172  77
+78  0.374987080  78
+79  0.930375731  79
+80  0.572677789  80
+81  0.025284737  81
+82  0.219377863  82
+83  0.783577573  83
+84  0.735413067  84
+85  0.519774102  85
+86  0.647546082  86
+87  0.148468722  87
+88  0.039050869  88
+89  0.485745831  89
+90  0.230958223  90
+91  0.152185026  91
+92  0.149559740  92
+93  0.369297755  93
+94  0.834610425  94
+95  0.984268122  95
+96  0.384179333  96
+97  0.490000334  97
+98  0.589433333  98
+99  0.221024843  99
+100 0.603810849 100
+
+R> class(unclass(z))
+[1] "list"
+R> typeof(unclass(z))
+[1] "list"
+R> names(unclass(z))
+ [1] "coefficients"  "residuals"     "effects"       "rank"         
+ [5] "fitted.values" "assign"        "qr"            "df.residual"  
+ [9] "xlevels"       "call"          "terms"         "model"        
+R> z $ call
+lm(formula = y ~ x)
+R> z $ coef
+ (Intercept)            x 
+0.4722177254 0.0005091535 
+R> z
+
+Call:
+lm(formula = y ~ x)
+
+Coefficients:
+(Intercept)            x  
+  0.4722177    0.0005092  
+
+R> summary(z)
+
+Call:
+lm(formula = y ~ x)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.4882 -0.2145 -0.0145  0.2305  0.5124 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.4722177  0.0553800   8.527 1.88e-13 ***
+x           0.0005092  0.0009521   0.535    0.594    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Residual standard error: 0.2748 on 98 degrees of freedom
+Multiple R-Squared: 0.00291,	Adjusted R-squared: -0.007265 
+F-statistic: 0.286 on 1 and 98 DF,  p-value: 0.594 
+
+R> sz <- summary(z)
+R> class(sz)
+[1] "summary.lm"
+R> print.summary.lm
+Error: object "print.summary.lm" not found
+R> getAnywhere("print.summary.lm")
+A single object matching 'print.summary.lm' was found
+It was found in the following places
+  registered S3 method for print from namespace stats
+  namespace:stats
+with value
+
+function (x, digits = max(3, getOption("digits") - 3), symbolic.cor = x$symbolic.cor, 
+    signif.stars = getOption("show.signif.stars"), ...) 
+{
+    cat("\nCall:\n")
+    cat(paste(deparse(x$call), sep = "\n", collapse = "\n"), 
+        "\n\n", sep = "")
+    resid <- x$residuals
+    df <- x$df
+    rdf <- df[2]
+    cat(if (!is.null(x$w) && diff(range(x$w))) 
+        "Weighted ", "Residuals:\n", sep = "")
+    if (rdf > 5) {
+        nam <- c("Min", "1Q", "Median", "3Q", "Max")
+        rq <- if (length(dim(resid)) == 2) 
+            structure(apply(t(resid), 1, quantile), dimnames = list(nam, 
+                dimnames(resid)[[2]]))
+        else structure(quantile(resid), names = nam)
+        print(rq, digits = digits, ...)
+    }
+    else if (rdf > 0) {
+        print(resid, digits = digits, ...)
+    }
+    else {
+        cat("ALL", df[1], "residuals are 0: no residual degrees of freedom!\n")
+    }
+    if (length(x$aliased) == 0) {
+        cat("\nNo Coefficients\n")
+    }
+    else {
+        if (nsingular <- df[3] - df[1]) 
+            cat("\nCoefficients: (", nsingular, " not defined because of singularities)\n", 
+                sep = "")
+        else cat("\nCoefficients:\n")
+        coefs <- x$coefficients
+        if (!is.null(aliased <- x$aliased) && any(aliased)) {
+            cn <- names(aliased)
+            coefs <- matrix(NA, length(aliased), 4, dimnames = list(cn, 
+                colnames(coefs)))
+            coefs[!aliased, ] <- x$coefficients
+        }
+        printCoefmat(coefs, digits = digits, signif.stars = signif.stars, 
+            na.print = "NA", ...)
+    }
+    cat("\nResidual standard error:", format(signif(x$sigma, 
+        digits)), "on", rdf, "degrees of freedom\n")
+    if (!is.null(x$fstatistic)) {
+        cat("Multiple R-Squared:", formatC(x$r.squared, digits = digits))
+        cat(",\tAdjusted R-squared:", formatC(x$adj.r.squared, 
+            digits = digits), "\nF-statistic:", formatC(x$fstatistic[1], 
+            digits = digits), "on", x$fstatistic[2], "and", x$fstatistic[3], 
+            "DF,  p-value:", format.pval(pf(x$fstatistic[1], 
+                x$fstatistic[2], x$fstatistic[3], lower.tail = FALSE), 
+                digits = digits), "\n")
+    }
+    correl <- x$correlation
+    if (!is.null(correl)) {
+        p <- NCOL(correl)
+        if (p > 1) {
+            cat("\nCorrelation of Coefficients:\n")
+            if (is.logical(symbolic.cor) && symbolic.cor) {
+                print(symnum(correl, abbr.col = NULL))
+            }
+            else {
+                correl <- format(round(correl, 2), nsmall = 2, 
+                  digits = digits)
+                correl[!lower.tri(correl)] <- ""
+                print(correl[-1, -p, drop = FALSE], quote = FALSE)
+            }
+        }
+    }
+    cat("\n")
+    invisible(x)
+}
+<environment: namespace:stats>
+R> names(unclass(sz))
+ [1] "call"          "terms"         "residuals"     "coefficients" 
+ [5] "aliased"       "sigma"         "df"            "r.squared"    
+ [9] "adj.r.squared" "fstatistic"    "cov.unscaled" 
+R> sz $ r.squared
+[1] 0.002909816
+R> z
+
+Call:
+lm(formula = y ~ x)
+
+Coefficients:
+(Intercept)            x  
+  0.4722177    0.0005092  
+
+R> summary(z)
+
+Call:
+lm(formula = y ~ x)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.4882 -0.2145 -0.0145  0.2305  0.5124 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.4722177  0.0553800   8.527 1.88e-13 ***
+x           0.0005092  0.0009521   0.535    0.594    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Residual standard error: 0.2748 on 98 degrees of freedom
+Multiple R-Squared: 0.00291,	Adjusted R-squared: -0.007265 
+F-statistic: 0.286 on 1 and 98 DF,  p-value: 0.594 
+
+R> plot(z)
+Hit <Return> to see next plot: 
+Hit <Return> to see next plot: 
+Hit <Return> to see next plot: 
+Hit <Return> to see next plot: 
+R> plot(x, y)
+R> abline(z)
+R> abline
+function (a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL, 
+    coef = NULL, untf = FALSE, col = par("col"), lty = par("lty"), 
+    lwd = par("lwd"), ...) 
+{
+    if (!is.null(reg)) 
+        a <- reg
+    if (!is.null(a) && is.list(a)) {
+        temp <- as.vector(coefficients(a))
+        if (length(temp) == 1) {
+            a <- 0
+            b <- temp
+        }
+        else {
+            a <- temp[1]
+            b <- temp[2]
+        }
+    }
+    if (!is.null(coef)) {
+        a <- coef[1]
+        b <- coef[2]
+    }
+    .Internal(abline(a, b, h, v, untf, col, lty, lwd, ...))
+    invisible()
+}
+<environment: namespace:graphics>
+R> methods(lines)
+[1] lines.default    lines.formula*   lines.histogram* lines.stepfun*  
+[5] lines.ts        
+
+   Non-visible functions are asterisked
+R> class(hist(x))
+[1] "histogram"
+R> x
+  [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
+ [19]  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
+ [37]  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52  53  54
+ [55]  55  56  57  58  59  60  61  62  63  64  65  66  67  68  69  70  71  72
+ [73]  73  74  75  76  77  78  79  80  81  82  83  84  85  86  87  88  89  90
+ [91]  91  92  93  94  95  96  97  98  99 100
+R> y
+  [1] 0.369749420 0.331783511 0.355035858 0.463137190 0.987153593 0.087330226
+  [7] 0.012649134 0.843793618 0.418106636 0.092170647 0.735925885 0.146807735
+ [13] 0.322959943 0.416503998 0.674833265 0.075533009 0.710411264 0.792558274
+ [19] 0.704529087 0.752016303 0.295118440 0.800848792 0.204666916 0.786937089
+ [25] 0.898116190 0.457921187 0.601100727 0.544910698 0.252254872 0.488417629
+ [31] 0.096095286 0.470627016 0.635488581 0.675100374 0.801800699 0.536083714
+ [37] 0.003737235 0.355824624 0.725627791 0.659182261 0.122425759 0.732597727
+ [43] 0.662296990 0.188916217 0.157101244 0.421622705 0.529190972 0.106822788
+ [49] 0.479175737 0.190530827 0.529612568 0.868108219 0.551405803 0.336688750
+ [55] 0.454725679 0.596072402 0.672669934 0.289260051 0.470066813 0.799512400
+ [61] 0.953400006 0.418179251 0.104041820 0.864448444 0.593284454 0.126791172
+ [67] 0.454225191 0.943334756 0.398462866 0.852491535 0.645421633 0.965838170
+ [73] 0.978281192 0.768459076 0.289926284 0.325536858 0.877615172 0.374987080
+ [79] 0.930375731 0.572677789 0.025284737 0.219377863 0.783577573 0.735413067
+ [85] 0.519774102 0.647546082 0.148468722 0.039050869 0.485745831 0.230958223
+ [91] 0.152185026 0.149559740 0.369297755 0.834610425 0.984268122 0.384179333
+ [97] 0.490000334 0.589433333 0.221024843 0.603810849
+R> hist(y)
+R> z <- hist(y)
+R> z
+$breaks
+ [1] 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+
+$counts
+ [1]  8 11  8 11 14 10 10 12  9  7
+
+$intensities
+ [1] 0.7999998 1.1000000 0.8000000 1.1000000 1.4000000 1.0000000 1.0000000
+ [8] 1.2000000 0.9000000 0.7000000
+
+$density
+ [1] 0.7999998 1.1000000 0.8000000 1.1000000 1.4000000 1.0000000 1.0000000
+ [8] 1.2000000 0.9000000 0.7000000
+
+$mids
+ [1] 0.05 0.15 0.25 0.35 0.45 0.55 0.65 0.75 0.85 0.95
+
+$xname
+[1] "y"
+
+$equidist
+[1] TRUE
+
+attr(,"class")
+[1] "histogram"
+R> class(z)
+[1] "histogram"
+R> plot(z)
+R> plot(z, density = TRUE)
+R> plot(z, density = FALSE)
+R> z <- hist(y, density = TRUE)
+R> z <- hist(y, proba = TRUE)
+R> plot(z)
+R> hist(y, proba = TRUE)
+R> density(y)
+
+Call:
+	density.default(x = y)
+
+Data: y (100 obs.);	Bandwidth 'bw' = 0.09811
+
+       x                 y           
+ Min.   :-0.2906   Min.   :0.001326  
+ 1st Qu.: 0.1024   1st Qu.:0.148869  
+ Median : 0.4954   Median :0.777167  
+ Mean   : 0.4954   Mean   :0.635417  
+ 3rd Qu.: 0.8885   3rd Qu.:1.041359  
+ Max.   : 1.2815   Max.   :1.183624  
+R> lines(density(y))
+R> methods(lines)
+[1] lines.default    lines.formula*   lines.histogram* lines.stepfun*  
+[5] lines.ts        
+
+   Non-visible functions are asterisked
+R> class(density(y))
+[1] "density"
+R> lines.default
+function (x, y = NULL, type = "l", ...) 
+plot.xy(xy.coords(x, y), type = type, ...)
+<environment: namespace:graphics>
+R> methods(xy.coords)
+no methods were found
+Warning message:
+function 'xy.coords' appears not to be generic in: methods(xy.coords) 
+R> 
+R> xy.coords(density(y))
+$x
+  [1] -0.290603116 -0.287526605 -0.284450094 -0.281373583 -0.278297072
+  [6] -0.275220561 -0.272144050 -0.269067540 -0.265991029 -0.262914518
+ [11] -0.259838007 -0.256761496 -0.253684985 -0.250608474 -0.247531963
+ [16] -0.244455453 -0.241378942 -0.238302431 -0.235225920 -0.232149409
+ [21] -0.229072898 -0.225996387 -0.222919876 -0.219843366 -0.216766855
+ [26] -0.213690344 -0.210613833 -0.207537322 -0.204460811 -0.201384300
+ [31] -0.198307789 -0.195231278 -0.192154768 -0.189078257 -0.186001746
+ [36] -0.182925235 -0.179848724 -0.176772213 -0.173695702 -0.170619191
+ [41] -0.167542681 -0.164466170 -0.161389659 -0.158313148 -0.155236637
+ [46] -0.152160126 -0.149083615 -0.146007104 -0.142930594 -0.139854083
+ [51] -0.136777572 -0.133701061 -0.130624550 -0.127548039 -0.124471528
+ [56] -0.121395017 -0.118318506 -0.115241996 -0.112165485 -0.109088974
+ [61] -0.106012463 -0.102935952 -0.099859441 -0.096782930 -0.093706419
+ [66] -0.090629909 -0.087553398 -0.084476887 -0.081400376 -0.078323865
+ [71] -0.075247354 -0.072170843 -0.069094332 -0.066017822 -0.062941311
+ [76] -0.059864800 -0.056788289 -0.053711778 -0.050635267 -0.047558756
+ [81] -0.044482245 -0.041405734 -0.038329224 -0.035252713 -0.032176202
+ [86] -0.029099691 -0.026023180 -0.022946669 -0.019870158 -0.016793647
+ [91] -0.013717137 -0.010640626 -0.007564115 -0.004487604 -0.001411093
+ [96]  0.001665418  0.004741929  0.007818440  0.010894950  0.013971461
+[101]  0.017047972  0.020124483  0.023200994  0.026277505  0.029354016
+[106]  0.032430527  0.035507037  0.038583548  0.041660059  0.044736570
+[111]  0.047813081  0.050889592  0.053966103  0.057042614  0.060119125
+[116]  0.063195635  0.066272146  0.069348657  0.072425168  0.075501679
+[121]  0.078578190  0.081654701  0.084731212  0.087807722  0.090884233
+[126]  0.093960744  0.097037255  0.100113766  0.103190277  0.106266788
+[131]  0.109343299  0.112419809  0.115496320  0.118572831  0.121649342
+[136]  0.124725853  0.127802364  0.130878875  0.133955386  0.137031897
+[141]  0.140108407  0.143184918  0.146261429  0.149337940  0.152414451
+[146]  0.155490962  0.158567473  0.161643984  0.164720494  0.167797005
+[151]  0.170873516  0.173950027  0.177026538  0.180103049  0.183179560
+[156]  0.186256071  0.189332581  0.192409092  0.195485603  0.198562114
+[161]  0.201638625  0.204715136  0.207791647  0.210868158  0.213944669
+[166]  0.217021179  0.220097690  0.223174201  0.226250712  0.229327223
+[171]  0.232403734  0.235480245  0.238556756  0.241633266  0.244709777
+[176]  0.247786288  0.250862799  0.253939310  0.257015821  0.260092332
+[181]  0.263168843  0.266245353  0.269321864  0.272398375  0.275474886
+[186]  0.278551397  0.281627908  0.284704419  0.287780930  0.290857440
+[191]  0.293933951  0.297010462  0.300086973  0.303163484  0.306239995
+[196]  0.309316506  0.312393017  0.315469528  0.318546038  0.321622549
+[201]  0.324699060  0.327775571  0.330852082  0.333928593  0.337005104
+[206]  0.340081615  0.343158125  0.346234636  0.349311147  0.352387658
+[211]  0.355464169  0.358540680  0.361617191  0.364693702  0.367770212
+[216]  0.370846723  0.373923234  0.376999745  0.380076256  0.383152767
+[221]  0.386229278  0.389305789  0.392382300  0.395458810  0.398535321
+[226]  0.401611832  0.404688343  0.407764854  0.410841365  0.413917876
+[231]  0.416994387  0.420070897  0.423147408  0.426223919  0.429300430
+[236]  0.432376941  0.435453452  0.438529963  0.441606474  0.444682984
+[241]  0.447759495  0.450836006  0.453912517  0.456989028  0.460065539
+[246]  0.463142050  0.466218561  0.469295072  0.472371582  0.475448093
+[251]  0.478524604  0.481601115  0.484677626  0.487754137  0.490830648
+[256]  0.493907159  0.496983669  0.500060180  0.503136691  0.506213202
+[261]  0.509289713  0.512366224  0.515442735  0.518519246  0.521595756
+[266]  0.524672267  0.527748778  0.530825289  0.533901800  0.536978311
+[271]  0.540054822  0.543131333  0.546207843  0.549284354  0.552360865
+[276]  0.555437376  0.558513887  0.561590398  0.564666909  0.567743420
+[281]  0.570819931  0.573896441  0.576972952  0.580049463  0.583125974
+[286]  0.586202485  0.589278996  0.592355507  0.595432018  0.598508528
+[291]  0.601585039  0.604661550  0.607738061  0.610814572  0.613891083
+[296]  0.616967594  0.620044105  0.623120615  0.626197126  0.629273637
+[301]  0.632350148  0.635426659  0.638503170  0.641579681  0.644656192
+[306]  0.647732703  0.650809213  0.653885724  0.656962235  0.660038746
+[311]  0.663115257  0.666191768  0.669268279  0.672344790  0.675421300
+[316]  0.678497811  0.681574322  0.684650833  0.687727344  0.690803855
+[321]  0.693880366  0.696956877  0.700033387  0.703109898  0.706186409
+[326]  0.709262920  0.712339431  0.715415942  0.718492453  0.721568964
+[331]  0.724645475  0.727721985  0.730798496  0.733875007  0.736951518
+[336]  0.740028029  0.743104540  0.746181051  0.749257562  0.752334072
+[341]  0.755410583  0.758487094  0.761563605  0.764640116  0.767716627
+[346]  0.770793138  0.773869649  0.776946159  0.780022670  0.783099181
+[351]  0.786175692  0.789252203  0.792328714  0.795405225  0.798481736
+[356]  0.801558246  0.804634757  0.807711268  0.810787779  0.813864290
+[361]  0.816940801  0.820017312  0.823093823  0.826170334  0.829246844
+[366]  0.832323355  0.835399866  0.838476377  0.841552888  0.844629399
+[371]  0.847705910  0.850782421  0.853858931  0.856935442  0.860011953
+[376]  0.863088464  0.866164975  0.869241486  0.872317997  0.875394508
+[381]  0.878471018  0.881547529  0.884624040  0.887700551  0.890777062
+[386]  0.893853573  0.896930084  0.900006595  0.903083106  0.906159616
+[391]  0.909236127  0.912312638  0.915389149  0.918465660  0.921542171
+[396]  0.924618682  0.927695193  0.930771703  0.933848214  0.936924725
+[401]  0.940001236  0.943077747  0.946154258  0.949230769  0.952307280
+[406]  0.955383790  0.958460301  0.961536812  0.964613323  0.967689834
+[411]  0.970766345  0.973842856  0.976919367  0.979995878  0.983072388
+[416]  0.986148899  0.989225410  0.992301921  0.995378432  0.998454943
+[421]  1.001531454  1.004607965  1.007684475  1.010760986  1.013837497
+[426]  1.016914008  1.019990519  1.023067030  1.026143541  1.029220052
+[431]  1.032296562  1.035373073  1.038449584  1.041526095  1.044602606
+[436]  1.047679117  1.050755628  1.053832139  1.056908649  1.059985160
+[441]  1.063061671  1.066138182  1.069214693  1.072291204  1.075367715
+[446]  1.078444226  1.081520737  1.084597247  1.087673758  1.090750269
+[451]  1.093826780  1.096903291  1.099979802  1.103056313  1.106132824
+[456]  1.109209334  1.112285845  1.115362356  1.118438867  1.121515378
+[461]  1.124591889  1.127668400  1.130744911  1.133821421  1.136897932
+[466]  1.139974443  1.143050954  1.146127465  1.149203976  1.152280487
+[471]  1.155356998  1.158433509  1.161510019  1.164586530  1.167663041
+[476]  1.170739552  1.173816063  1.176892574  1.179969085  1.183045596
+[481]  1.186122106  1.189198617  1.192275128  1.195351639  1.198428150
+[486]  1.201504661  1.204581172  1.207657683  1.210734193  1.213810704
+[491]  1.216887215  1.219963726  1.223040237  1.226116748  1.229193259
+[496]  1.232269770  1.235346281  1.238422791  1.241499302  1.244575813
+[501]  1.247652324  1.250728835  1.253805346  1.256881857  1.259958368
+[506]  1.263034878  1.266111389  1.269187900  1.272264411  1.275340922
+[511]  1.278417433  1.281493944
+
+$y
+  [1] 0.001326239 0.001466962 0.001620427 0.001784392 0.001968299 0.002168329
+  [7] 0.002381601 0.002619884 0.002878371 0.003153398 0.003459494 0.003790669
+ [13] 0.004142303 0.004532163 0.004952852 0.005398607 0.005890941 0.006420806
+ [19] 0.006981086 0.007597576 0.008259318 0.008957604 0.009723067 0.010542559
+ [25] 0.011405535 0.012348013 0.013354373 0.014411966 0.015562727 0.016788278
+ [31] 0.018073600 0.019467030 0.020947153 0.022496318 0.024169680 0.025942533
+ [37] 0.027794337 0.029787395 0.031893480 0.034088932 0.036443410 0.038924982
+ [43] 0.041506678 0.044265565 0.047165884 0.050177210 0.053383905 0.056746325
+ [49] 0.060230512 0.063927812 0.067794723 0.071793751 0.076022706 0.080434343
+ [55] 0.084987725 0.089786374 0.094779523 0.099922986 0.105325014 0.110931646
+ [61] 0.116695752 0.122729100 0.128974971 0.135383717 0.142069188 0.148972454
+ [67] 0.156041895 0.163391808 0.170961698 0.178698647 0.186715586 0.194951195
+ [73] 0.203352048 0.212027757 0.220917002 0.229966744 0.239281225 0.248800014
+ [79] 0.258471453 0.268392310 0.278503982 0.288757259 0.299239339 0.309894409
+ [85] 0.320676824 0.331662189 0.342798437 0.354044633 0.365462890 0.377005827
+ [91] 0.388638350 0.400407380 0.412271102 0.424201359 0.436228430 0.448316878
+ [97] 0.460446493 0.472629786 0.484838399 0.497060964 0.509291470 0.521509213
+[103] 0.533712412 0.545876190 0.557987932 0.570055988 0.582036736 0.593925915
+[109] 0.605742326 0.617424199 0.628975711 0.640426187 0.651696789 0.662800033
+[115] 0.673775556 0.684529019 0.695080982 0.705480894 0.715620931 0.725529217
+[121] 0.735264215 0.744707050 0.753892739 0.762887673 0.771564708 0.779964922
+[127] 0.788161270 0.796021396 0.803591453 0.810949361 0.817960782 0.824675843
+[133] 0.831175619 0.837327106 0.843183206 0.848826193 0.854127676 0.859142074
+[139] 0.863950823 0.868433269 0.872644079 0.876661789 0.880376349 0.883841422
+[145] 0.887130640 0.890147062 0.892942151 0.895582762 0.897987113 0.900203368
+[151] 0.902289938 0.904181714 0.905922597 0.907561154 0.909049887 0.910427625
+[157] 0.911732018 0.912933506 0.914065220 0.915153190 0.916185511 0.917189182
+[163] 0.918178316 0.919157783 0.920148228 0.921151957 0.922189200 0.923274216
+[169] 0.924398033 0.925594346 0.926871195 0.928209243 0.929653365 0.931205728
+[175] 0.932837888 0.934603334 0.936498855 0.938488456 0.940631494 0.942919997
+[181] 0.945312214 0.947870547 0.950582981 0.953403955 0.956396139 0.959544250
+[187] 0.962800952 0.966226537 0.969803261 0.973484050 0.977324401 0.981304908
+[193] 0.985380732 0.989600454 0.993943776 0.998369931 1.002918811 1.007569942
+[199] 1.012288268 1.017103619 1.021995975 1.026937399 1.031946682 1.037004812
+[205] 1.042092091 1.047215710 1.052358122 1.057508686 1.062662838 1.067804840
+[211] 1.072933629 1.078033094 1.083089564 1.088111752 1.093072554 1.097960531
+[217] 1.102794075 1.107535938 1.112176994 1.116744933 1.121193469 1.125515797
+[223] 1.129748269 1.133836868 1.137777061 1.141613001 1.145284397 1.148788894
+[229] 1.152177389 1.155384885 1.158411072 1.161312380 1.164020725 1.166537688
+[235] 1.168923903 1.171109829 1.173098763 1.174954138 1.176606546 1.178060825
+[241] 1.179381751 1.180501576 1.181426484 1.182221152 1.182820891 1.183233042
+[247] 1.183520778 1.183623720 1.183550177 1.183360489 1.182999659 1.182476771
+[253] 1.181848123 1.181064965 1.180136963 1.179115315 1.177958155 1.176675541
+[259] 1.175312694 1.173835030 1.172252808 1.170604605 1.168863271 1.167039080
+[265] 1.165163518 1.163216790 1.161208994 1.159164325 1.157070023 1.154935837
+[271] 1.152778698 1.150592369 1.148386068 1.146169738 1.143942961 1.141714260
+[277] 1.139487079 1.137265972 1.135058610 1.132862629 1.130686595 1.128537185
+[283] 1.126407085 1.124307841 1.122245009 1.120207317 1.118208225 1.116252059
+[289] 1.114324676 1.112440392 1.110602207 1.108794249 1.107030669 1.105313068
+[295] 1.103625000 1.101979504 1.100376719 1.098800761 1.097262700 1.095761175
+[301] 1.094281939 1.092833353 1.091412528 1.090007843 1.088624338 1.087257587
+[307] 1.085899474 1.084551238 1.083206924 1.081862666 1.080515566 1.079158159
+[313] 1.077791435 1.076408152 1.074999380 1.073571415 1.072112600 1.070612595
+[319] 1.069083301 1.067508697 1.065877111 1.064206190 1.062475715 1.060672774
+[325] 1.058820759 1.056895515 1.054883006 1.052812220 1.050655421 1.048397577
+[331] 1.046072998 1.043650787 1.041115070 1.038505077 1.035787233 1.032944983
+[337] 1.030021976 1.026982480 1.023809430 1.020550303 1.017167756 1.013644384
+[343] 1.010030844 1.006288721 1.002400443 0.998419147 0.994305881 0.990043056
+[349] 0.985685582 0.981194460 0.976552222 0.971814851 0.966943745 0.961921662
+[355] 0.956804994 0.951555913 0.946157480 0.940665897 0.935044409 0.929276418
+[361] 0.923417421 0.917431953 0.911303764 0.905087231 0.898748315 0.892271084
+[367] 0.885708496 0.879027994 0.872213914 0.865317607 0.858307990 0.851169601
+[373] 0.843952105 0.836625837 0.829175469 0.821648994 0.814018075 0.806267475
+[379] 0.798443590 0.790519317 0.782479503 0.774369052 0.766162022 0.757843385
+[385] 0.749456653 0.740977017 0.732389686 0.723736828 0.714994801 0.706149245
+[391] 0.697240938 0.688247525 0.679155350 0.670003641 0.660771526 0.651446423
+[397] 0.642065689 0.632610228 0.623068974 0.613476931 0.603817147 0.594080586
+[403] 0.584299243 0.574458748 0.564552651 0.554609130 0.544616872 0.534572592
+[409] 0.524499717 0.514390477 0.504245322 0.494081911 0.483896483 0.473693748
+[415] 0.463484552 0.453269558 0.443058185 0.432853453 0.422660779 0.412494638
+[421] 0.402349307 0.392235169 0.382171979 0.372144510 0.362168199 0.352268144
+[427] 0.342419078 0.332641425 0.322965541 0.313355835 0.303837505 0.294445918
+[433] 0.285135168 0.275934869 0.266884993 0.257929639 0.249102346 0.240447144
+[439] 0.231898763 0.223494063 0.215280471 0.207184253 0.199244903 0.191512488
+[445] 0.183905975 0.176466741 0.169246685 0.162158833 0.155245677 0.148560107
+[451] 0.142010712 0.135640339 0.129502037 0.123501542 0.117681331 0.112093816
+[457] 0.106643480 0.101371768 0.096329726 0.091422135 0.086688828 0.082178838
+[463] 0.077798700 0.073586148 0.069587659 0.065712827 0.061996903 0.058483383
+[469] 0.055086034 0.051837352 0.048777538 0.045825443 0.043010637 0.040369825
+[475] 0.037827635 0.035410638 0.033151949 0.030982445 0.028925706 0.027011268
+[481] 0.025176510 0.023442115 0.021834119 0.020296479 0.018847118 0.017508734
+[487] 0.016231757 0.015031540 0.013927654 0.012876757 0.011891853 0.010989632
+[493] 0.010132626 0.009331729 0.008601019 0.007908469 0.007263100 0.006676665
+[499] 0.006122087 0.005606755 0.005140379 0.004700312 0.004292544 0.003925010
+[505] 0.003578975 0.003259241 0.002972228 0.002702598 0.002454162 0.002232060
+[511] 0.002023868 0.001832578
+
+$xlab
+[1] "$x"
+
+$ylab
+[1] "$y"
+
+R> methods(lines)
+[1] lines.default    lines.formula*   lines.histogram* lines.stepfun*  
+[5] lines.ts        
+
+   Non-visible functions are asterisked
+R> lines.default
+function (x, y = NULL, type = "l", ...) 
+plot.xy(xy.coords(x, y), type = type, ...)
+<environment: namespace:graphics>
+R> names(density(y))
+[1] "x"         "y"         "bw"        "n"         "call"      "data.name"
+[7] "has.na"   
+
+R> z <- 1 : 10
+R> class(z) <- "bar"
+R> z + z
+A bar object of length 10 
+R> unclass(z + z)
+ [1]  2  4  6  8 10 12 14 16 18 20
+R> M <- matrix(c(1, 1, 1, 0, 1, 1, 0, 0, 1), nr = 3, byrow = TRUE)
+R> M
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    0    1    1
+[3,]    0    0    1
+R> class(M) <- "relation"
+R> M
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    0    1    1
+[3,]    0    0    1
+attr(,"class")
+[1] "relation"
+R> print.relation <- function(x, ...) cat("A binary relation on", nrow(x), "objects.\n")
+R> M
+A binary relation on 3 objects.
+R> M + 1
+A binary relation on 3 objects.
+R> unclass(M + 1)
+     [,1] [,2] [,3]
+[1,]    2    2    2
+[2,]    1    2    2
+[3,]    1    1    2
+R> M ^ 3
+A binary relation on 3 objects.
+R> unclass(M ^ 3)
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    0    1    1
+[3,]    0    0    1
+R> unclass(- M)
+     [,1] [,2] [,3]
+[1,]   -1   -1   -1
+[2,]    0   -1   -1
+[3,]    0    0   -1
+R> class(M)
+[1] "relation"
+R> `+`
+.Primitive("+")
+R> unclass(M)
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    0    1    1
+[3,]    0    0    1
+R> unclass(M) + 1
+     [,1] [,2] [,3]
+[1,]    2    2    2
+[2,]    1    2    2
+[3,]    1    1    2
+R> M
+A binary relation on 3 objects.
+R> Inz <- M
+R> Inz <- unclass(M)
+R> Inz
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    0    1    1
+[3,]    0    0    1
+R> M1 <- list(incidences = Inz)
+R> M1
+$incidences
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    0    1    1
+[3,]    0    0    1
+
+R> class(M1) <- "relation"
+R> M1
+A binary relation on objects.
+R> print.relation
+function(x, ...) cat("A binary relation on", nrow(x), "objects.\n")
+R> print.relation <- function(x, ...) cat("A binary relation on", nrow(x$incidences), "objects.\n")
+R> M1
+A binary relation on 3 objects.
+R> M1 + 1
+Error in M1 + 1 : non-numeric argument to binary operator
+R> M1 ^ 2
+Error in M1^2 : non-numeric argument to binary operator
+R> unclass(M1)
+$incidences
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    0    1    1
+[3,]    0    0    1
+
+R>
+R> M2 <- list(incidences = Inz, object_names = c("Mensa", "McD", "Zaus"))
+R> M2
+$incidences
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    0    1    1
+[3,]    0    0    1
+
+$object_names
+[1] "Mensa" "McD"   "Zaus" 
+
+R> class(M2) <- "relation"
+R> M2
+A binary relation on 3 objects.
+R> M2
+A binary relation on 3 objects.
+R> M2
+A binary relation on 3 objects.
+R> M2 $ incidences
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    0    1    1
+[3,]    0    0    1
+R> source("unit5.R")
+R> incidences(M2)
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    0    1    1
+[3,]    0    0    1
+R> M2
+A binary relation on 3 objects.
+R> names(M2)
+[1] "incidences"   "object_names"
+R> x <- c(1, 3, 5)
+R> x
+[1] 1 3 5
+R> outer(x, x, "<=")
+      [,1]  [,2] [,3]
+[1,]  TRUE  TRUE TRUE
+[2,] FALSE  TRUE TRUE
+[3,] FALSE FALSE TRUE
+R> outer(x, x, "<=") * 1
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    0    1    1
+[3,]    0    0    1
+R> source("unit5.R")
+R> Inz
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    0    1    1
+[3,]    0    0    1
+R> as.relation(Inz)
+A binary relation on 3 objects.
+R> x
+[1] 1 3 5
+R> as.relation(x)
+A binary relation on 3 objects.
+R> x <- runif(12)
+R> as.relation(x)
+A binary relation on 12 objects.
+R> z <- as.relation(x)
+R> z
+A binary relation on 12 objects.
+R> incidences(z)
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+ [1,]    1    0    0    1    1    1    0    0    0     1     1     0
+ [2,]    1    1    1    1    1    1    1    1    1     1     1     1
+ [3,]    1    0    1    1    1    1    0    1    1     1     1     0
+ [4,]    0    0    0    1    0    1    0    0    0     0     0     0
+ [5,]    0    0    0    1    1    1    0    0    0     1     1     0
+ [6,]    0    0    0    0    0    1    0    0    0     0     0     0
+ [7,]    1    0    1    1    1    1    1    1    1     1     1     0
+ [8,]    1    0    0    1    1    1    0    1    1     1     1     0
+ [9,]    1    0    0    1    1    1    0    0    1     1     1     0
+[10,]    0    0    0    1    0    1    0    0    0     1     0     0
+[11,]    0    0    0    1    0    1    0    0    0     1     1     0
+[12,]    1    0    1    1    1    1    1    1    1     1     1     1
+R> source("unit5.R")
+R> as.relation(Inz)
+A binary relation on 3 objects.
+R> as.relation
+function(x) UseMethod("as.relation")
+R> methods(as.relation)
+[1] as.relation.matrix  as.relation.numeric
+R> as.relation.matrix
+function(x)
+    .relation_from_incidences(x)
+R> source("unit5.R")
+R> M2
+A binary relation on 3 objects.
+R> dual(M2)
+A binary relation on 3 objects.
+R> incidences(M2)
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    0    1    1
+[3,]    0    0    1
+R> incidences(dual(M2))
+     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    1    1    0
+[3,]    1    1    1
+R> q()
+Save workspace image? [y/n/c]: n
+
+Process R finished at Thu May 11 22:01:08 2006

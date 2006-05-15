@@ -1,0 +1,935 @@
+
+R : Copyright 2006, The R Foundation for Statistical Computing
+Version 2.3.0 Patched (2006-04-24 r37914)
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+R> options(STERM='iESS', editor='emacsclient')
+R> Sweave("unit4.Rnw")
+Writing to file unit4.tex
+Processing code chunks ...
+ 1 : echo term verbatim
+
+You can now run LaTeX on 'unit4.tex'
+R> x <- "sin(x + y)"
+R> parse(text = x)
+expression(sin(x + y))
+R> length(parse(text = x))
+[1] 1
+R> parse(text = x))[[1]]
+Error: syntax error in "parse(text = x))"
+R> parse(text = x)[[1]]
+sin(x + y)
+R> length(parse(text = x)[[1]])
+[1] 2
+R> parse(text = x)[[1]][[1]]
+sin
+R> parse(text = x)[[1]][[2]]
+x + y
+R> parse(text = x)[[1]][[2]][[1]]
+`+`
+R> parse(text = x)[[1]][[2]][[2]]
+x
+R> parse(text = x)[[1]][[2]][[3]]
+y
+R> read.csv("unit4.csv")
+    Martin X23 X76
+1   Gerold  28  80
+2    Roman  28  76
+3     Paul  24  65
+4 Johannes  23  71
+R> read.csv("unit4.csv")
+         AGE WEIGHT
+Martin    23     76
+Gerold    28     80
+Roman     28     76
+Paul      24     65
+Johannes  23     71
+R> x <- read.csv("unit4.csv")
+R> typeof(x)
+[1] "list"
+R> class(x)
+[1] "data.frame"
+R> x <- read.csv("unit4.csv")
+R> x
+         AGE WEIGHT EMPLOYED
+Martin    23     76    FALSE
+Gerold    28     80     TRUE
+Roman     28     76     TRUE
+Paul      24     65    FALSE
+Johannes  23     71    FALSE
+R> x$AGE
+[1] 23 28 28 24 23
+R> class(x$AGE)
+[1] "integer"
+R> class(x$WEIGHT)
+[1] "integer"
+R> class(x$EMPLOYED)
+[1] "logical"
+R> x <- read.csv("unit4.csv")
+R> x
+         AGE WEIGHT EMPLOYED
+Martin    23     76    FALSE
+Gerold    28     NA     TRUE
+Roman     28     76     TRUE
+Paul      24     65    FALSE
+Johannes  23     71    FALSE
+R> x <- read.csv("unit4.csv", na.strings = "-999")
+R> x
+         AGE WEIGHT EMPLOYED
+Martin    23     76    FALSE
+Gerold    28     NA     TRUE
+Roman     28     76     TRUE
+Paul      24     65    FALSE
+Johannes  23     71    FALSE
+R> class(x$WEIGHT)
+[1] "integer"
+R> x <- read.csv("unit4.csv")
+R> x
+         AGE WEIGHT EMPLOYED
+Martin    23     76    FALSE
+Gerold    28    N/A     TRUE
+Roman     28     76     TRUE
+Paul      24     65    FALSE
+Johannes  23     71    FALSE
+R> x$WEIGHT
+[1] 76  N/A 76  65  71 
+Levels: 65 71 76 N/A
+R> x$WEIGHT
+[1] 76  N/A 76  65  71 
+Levels: 65 71 76 N/A
+R> class(x$WEIGHT)
+[1] "factor"
+R> typeof(x$WEIGHT)
+[1] "integer"
+R> as.numeric(x$WEIGHT)
+[1] 3 4 3 1 2
+R> levels(x$WEIGHT)
+[1] "65"  "71"  "76"  "N/A"
+R> as.character(x$WEIGHT)
+[1] "76"  "N/A" "76"  "65"  "71" 
+R> as.numeric(as.character(x$WEIGHT))
+[1] 76 NA 76 65 71
+Warning message:
+NAs introduced by coercion 
+R> as.numeric("4,32")
+[1] NA
+Warning message:
+NAs introduced by coercion 
+R> x
+         AGE WEIGHT EMPLOYED
+Martin    23     76    FALSE
+Gerold    28    N/A     TRUE
+Roman     28     76     TRUE
+Paul      24     65    FALSE
+Johannes  23     71    FALSE
+R> prompt(x)
+Created file named 'x.Rd'.
+Edit the file and move it to the appropriate directory.
+R> f <- function() writeLines("Hello world.")
+R> package.skeleton(list = c("f", "x"), name = "Unit4")
+Creating directories ...
+Creating DESCRIPTION ...
+Creating Read-and-delete-mes ...
+Saving functions and data ...
+Making help files ...
+Created file named './Unit4/man/Unit4.package.Rd'.
+Edit the file and move it to the appropriate directory.
+Created file named './Unit4/man/f.Rd'.
+Edit the file and move it to the appropriate directory.
+Created file named './Unit4/man/x.Rd'.
+Edit the file and move it to the appropriate directory.
+Done.
+Further steps are described in ./Unit4/Read-and-delete-me 
+R> library()
+Packages in library '/home/Hornik/lib/R/Library':
+
+abind                   Combine multi-dimensional arrays
+ape                     Analyses of Phylogenetics and Evolution
+APRMU3                  Advanced Programming Recreational Math Unit 3
+arules                  Mining Association Rules and Frequent Itemsets
+BradleyTerry            Bradley-Terry models
+brlr                    Bias-reduced logistic regression
+cba                     Clustering for Business Analytics
+cclust                  Convex Clustering Methods and Clustering
+                        Indexes
+clue                    Cluster ensembles
+codetools               Code Analysis Tools for R
+coin                    Conditional Inference Procedures in a
+                        Permutation Test Framework
+colorspace              Colorspace Manipulation
+e1071                   Misc Functions of the Department of Statistics
+                        (e1071), TU Wien
+exactRankTests          Exact Distributions for Rank and Permutation
+                        Tests
+flexclust               Flexible Cluster Algorithms
+flexmix                 Flexible Mixture Modeling
+gdata                   Various R programming tools for data
+                        manipulation
+gee                     Generalized Estimation Equation solver
+graph                   graph: A package to handle graph data
+                        structures
+gtools                  Various R programming tools
+kernlab                 Kernel Methods Lab
+klaR                    Classification and visualization
+lpSolve                 Interface to Lp_solve v. 5.5 to solve
+                        linear/integer programs
+maps                    Draw Geographical Maps
+Matrix                  A Matrix package for R
+mclust                  Model-based cluster analysis
+mlbench                 Machine Learning Benchmark Problems
+modeltools              Tools and Classes for Statistical Models
+mvtnorm                 Multivariate Normal and T Distribution
+party                   A Laboratory for Recursive Part(y)itioning
+proftools               Profile Output Processing Tools for R
+quadprog                Functions to solve Quadratic Programming
+                        Problems.
+relations               Relations
+Rgraphviz               Provides plotting capabilities for R graph
+                        objects
+rJava                   Low-level R to Java interface
+Ruuid                   Ruuid: Provides Universally Unique ID values
+RWeka                   R/Weka interface
+sandwich                Robust Covariance Matrix Estimators
+strucchange             Testing for Structural Change
+svmpath                 svmpath: the SVM Path algorithm
+tseries                 Time series analysis and computational finance
+Unit4                   What the package does (short line)
+vcd                     Visualizing Categorical Data
+XML                     Tools for parsing and generating XML within R
+                        and S-Plus.
+xtable                  Export tables to LaTeX or HTML
+zoo                     Z's ordered observations
+
+Packages in library '/usr/local/lib/R/library':
+
+base                    The R Base Package
+boot                    Bootstrap R (S-Plus) Functions (Canty)
+class                   Functions for Classification
+cluster                 Cluster Analysis Extended Rousseeuw et al.
+datasets                The R Datasets Package
+foreign                 Read Data Stored by Minitab, S, SAS, SPSS,
+                        Stata, Systat, dBase, ...
+graphics                The R Graphics Package
+grDevices               The R Graphics Devices and Support for Colours
+                        and Fonts
+grid                    The Grid Graphics Package
+KernSmooth              Functions for kernel smoothing for Wand & Jones
+                        (1995)
+lattice                 Lattice Graphics
+MASS                    Main Package of Venables and Ripley's MASS
+methods                 Formal Methods and Classes
+mgcv                    GAMs with GCV smoothness estimation and GAMMs
+                        by REML/PQL
+nlme                    Linear and nonlinear mixed effects models
+nnet                    Feed-forward Neural Networks and Multinomial
+                        Log-Linear Models
+rpart                   Recursive Partitioning
+spatial                 Functions for Kriging and Point Pattern
+                        Analysis
+splines                 Regression Spline Functions and Classes
+stats                   The R Stats Package
+stats4                  Statistical Functions using S4 Classes
+survival                Survival analysis, including penalised
+                        likelihood.
+tcltk                   Tcl/Tk Interface
+tools                   Tools for Package Development
+utils                   The R Utils Package
+
+R> ls()
+[1] "f"            "last.warning" "x"           
+R> rm(list = ls())
+R> f
+Error: object "f" not found
+R> x
+Error: object "x" not found
+R> library("Unit4")
+R> f
+function () 
+writeLines("Hello world.")
+R> x
+Error: object "x" not found
+R> data("x")
+R> x
+         AGE WEIGHT EMPLOYED
+Martin    23     76    FALSE
+Gerold    28    N/A     TRUE
+Roman     28     76     TRUE
+Paul      24     65    FALSE
+Johannes  23     71    FALSE
+R> rm(list = ls())
+R> detach("Unit4")
+Error in detach("Unit4") : invalid name
+R> detach("package:Unit4")
+R> library("Unit4")
+R> vignette()
+Vignettes in package 'arules':
+
+arules                  Data structures for association rules (source,
+                        pdf)
+
+Vignettes in package 'clue':
+
+clue                    CLUster Ensembles (source, pdf)
+
+Vignettes in package 'coin':
+
+LegoCondInf             A Lego System for Conditional Inference
+                        (source, pdf)
+coin                    coin: A Computational Framework for Conditional
+                        Inference (source, pdf)
+
+Vignettes in package 'e1071':
+
+svmdoc                  Support Vector Machines---the Interface to
+                        libsvm in package e1071 (source, pdf)
+
+Vignettes in package 'flexmix':
+
+flexmix-intro           FlexMix: A General Framework for Finite Mixture
+                        Models and Latent Class Regression in R}
+                        (source, pdf)
+
+Vignettes in package 'graph':
+
+clusterGraph            clusterGraph and distGraph (source, pdf)
+graph                   Graph (source, pdf)
+graphAttributes         Attributes for Graph Objects (source, pdf)
+
+Vignettes in package 'grid':
+
+displaylist             Display Lists in grid (source, pdf)
+frame                   Frames and packing grobs (source, pdf)
+grid                    Introduction to grid (source, pdf)
+grobs                   Working with grid grobs (source, pdf)
+interactive             Editing grid Graphics (source, pdf)
+locndimn                Locations versus Dimensions (source, pdf)
+moveline                Demonstrating move-to and line-to (source, pdf)
+nonfinite               Non-finite values (source, pdf)
+plotexample             Writing grid Code (source, pdf)
+rotated                 Rotated Viewports (source, pdf)
+saveload                Persistent representations (source, pdf)
+sharing                 Modifying multiple grobs simultaneously
+                        (source, pdf)
+viewports               Working with viewports (source, pdf)
+
+Vignettes in package 'kernlab':
+
+kernlab                 kernlab - An S4 Package for Kernel Methods in R
+                        (source, pdf)
+
+Vignettes in package 'Matrix':
+
+Comparisons             Comparisons of Least Squares calculation speeds
+                        (source, pdf)
+Introduction            Introduction to the Matrix Package (source,
+                        pdf)
+
+Vignettes in package 'mvtnorm':
+
+MVT_Rnews               Using mvtnorm (source, pdf)
+
+Vignettes in package 'party':
+
+MOB                     party with the mob (source, pdf)
+party                   party: A Laboratory for Recursive
+                        Part(y)itioning (source, pdf)
+
+Vignettes in package 'Rgraphviz':
+
+Rgraphviz               HOWTO Rendering (source, pdf)
+layingOutPathways       HOWTO layout pathways (source, pdf)
+
+Vignettes in package 'Ruuid':
+
+Ruuid                   HOWTO Ruuid (source, pdf)
+
+Vignettes in package 'sandwich':
+
+sandwich-OOP            Object-oriented Computation of Sandwich
+                        Estimators (source, pdf)
+sandwich                Econometric Computing with HC and HAC
+                        Covariance Matrix Estimators (source, pdf)
+
+Vignettes in package 'strucchange':
+
+strucchange-intro       strucchange: An R Package for Testing for
+                        Structural Change in Linear Regression Models
+                        (source, pdf)
+
+Vignettes in package 'Unit4':
+
+unit4                   BLA BLA BLA (source, pdf)
+
+Vignettes in package 'vcd':
+
+labeling                Labeling in the Strucplot Framework (source,
+                        pdf)
+shading                 Colors and Residual-based Shadings in the
+                        Strucplot Framework (source, pdf)
+spacing                 Spacing in the Strucplot Framework (source,
+                        pdf)
+strucplot               The Strucplot Framework---Visualizing Multi-way
+                        Contingency Tables (source, pdf)
+
+Vignettes in package 'zoo':
+
+zoo-quickref            zoo Quick Reference (source, pdf)
+zoo                     zoo: An S3 Class and Methods for Indexed
+                        Totally Ordered Observations (source, pdf)
+
+R> vignette("unit4")
+R> detach("package:Unit4")
+R> library("Unit4")
+R> vignette("unit4")
+R> vignette("unit4")
+R> optim
+function (par, fn, gr = NULL, method = c("Nelder-Mead", "BFGS", 
+    "CG", "L-BFGS-B", "SANN"), lower = -Inf, upper = Inf, control = list(), 
+    hessian = FALSE, ...) 
+{
+    fn1 <- function(par) fn(par, ...)
+    gr1 <- if (!is.null(gr)) 
+        function(par) gr(par, ...)
+    method <- match.arg(method)
+    if ((length(lower) > 1 || length(upper) > 1 || lower[1] != 
+        -Inf || upper[1] != Inf) && method != "L-BFGS-B") {
+        warning("bounds can only be used with method L-BFGS-B")
+        method <- "L-BFGS-B"
+    }
+    con <- list(trace = 0, fnscale = 1, parscale = rep.int(1, 
+        length(par)), ndeps = rep.int(0.001, length(par)), maxit = 100, 
+        abstol = -Inf, reltol = sqrt(.Machine$double.eps), alpha = 1, 
+        beta = 0.5, gamma = 2, REPORT = 10, type = 1, lmm = 5, 
+        factr = 1e+07, pgtol = 0, tmax = 10, temp = 10)
+    if (method == "Nelder-Mead") 
+        con$maxit <- 500
+    if (method == "SANN") 
+        con$maxit <- 10000
+    con[(namc <- names(control))] <- control
+    if (con$trace < 0) 
+        warning("read the documentation for 'trace' more carefully")
+    if (method == "L-BFGS-B" && any(!is.na(match(c("reltol", 
+        "abstol"), namc)))) 
+        warning("method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'")
+    npar <- length(par)
+    if (npar == 1 && method == "Nelder-Mead") 
+        warning("one-diml optimization by Nelder-Mead is unreliable: use optimize")
+    lower <- as.double(rep(lower, , npar))
+    upper <- as.double(rep(upper, , npar))
+    res <- .Internal(optim(par, fn1, gr1, method, con, lower, 
+        upper))
+    names(res) <- c("par", "value", "counts", "convergence", 
+        "message")
+    nm <- names(par)
+    if (!is.null(nm)) 
+        names(res$par) <- nm
+    names(res$counts) <- c("function", "gradient")
+    if (hessian) {
+        hess <- .Internal(optimhess(res$par, fn1, gr1, con))
+        hess <- 0.5 * (hess + t(hess))
+        if (!is.null(nm)) 
+            dimnames(hess) <- list(nm, nm)
+        res$hessian <- hess
+    }
+    res
+}
+<environment: namespace:stats>
+R> s <- 3
+R> n <- 8
+R> f <- function(p) p ^ s * (1 - p) ^ (n - s)
+R> optim(0.5, f)
+$par
+[1] 3.402824e+38
+
+$value
+[1] -1.797693e+308
+
+$counts
+function gradient 
+     466       NA 
+
+$convergence
+[1] 10
+
+$message
+NULL
+
+Warning message:
+one-diml optimization by Nelder-Mead is unreliable: use optimize in: optim(0.5, f) 
+R> optim(0.5, f, lower = 0, upper = 1)
+$par
+[1] 0.983565
+
+$value
+[1] 1.140944e-09
+
+$counts
+function gradient 
+      15       15 
+
+$convergence
+[1] 0
+
+$message
+[1] "CONVERGENCE: REL_REDUCTION_OF_F <= FACTR*EPSMCH"
+
+Warning message:
+bounds can only be used with method L-BFGS-B in: optim(0.5, f, lower = 0, upper = 1) 
+R> optim(0.3, f, lower = 0, upper = 1)
+$par
+[1] -7.426785e-18
+
+$value
+[1] -4.096402e-52
+
+$counts
+function gradient 
+       5        5 
+
+$convergence
+[1] 52
+
+$message
+[1] "ERROR: ABNORMAL_TERMINATION_IN_LNSRCH"
+
+Warning message:
+bounds can only be used with method L-BFGS-B in: optim(0.3, f, lower = 0, upper = 1) 
+R> optim(0.3, f, lower = 0, upper = 1, method = "L-BFGS-B")
+$par
+[1] -7.426785e-18
+
+$value
+[1] -4.096402e-52
+
+$counts
+function gradient 
+       5        5 
+
+$convergence
+[1] 52
+
+$message
+[1] "ERROR: ABNORMAL_TERMINATION_IN_LNSRCH"
+
+R> f <- function(p)  - p ^ s * (1 - p) ^ (n - s)
+R> optim(0.3, f, lower = 0, upper = 1, method = "L-BFGS-B")
+$par
+[1] 0.3750001
+
+$value
+[1] -0.005029142
+
+$counts
+function gradient 
+       5        5 
+
+$convergence
+[1] 0
+
+$message
+[1] "CONVERGENCE: REL_REDUCTION_OF_F <= FACTR*EPSMCH"
+
+R> f
+function(p)  - p ^ s * (1 - p) ^ (n - s)
+R> source("unit4.R")
+R> x <- rep(c(1, 0), each = c(3, 5))
+Error in rep.default(c(1, 0), each = c(3, 5)) : 
+	invalid number of copies in rep()
+R> x <- rep(c(1, 0), c(3, 5))
+R> x
+[1] 1 1 1 0 0 0 0 0
+R> ls()
+[1] "f"            "last.warning" "MLE1"         "MLE2"         "n"           
+[6] "s"            "x"           
+R> rm(s, n)
+R> s
+Error: object "s" not found
+R> n
+Error: object "n" not found
+R> x
+[1] 1 1 1 0 0 0 0 0
+R> MLE2(x)
+[1] 0.375
+R> length(MLE2)
+[1] 1
+R> class(MLE2)
+[1] "function"
+R> typeof(MLE2)
+[1] "closure"
+R> source("unit4.R")
+R> x
+[1] 1 1 1 0 0 0 0 0
+R> L 
+Error: object "L" not found
+R> L <- make_L(x)
+R> L
+function(p) - p ^ s * (1 - p) ^ (n - s)
+<environment: 0x834f1b0>
+R> environment(L)
+<environment: 0x834f1b0>
+R> objects(environment(L))
+[1] "L" "n" "s" "x"
+R> get("s", environment(L))
+[1] 3
+R> environment(L)$s
+[1] 3
+R> s
+Error: object "s" not found
+R> source("unit4.R")
+R> L <- make_L(x)
+R> environment(L)$s
+[1] 3
+R> environment(L)
+<environment: 0x829dacc>
+R> objects(environment(L))
+[1] "n" "s" "x"
+R> optim(s / n, L, lower = 0, upper = 1, method = "L-BFGS-B")$par
+Error in rep.int(1, length(par)) : object "s" not found
+R> optim(runif(1), L, lower = 0, upper = 1, method = "L-BFGS-B")$par
+[1] 0.3750003
+R> L
+function(p) - p ^ s * (1 - p) ^ (n - s)
+<environment: 0x829dacc>
+R> make_L
+function(x) {
+    s <- sum(x)
+    n <- length(x)
+    function(p) - p ^ s * (1 - p) ^ (n - s)
+}
+R> L <- make_L(x)
+R> optim(runif(1), L, lower = 0, upper = 1, method = "L-BFGS-B")$par
+[1] 0.3750004
+R> optim(runif(1), L, lower = 0, upper = 1, method = "L-BFGS-B")$par
+[1] 0.3750001
+R> L
+function(p) - p ^ s * (1 - p) ^ (n - s)
+<environment: 0x8269a44>
+R> environment(L)
+<environment: 0x8269a44>
+R> objects(environment(L))
+[1] "n" "s" "x"
+R> environment(L)$s
+[1] 3
+R> environment(L)$n
+[1] 8
+R> environment(L)$x
+[1] 1 1 1 0 0 0 0 0
+R> plot(L, 0, 1)
+R> L(0.1)
+[1] -0.00059049
+R> L(seq(0.1, 1, by = 0.1))
+ [1] -0.00059049 -0.00262144 -0.00453789 -0.00497664 -0.00390625 -0.00221184
+ [7] -0.00083349 -0.00016384 -0.00000729  0.00000000
+R> L
+function(p) - p ^ s * (1 - p) ^ (n - s)
+<environment: 0x8269a44>
+R> optim
+function (par, fn, gr = NULL, method = c("Nelder-Mead", "BFGS", 
+    "CG", "L-BFGS-B", "SANN"), lower = -Inf, upper = Inf, control = list(), 
+    hessian = FALSE, ...) 
+{
+    fn1 <- function(par) fn(par, ...)
+    gr1 <- if (!is.null(gr)) 
+        function(par) gr(par, ...)
+    method <- match.arg(method)
+    if ((length(lower) > 1 || length(upper) > 1 || lower[1] != 
+        -Inf || upper[1] != Inf) && method != "L-BFGS-B") {
+        warning("bounds can only be used with method L-BFGS-B")
+        method <- "L-BFGS-B"
+    }
+    con <- list(trace = 0, fnscale = 1, parscale = rep.int(1, 
+        length(par)), ndeps = rep.int(0.001, length(par)), maxit = 100, 
+        abstol = -Inf, reltol = sqrt(.Machine$double.eps), alpha = 1, 
+        beta = 0.5, gamma = 2, REPORT = 10, type = 1, lmm = 5, 
+        factr = 1e+07, pgtol = 0, tmax = 10, temp = 10)
+    if (method == "Nelder-Mead") 
+        con$maxit <- 500
+    if (method == "SANN") 
+        con$maxit <- 10000
+    con[(namc <- names(control))] <- control
+    if (con$trace < 0) 
+        warning("read the documentation for 'trace' more carefully")
+    if (method == "L-BFGS-B" && any(!is.na(match(c("reltol", 
+        "abstol"), namc)))) 
+        warning("method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'")
+    npar <- length(par)
+    if (npar == 1 && method == "Nelder-Mead") 
+        warning("one-diml optimization by Nelder-Mead is unreliable: use optimize")
+    lower <- as.double(rep(lower, , npar))
+    upper <- as.double(rep(upper, , npar))
+    res <- .Internal(optim(par, fn1, gr1, method, con, lower, 
+        upper))
+    names(res) <- c("par", "value", "counts", "convergence", 
+        "message")
+    nm <- names(par)
+    if (!is.null(nm)) 
+        names(res$par) <- nm
+    names(res$counts) <- c("function", "gradient")
+    if (hessian) {
+        hess <- .Internal(optimhess(res$par, fn1, gr1, con))
+        hess <- 0.5 * (hess + t(hess))
+        if (!is.null(nm)) 
+            dimnames(hess) <- list(nm, nm)
+        res$hessian <- hess
+    }
+    res
+}
+<environment: namespace:stats>
+R> optim
+function (par, fn, gr = NULL, method = c("Nelder-Mead", "BFGS", 
+    "CG", "L-BFGS-B", "SANN"), lower = -Inf, upper = Inf, control = list(), 
+    hessian = FALSE, ...) 
+{
+    fn1 <- function(par) fn(par, ...)
+    gr1 <- if (!is.null(gr)) 
+        function(par) gr(par, ...)
+    method <- match.arg(method)
+    if ((length(lower) > 1 || length(upper) > 1 || lower[1] != 
+        -Inf || upper[1] != Inf) && method != "L-BFGS-B") {
+        warning("bounds can only be used with method L-BFGS-B")
+        method <- "L-BFGS-B"
+    }
+    con <- list(trace = 0, fnscale = 1, parscale = rep.int(1, 
+        length(par)), ndeps = rep.int(0.001, length(par)), maxit = 100, 
+        abstol = -Inf, reltol = sqrt(.Machine$double.eps), alpha = 1, 
+        beta = 0.5, gamma = 2, REPORT = 10, type = 1, lmm = 5, 
+        factr = 1e+07, pgtol = 0, tmax = 10, temp = 10)
+    if (method == "Nelder-Mead") 
+        con$maxit <- 500
+    if (method == "SANN") 
+        con$maxit <- 10000
+    con[(namc <- names(control))] <- control
+    if (con$trace < 0) 
+        warning("read the documentation for 'trace' more carefully")
+    if (method == "L-BFGS-B" && any(!is.na(match(c("reltol", 
+        "abstol"), namc)))) 
+        warning("method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'")
+    npar <- length(par)
+    if (npar == 1 && method == "Nelder-Mead") 
+        warning("one-diml optimization by Nelder-Mead is unreliable: use optimize")
+    lower <- as.double(rep(lower, , npar))
+    upper <- as.double(rep(upper, , npar))
+    res <- .Internal(optim(par, fn1, gr1, method, con, lower, 
+        upper))
+    names(res) <- c("par", "value", "counts", "convergence", 
+        "message")
+    nm <- names(par)
+    if (!is.null(nm)) 
+        names(res$par) <- nm
+    names(res$counts) <- c("function", "gradient")
+    if (hessian) {
+        hess <- .Internal(optimhess(res$par, fn1, gr1, con))
+        hess <- 0.5 * (hess + t(hess))
+        if (!is.null(nm)) 
+            dimnames(hess) <- list(nm, nm)
+        res$hessian <- hess
+    }
+    res
+}
+<environment: namespace:stats>
+R> hist
+function (x, ...) 
+UseMethod("hist")
+<environment: namespace:graphics>
+R> methods(hist)
+[1] hist.Date*   hist.default hist.POSIXt*
+
+   Non-visible functions are asterisked
+R> hist.Date
+Error: object "hist.Date" not found
+R> graphics:::hist.Date
+function (x, breaks, ..., xlab = deparse(substitute(x)), plot = TRUE, 
+    freq = FALSE, start.on.monday = TRUE, format) 
+{
+    if (!inherits(x, "Date")) 
+        stop("wrong method")
+    xlab
+    x <- as.Date(x)
+    incr <- 1
+    if (inherits(breaks, "Date")) {
+        breaks <- as.Date(breaks)
+        d <- min(abs(diff(unclass(breaks))))
+        if (d > 1) 
+            incr <- 1
+        if (d > 7) 
+            incr <- 7
+        if (d > 28) 
+            incr <- 28
+        if (d > 366) 
+            incr <- 366
+        num.br <- FALSE
+    }
+    else {
+        num.br <- is.numeric(breaks) && length(breaks) == 1
+        if (num.br) {
+        }
+        else if (is.character(breaks) && length(breaks) == 1) {
+            valid <- pmatch(breaks, c("days", "weeks", "months", 
+                "years"))
+            if (is.na(valid)) 
+                stop("invalid specification of 'breaks'")
+            start <- as.POSIXlt(min(x, na.rm = TRUE))
+            incr <- 1
+            if (valid > 1) {
+                start$isdst <- -1
+            }
+            if (valid == 2) {
+                start$mday <- start$mday - start$wday
+                if (start.on.monday) 
+                  start$mday <- start$mday + ifelse(start$wday > 
+                    0, 1, -6)
+                incr <- 7
+            }
+            if (valid == 3) {
+                start$mday <- 1
+                incr <- 31
+            }
+            if (valid == 4) {
+                start$mon <- 0
+                incr <- 366
+            }
+            start <- .Internal(POSIXlt2Date(start))
+            maxx <- max(x, na.rm = TRUE)
+            breaks <- seq(start, maxx + incr, breaks)
+            breaks <- breaks[1:(1 + max(which(breaks < maxx)))]
+        }
+        else stop("invalid specification of 'breaks'")
+    }
+    res <- hist.default(unclass(x), unclass(breaks), plot = FALSE, 
+        ...)
+    res$equidist <- TRUE
+    res$intensities <- res$intensities * incr
+    res$xname <- xlab
+    if (plot) {
+        myplot <- function(res, xlab, freq, format, breaks, right, 
+            include.lowest, labels = FALSE, axes = TRUE, xaxt = par("xaxt"), 
+            ...) {
+            plot(res, xlab = xlab, axes = FALSE, freq = freq, 
+                labels = labels, ...)
+            if (axes && xaxt != "n") {
+                axis(2, ...)
+                if (num.br) 
+                  breaks <- c.Date(res$breaks)
+                axis.Date(1, at = breaks, format = format, ...)
+            }
+        }
+        myplot(res, xlab, freq, format, breaks, ...)
+    }
+    invisible(res)
+}
+<environment: namespace:graphics>
+R> hist
+function (x, ...) 
+UseMethod("hist")
+<environment: namespace:graphics>
+R> methods(hist)
+[1] hist.Date*   hist.default hist.POSIXt*
+
+   Non-visible functions are asterisked
+R> hist.default
+function (x, breaks = "Sturges", freq = NULL, probability = !freq, 
+    include.lowest = TRUE, right = TRUE, density = NULL, angle = 45, 
+    col = NULL, border = NULL, main = paste("Histogram of", xname), 
+    xlim = range(breaks), ylim = NULL, xlab = xname, ylab, axes = TRUE, 
+    plot = TRUE, labels = FALSE, nclass = NULL, ...) 
+{
+    if (!is.numeric(x)) 
+        stop("'x' must be numeric")
+    xname <- paste(deparse(substitute(x), 500), collapse = "\n")
+    n <- length(x <- x[is.finite(x)])
+    use.br <- !missing(breaks)
+    if (use.br) {
+        if (!missing(nclass)) 
+            warning("'nclass' not used when 'breaks' is specified")
+    }
+    else if (!is.null(nclass) && length(nclass) == 1) 
+        breaks <- nclass
+    use.br <- use.br && (nB <- length(breaks)) > 1
+    if (use.br) 
+        breaks <- sort(breaks)
+    else {
+        if (!include.lowest) {
+            include.lowest <- TRUE
+            warning("'include.lowest' ignored as 'breaks' is not a vector")
+        }
+        if (is.character(breaks)) {
+            breaks <- match.arg(tolower(breaks), c("sturges", 
+                "fd", "freedman-diaconis", "scott"))
+            breaks <- switch(breaks, sturges = nclass.Sturges(x), 
+                "freedman-diaconis" = , fd = nclass.FD(x), scott = nclass.scott(x), 
+                stop("unknown 'breaks' algorithm"))
+        }
+        else if (is.function(breaks)) {
+            breaks <- breaks(x)
+        }
+        if (!is.numeric(breaks) || is.na(breaks) || breaks < 
+            2) 
+            stop("invalid number of 'breaks'")
+        breaks <- pretty(range(x), n = breaks, min.n = 1)
+        nB <- length(breaks)
+        if (nB <= 1) 
+            stop("hist.default: pretty() error, breaks=", format(breaks))
+    }
+    h <- diff(breaks)
+    equidist <- !use.br || diff(range(h)) < 1e-07 * mean(h)
+    if (!use.br && any(h <= 0)) 
+        stop("'breaks' are not strictly increasing")
+    if (is.null(freq)) {
+        freq <- if (!missing(probability)) 
+            !as.logical(probability)
+        else equidist
+    }
+    else if (!missing(probability) && any(probability == freq)) 
+        stop("'probability' is an alias for '!freq', however they differ.")
+    diddle <- 1e-07 * stats::median(diff(breaks))
+    fuzz <- if (right) 
+        c(if (include.lowest) -diddle else diddle, rep.int(diddle, 
+            length(breaks) - 1))
+    else c(rep.int(-diddle, length(breaks) - 1), if (include.lowest) diddle else -diddle)
+    fuzzybreaks <- breaks + fuzz
+    h <- diff(fuzzybreaks)
+    storage.mode(x) <- "double"
+    storage.mode(fuzzybreaks) <- "double"
+    counts <- .C("bincount", x, as.integer(n), fuzzybreaks, as.integer(nB), 
+        counts = integer(nB - 1), right = as.logical(right), 
+        include = as.logical(include.lowest), naok = FALSE, NAOK = FALSE, 
+        DUP = FALSE, PACKAGE = "base")$counts
+    if (any(counts < 0)) 
+        stop("negative 'counts'. Internal Error in C-code for \"bincount\"")
+    if (sum(counts) < n) 
+        stop("some 'x' not counted; maybe 'breaks' do not span range of 'x'")
+    dens <- counts/(n * h)
+    mids <- 0.5 * (breaks[-1] + breaks[-nB])
+    r <- structure(list(breaks = breaks, counts = counts, intensities = dens, 
+        density = dens, mids = mids, xname = xname, equidist = equidist), 
+        class = "histogram")
+    if (plot) {
+        plot(r, freq = freq, col = col, border = border, angle = angle, 
+            density = density, main = main, xlim = xlim, ylim = ylim, 
+            xlab = xlab, ylab = ylab, axes = axes, labels = labels, 
+            ...)
+        invisible(r)
+    }
+    else r
+}
+<environment: namespace:graphics>
+R> methods(hist)
+[1] hist.Date*   hist.default hist.POSIXt*
+
+   Non-visible functions are asterisked
+R> q()
+Save workspace image? [y/n/c]: n
+
+Process R finished at Thu Apr 27 22:12:10 2006
