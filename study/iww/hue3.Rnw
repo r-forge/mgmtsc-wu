@@ -1,0 +1,243 @@
+\documentclass[a4paper]{article}
+% PREAMBLE
+\usepackage[austrian]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[authoryear,round]{natbib}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{textcomp}
+
+\title{Wirtschaftswachstum, EURO Raum}
+\author{Stefan Theußl, 0352689}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents 
+
+\begin{abstract}
+Für die Analyse des Wirtschaftswachstums im Euro-Raum verwendete ich
+das Software Paket R.
+Nach der Bearbeitung der Daten (z.B. Entfernen der \textit{n/a},
+extrahieren der relevanten Daten), begannen die eigentlichen analytischen
+Arbeiten. Zuerst wurde versucht, allgemeine Wachstumstrends
+festzustellen. Dabei wurde der Fokus auf Österreich, Deutschland und
+Finnland gelegt. Im Durchschnitt gab es hier ein stetig positives Wachstum in
+allen Ländern, welches zeitweise auch negativ ausfallen konnte
+(Deutschland, Finnland). Danach wurde eine detaillierte Untersuchung diverser
+Wechselwirkungen und statistischen Merkmalen von Wirtschaftswachstum
+durchgeführt. Am Ende meiner Analyse wurde noch genauer auf den
+Zusammenhang zwischen Wirtschaftswachstum und der Arbeitslosigkeit
+eingegangen.
+\end{abstract}
+
+<<init,echo=FALSE>>=
+## ---------------------------------------------
+## data handling funtions
+countries <- c("Austria","Belgium","Finland","France","Germany","Greece","Ireland","Italy","Luxembourg","Netherlands","Portugal","Spain")
+n.countries <- length(countries)
+n.entries <- 28
+dates <- 1980:2004
+
+
+extract.data <- function(X,start=2){
+  Y <- NULL
+  X <- X[,-c(1:4,30,31)]
+  for(i in 1:n.countries){
+    Y  <- append(Y,X[start,])
+    start <- start+n.entries
+  }
+  matrix(as.numeric(Y),ncol=n.countries)
+}
+
+calc.basis <- function(X,index=1,basis=100){
+  b <- X[index,]
+  sweep(X,2,b*1/basis,"/")
+}
+
+plot.matrix <- function(X, ...){
+  plot(dates,X[,1],type="l",col=1)
+  for(i in 2:ncol(X))
+    lines(dates,X[,i],col=i)
+}
+
+cor.matrix <- function(X, Y){
+  corr <- NULL
+  for(i in 1:n.countries)
+    corr <- c(corr,cor(X[,i],Y[,i]))
+  corr
+}
+
+# read data source
+X<-read.delim("Euro-Zone_80-06.txt")
+
+# generate datamatrices
+# GDP per capita constant prices
+GDPpcConst <- extract.data(X,14)
+# GDP per capita current prices USD
+GDPpcCur <- extract.data(X,15)
+
+# GDP constant prices
+GDPConst <- extract.data(X,17)
+# GDP current prices USD
+GDPCur <- extract.data(X,19)
+
+# GDP constant percentage
+GDPConstPer <- extract.data(X,18)
+
+# Inflation, annual percentage change
+inf.perc <- extract.data(X,25)
+
+## end
+## ----------------------------------------------
+
+@
+
+
+
+\section{Wachstumstrends, allgemein}
+\subsection{Vergleich Österreich - Deutschland}
+Das Wirtschaftswachstum in Österreich sieht man in Abbildung~\ref{fig:wwoe}.
+\begin{figure}
+\centering
+<<fig=TRUE,echo=FALSE>>=
+GDPcurpUS<-extract.data(X,start=19)
+plot(dates,GDPcurpUS[,1],type="l",main="GDP current prices USD, Austria")
+@
+\caption{Wirtschaftswachstum in Österreich seit 1980}
+\label{fig:wwoe}
+\end{figure}
+\newline
+Deutschland hat von 1980 - 2004 ein Wachstum (siehe Abbildung~\ref{fig:wwde}) aufzuweisen, welches einen interessanten Verlauf annimmt.
+\begin{figure} 
+\centering
+<<fig=TRUE,echo=FALSE>>=
+plot(dates,GDPcurpUS[,5],type="l",main="GDP current prices USD, Germany")
+@
+\caption{Wirtschaftswachstum in Deutschland seit 1980}
+\label{fig:wwde}
+\end{figure}
+Man sieht nämlich, dass nach der Wiedervereinigung (ab 1989) mit der ehemaligen DDR 
+ein Einbruch des Wachstums stattgefunden hat. Zu beachten ist bei beiden Plots, dass ab 1995 die Einführung des Euro die Wachstumskurve beeinflusst (BIP in US Dollar). Daher soll in der folgenden Gegenüberstellung das BIP zu konstanten Preisen verwendet werden.\newline
+
+Wenn man nun den Pfad des BIP beider Länder gegenüberstellt (Basisjahr 1985), dann sieht man (Abbildung~\ref{fig:vgoede}), dass auch Österreich von den Auswirkungen der Wiedervereinigung in Deutschland betroffen war.
+\begin{figure}
+\centering
+<<fig=TRUE, echo=FALSE>>=
+## BIP Vergleich
+b.gdp <- calc.basis(GDPConst,index=6)
+plot(dates,b.gdp[,1],type="l",col=2)
+lines(dates,b.gdp[,5],col=3)
+legend("bottomright",countries[c(1,5)],fill=c(2,3),col=c(2,3))
+@ 
+\caption{Vergleich Österreich-Deutschland}
+\label{fig:vgoede}
+\end{figure}
+
+%% \begin{figure}
+%% \centering
+%% <<fig=TRUE, echo=FALSE>>=
+%% ## Vergleich der Wachstumsraten
+%% plot(dates,GDPConstPer[,1],type="l",col=2)
+%% lines(dates,GDPConstPer[,5],col=3)
+%% @ 
+%% \end{figure}
+
+\subsection{Finnland}
+Betrachtet man die Entwicklung des BIP in Finnland (Abbildung~\ref{fig:wwfi}), dann
+ergibt sich ein erstaunliches Bild: einen gewaltigen Einbruch der
+Wirtschaft ab dem  Jahre 1987. Das kann begründet werden durch die Wirtschaftskrise, die damals Finnland erfasst hatte. Die Sowjetunion brach zusammen und damit der vorrangige Handelspartner der Finnen (siehe~\cite{finnfacts}. Seit 1993 geht es mit der Produktion bergauf (vorallem durch Exporte angetrieben).
+
+\begin{figure}
+\centering
+<<fig=TRUE>>=
+## BIP Finnland
+plot(dates,GDPConst[,3],type="l",col=4)
+@
+\caption{BIP Entwicklung in Finnland}
+\label{fig:wwfi}
+\end{figure}
+
+\subsection{\texteuro  Raum}
+Im Großen und Ganzen kann gesagt werden, dass im EURO - Raum im Durchschnitt ein positives Wachstum herrschte. Die Mittelwerte der Wachstumsraten der einzelnen Länder sieht man in Abbildung~\ref{fig:wwmean}. 
+
+\begin{figure}
+\centering
+<<echo=FALSE>>=
+# Vergleich der durchschnittlichen Wachstumsraten
+x <- apply(GDPConstPer,2,mean)
+as.data.frame(x, row.names=countries)
+@
+\caption{Mittelwerte des BIP-Wachstums}
+\label{fig:wwmean}
+\end{figure}
+
+
+\section{Weiterführende Untersuchungen}
+
+\subsection{Wechselwirkung Wachstum - Varianz der Wachstumsraten}
+
+Zuerst soll untersucht werden, ob es in Zusammenhang mit hohen Wachstumsraten auch eine hohe Streuung dieser gibt.
+Wie wir im vorigen R-Output (Abbildung~\ref{fig:wwmean} gesehen haben, findet man das höchste durchschnittliche Wachstum  im Euro-Raum bei Irland und Luxemburg.
+Die niedrigsten Raten im betrachteten Zeitraum liegen bei Deutschland und Griechenland.
+
+\begin{figure}
+\centering
+<<echo=FALSE>>=
+# Vergleich der Varianz der Wachstumsraten
+x <- apply(GDPConstPer,2,var)
+as.data.frame(x, row.names=countries)
+@
+\caption{Varianz des Wirtschaftswachstums}
+\label{fig:wwvar}
+\end{figure}
+
+Abbildung~\ref{fig:wwvar} zeigt, dass Luxemburg und Irland tatsächlich eine weitaus höhere Varianz aufweisen als die anderen Länder.
+
+
+\subsection{Korrelation zwischen Wachstum und Inflation?}
+
+Als Nächstes soll untersucht werden, ob hohes Wachstum mit einer höheren Inflation korreliert.
+
+\begin{figure}
+\centering
+<<echo=FALSE>>=
+x<-cor.matrix(GDPConstPer,inf.perc)
+as.data.frame(x, row.names=countries)
+@ 
+\caption{Korrelation Wachstum - Inflation}
+\label{fig:wwcorwwinf}
+\end{figure}
+
+Abbildung~\ref{fig:wwcorwwinf} zeigt, das kein eindeutiger Trend erkennbar ist. Es gibt Länder wie Portugal, bei dem Wachstum mit Inflation stark negativ korreliert ist, andererseits wiederum ist bei Ländern mit hohem Wachstum (Luxemburg, Irland) die korrelation relativ gering.
+
+Wie Unterschiedlich Inflation im Euroraum ausfiel zeigt Abbildung~\ref{fig:wwinf}.
+
+\begin{figure}
+\centering
+<<echo=FALSE>>=
+x<-apply(inf.perc,2,mean)
+as.data.frame(x, row.names=countries)
+@ 
+\caption{Inflation im EuroRaum}
+\label{fig:wwinf}
+\end{figure}
+
+
+
+%% <<>>=
+%% # negative Korrelation bei den Niederlanden
+%% plot(dates,GDPConstPer[,10],type="l",col="green",main="Gegenüberstellung Wirtschaftswachstum-Inflation")
+%% lines(dates,inf.perc[,10],col="red")
+%%@ 
+
+%% \subsection{Begünstigt Offenheit einer Wirtschaft das Wirtschaftswachstum}
+%% \subsection{hohe Budgetdefizite Wachstumsfördernd?}
+%% \section{Zusammenhang Arbeitslosigkeit-Wirtschaftswachstum}
+
+
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}

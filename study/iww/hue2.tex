@@ -1,0 +1,346 @@
+\documentclass[a4paper]{article}
+% PREAMBLE
+\usepackage[austrian]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[authoryear,round]{natbib}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title{Wirtschaftswachstum, Modell nach Domar bzw. Solow}
+\author{Stefan Theußl, 0352689}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents 
+
+\begin{abstract}
+Das Ziel dieser Hausarbeit ist es, dass Wachstumsmodell nach Domar und
+Solow zu erarbeiten. Die Grundprinzipien der Wachstumstheorie basieren
+auf den Erkenntnissen dieser beiden Wissenschaftler. Domar untersuchte
+das Wirtschaftswachstum einer Volkswirtschaft unter zahlreichen
+Annahmen. Er ging davon aus, dass Angebot und Nachfrage von den
+Investitionen unterschiedlich beeinflusst werden. Die Zentrale
+Aussage des Modells nach Solow ist, dass langfristiges Wachstum mit
+dem technischen Fortschritt eng verbunden ist.  
+\end{abstract}
+
+\pagebreak
+
+\section{Einleitung}
+\label{sec:el}
+
+Anhand beider Grundmodelle soll nun im folgenden näher auf das Thema
+Wirtschaftswachstum eingegangen werden. Das Ziel ist nun, nach
+erarbeiten der Modelle, die Frage zu beantworten: Was ist
+Wirtschaftswachstum bzw. wovon hängt die Wachstumsrate
+\textbf{(Konjunktur)} ab. Weiters
+sollen noch die wirtschaftspolitischen Aspekte gezeigt, sowie
+die Charakteristiken der Modelle kritisch analysiert werden.
+Die Hausübung basiert auf den Texten von:
+\begin{description}
+ \item[Evsey D. Domar], der in Russland geboren wurde und in die USA
+   auswanderte: \cite{domar46} 
+  
+ \item[Robert Merton Solow], US-amerikanischer Ökonom: \cite{solow56} 
+\end{description}
+
+
+\section{Grundmodelle}
+
+\subsection{Standardmodell nach Domar}
+\label{sec:gm}
+
+Domar versuchte in seinem Modell eine Beziehung zwischen
+Kapitalakkumulation (akkumulierte, aufgehäufte Menge an
+Investitionsgütern) und Beschäftigung abzuleiten \textbf{(technisch gegebener
+Zusammenhang zwischen Kapitalstock und Produktionsmenge)}. Er bediente sich
+dabei folgender Annahmen:
+
+\begin{itemize}
+ \item es gibt ein allgemeines konstantes Preisniveau
+ \item Investitionen und Sparbeträge werden auf das Einkommen in der
+   gleichen Periode bezogen
+ \item zeitliche lags werden ausgeschlossen
+ \item es wird in Nettobeträgen gerechnet (Investieren, Sparen)
+ \item Abschreibungen werden auf die Kosten des Tausches auf ein neues
+   Produktionsmittel bezogen.
+ \item Produktionskapazitäten sind messbar
+\end{itemize}
+
+Weiters wird noch eine Ein-Gut-Parabel in einer geschlossenen
+Wirtschaft angenommen, dh. es wird nur ein
+Gut hergestellt, dass dann entweder investiert oder konsumiert werden
+kann.\newline
+
+Die \textbf{Investitionen I} (Netto; dh. Bruttoinvestitionen - Abschreibungen)
+in einer Periode \textbf{erhöhen} nun den \textbf{Kapitalstock
+  K}. Der Faktor (Outputfaktor der Investitionsprojekte) wird mit s
+bezeichnet.
+
+Die Steigerungsrate des Kapitals wird mit
+$$ \frac{dK}{dt} = sY $$
+angegeben.
+
+Der Output wird mit Hilfe 2er Faktoren produziert: Kapital und
+Arbeit. \textbf{Für alle zulässigen Kombinationen von Inputfaktoren, kann nun
+der maximal mögliche Output angegeben werden}:
+\begin{equation} \label{eq:prod} Y = F(K,L) \end{equation}
+
+Domar nimmt an, dass mit der Erhöhung des Kapitalstocks, mehr
+produziert werden kann \textbf{(Produktionskapazität P steigt)}.
+Die Investitionsproduktivität der Gesellschaft wird nun folgendermaßen
+definiert:
+\begin{equation} \label{eq:sig} \sigma = \frac{\frac{dP}{dt}}{I} \end{equation}
+
+
+Die Wirtschaft befindet sich nun dann im Gleichgewicht, wenn die
+Produktionskapazität P{\tiny 0} dem nationalen Einkommen Y{\tiny 0}
+entspricht, sprich die Angebotsseite und die Nachfrageseite wachsen im
+gleichen Ausmaß \textbf{(Steady State)}.
+
+Damit dieses Gleichgewichtswachstum erfüllt wird, muss in der
+Ausgangssituation ebenfalls ein Gleichgewicht herrschen.
+
+\subsection{Ableitung der Nachfrageseite (Multiplikator)}
+
+\textbf{Angebotsseite:}
+
+\begin{itemize}
+ \item die Produktionskapazität wird dem Y entsprechen.
+ \item Kapitalproduktivität $ \frac{Y}{K} $
+ \item Konstante $ \sigma $ (siehe oben).
+\end{itemize}
+Aus (\ref{eq:sig}) erhält man durch Umformen die Änderung auf der
+Angebotsseite:
+\begin{equation} \label{eq:ang} \frac{dP}{dt} = I\sigma \end{equation}
+\textbf{Nachfrageseite:}\newline
+im einfachsten Fall kann angenommen werden, dass
+$$ Y = C + I $$
+der Konsum C kann nun auch folgendermaßen angeschrieben werden:
+$$ C = cY $$
+daraus erhält man durch umformen und auflösen nach Y:
+$$ Y = \frac{1}{1-c} I = \frac{1}{\alpha} I $$
+Die Änderung auf der Nachfrageseite ist demnach:
+\begin{equation} \label{eq:nach} \frac{dY}{dt} = \frac{dI}{dt}
+  \frac{1}{\alpha} \end{equation}
+$\frac{1}{\alpha}$ nennt man auch die Sparquote.\newline
+Im Gleichgewichtszustand gilt:
+$$ \frac{dP}{dt} = \frac{dY}{dt} $$
+Setzt man jetzt (\ref{eq:ang}) gleich (\ref{eq:nach}) dann erhält man
+durch Umformen den \textbf{Pfad der Investitionen}:
+$$ I = I_0 e^{\alpha \sigma t} $$
+
+\pagebreak
+
+
+\subsection{Grundmodell nach Solow}
+\label{sec:gs}
+
+Solow kritisierte das Modell von Domar, da dieser die Determinanten
+des Wirtschaftswachstums teilweise ausklammerte. Z.B. wird das
+(Wachstum vom) Arbeitsangebot als exogen angenommen. Solow übernimmt
+nun die Grundannahmen des Modells von Domar und erweitert
+dieses. Er nimmt nun fundamental an, dass die \textbf{Produktion eines
+Gutes eine Funktion von Kapital und Arbeit} ist. Die Produktion einer
+Periode (Einkommen) wird mit \textit{Y(t)} bezeichnet. Ein Teil dieses
+Einkommens kann unn gespart werden (=\textit{sY(t)}).
+Das akkumulierte Kapital ändert sich nun um das Ersparte in der selben
+Periode.
+$$ \frac{dK}{dt} = s Y $$
+ 
+Der Output (Produktion des Gutes) wird, wie oben erwähnt, über 2
+Inputfaktoren erzeugt: Arbeit L und Kapital K.
+
+daraus ergibt sich dann der folgende bekannte Gleichung (\ref{eq:prod}).
+Solow geht wie Domar vom Netto-Output aus (dh. nach
+Abschreibungen).\newline
+
+Bei Solow wächst die Bevölkerung und somit das Arbeitskräftepotentiel
+einer Wirtschaft mit einer konstanten Rate \textit{n} an. Daraus ergibt sich
+folgende Beziehung:
+$$ L(t) = L_0 e^{nt} $$
+wobei in (\ref{eq:prod}) \textit{L} für Vollbeschäftigung steht, hier
+aber für das verfügbare Arbeitskräftepotential.
+
+Zusammengefasst erhalten wir nun jene Gleichung, die uns den
+Wachstumspfad angibt, um Vollbeschäftigung zu erreichen:
+\begin{equation} \label{eq:sol} \frac{dK}{dt} = sF(K,L_0e^{nt})  \end{equation}
+
+Gegeben das Arbeitskräftepotential und das Kapital, kann man über die
+Produktionsfunktion jene Outputrate ermitteln, die Vollbeschäftigung
+erlaubt. Die Sparquote gibt dann die Menge an Output an, die in dieser
+Periode investiert wird. Dadurch vergrößert sich das angehäufte
+Kapital für die nächste Periode.
+
+Solow beweist nun die proportionale Entwicklung von Arbeit und
+Kapital, indem er eine neue Variable einführt:
+$$ r = \frac{K}{L} $$
+(Verhältnis Kapital zu Arbeit)
+
+Er zeigt nun, dass über umformen folgender Ausdruck entsteht:
+$$ r' = sF(r,1) - nr $$
+wobei F(r,1) den Output angibt, den 1 Arbeiter als Funktion von
+Kapital pro Arbeiter erzeugt.
+
+Wenn nun r' = 0, dann wächst der Kapitalstock mit der gleichen Rate
+an, wie das Arbeitskräftepotential. Über die Zeit wird sich ein
+\textit{r*} einstellen, wo Kapital und Arbeit in gleichem Umfang
+ansteigen werden.
+
+\subsection{Interest und Wage Rates}
+
+Solow geht bei Wettbewerb in einer Wirtschaft davon aus, dass die
+Lohnraten und die Renditen aus dem Kapital einer Grenzproduktivität
+unterliegen.
+
+Unter folgenden Annahmen:
+\begin{description}
+ \item[p(t)] Verkaufspreis des Gutes (kann man als gegeben annehmen)
+ \item[w(t)] Lohnrate
+ \item[q(t)] Rendite aus dem Kapital in einer Periode
+ \item[i(t)] Zinssatz
+\end{description}
+ergibt sich eingesetzt die Grenzproduktivitätsgleichung (für
+vollkommene Konkurrenz):\newline
+$ \frac{dF}{dL} = \frac{w}{p}$ sowie $\frac{dF}{dK} = \frac{q}{p} $
+\newline
+Der Ausdruck $ \frac{q}{p} $ stellt einen eigenen Zinssatz dar,
+nämlich die Rendite des Kapitals in Einheiten des Kapitalstocks. Unter
+der Bedingung der vollkommenen Abitrage besteht nun ein eindeutiger
+Zusammenhang zwischen dem monetären Zinssatz und dieser kapitaleigenen Rate:
+$$ i(t) = \frac{q(t)}{p(t)}  \frac{p'(t)}{p(t)} $$
+Wenn nun das Preisniveau konstant ist, dann entsprechen sich die
+beiden Größen. Sinkt das Preisniveau, dann muss die kapitaleigene Rate
+den Zinssatz übersteigen, um dem Volk einen Anreiz zu geben, Güter zu
+halten.
+Wir können nun die obige Gleichung als Anreiz interpretieren,
+Wohlstand in Form von Kapitalstock oder liquiden Mitteln zu halten. 
+
+
+\section{Das Entstehen von Wirtschaftswachstum}
+\label{sec:ew}
+
+Ausgehend von einem Gleichgewichtszustand wird im Modell von \textbf{Domar}
+Wirtschaftswachstum über ein stetiges anwachsen mit der Rate $\alpha \sigma$
+erzeugt. Ein Einkommen von $ Y \alpha \sigma $ würde ein Investment
+von $ Y \alpha \sigma / s $ benötigen. Hier muss man nun 2 Fälle
+unterscheiden:
+\begin{enumerate}
+\item $ \sigma = s $: Die resultierende Menge der Investments $ Y
+  \alpha $ wird die Menge des Sparens ausgeleichen und das
+  Gleichgewicht bleibt erhalten.
+\item $ \sigma < s $: Investitionen fallen unter die Sparmenge => kein
+  Gleichgewicht. Kapitalbesitzer investieren nicht die nötige Menge.
+\end{enumerate}
+Daraus kann abgeleitet werden, dass eine Garantie eines hohen
+wachsenden Einkommens, eine der besten Methoden ist, Investitionen
+voranzutreiben. Unabhängig davon, ob privat oder öffentlich.\newline
+
+\textbf{Solow} geht in seiner Betrachtung weiter in die Tiefe. Er
+berücksichtigt auch ein Wachstum der Bevölkerung. Daher bedeutet für
+ihn Wirtschaftswachstum auch, die Investitionen, die pro Arbeiter
+getätigt werden (der Output pro Arbeiter ist eine Funktion des
+Kapitals pro Arbeiter).
+
+Die Änderung des Kapitals, das pro Arbeiter zur Verfügung steht, hängt
+von 3 Faktoren ab: den Investitionen (pro Arbeiter), Wachstum der
+Bevölkerung und den Abschreibungen auf das Vermögen.
+Wenn nun $ sY > (n+d) K $ gilt, dann wächst das Kapital pro Arbeiter
+an.
+
+
+\section{Wirtschaftspolitische Implikationen}
+\label{sec:wi}
+
+Bei \textbf{Domar} sollte die Gesellschaft (society) das Wachstum des
+Einkommens an das optimale Wachstum angleichen. Wenn aber ein zu
+großer Unterschied zwischen $\sigma$ und s besteht, hat die Politik
+laut Domar folgende 2 Möglichkeiten, diese Diskrepanz wieder
+auszugleichen:
+\begin{enumerate}
+\item Reduktion der Sparquote
+\item verstärkter technologischer Fortschritt
+\end{enumerate}
+Natürlich wäre das zuletzt genannte, die bessere Option.
+
+\textbf{Solow} geht von der Nation als Träger der
+wirtschaftspolitischen Entscheidungen aus. Er definiert nun Maßnahmen,
+die der Staat treffen kann, um Vollbeschäftigung zu erreichen.
+Vorallem ist es die Möglichkeit des Staates Steuern einzuheben und
+damit am Markt als Nachfrager und Anbieter aufzutreten,
+Wirtschaftswachstum zu beeinflussen. Bei Solow ist außerdem das
+natürliche Wachstum ein nicht unwichtiges Thema. Träger von
+wirtschaftspolitischen Entscheidungen, sollten dieses Variable stets
+im Auge behalten.
+
+
+\section{Bedeutung der Produktionsannahmen}
+\label{sec:bp}
+\subsection{Produktionsannahmen bei Domar}
+
+Wie in~\ref{sec:gm} geht Domar mit stark vereinfachenden Annahmen an
+dieses Problem heran und das die Produktion Vollbeschäftigung erhalten
+kann, wenn Investitionen und Einkommen mit einer rate von $\alpha
+\sigma$. Was nun wenn, dies nicht erfüllt ist, sprich diees gibt
+spontane (und damit unregelmäßige Investitionen). Domar geht nicht
+näher auf dieses Problem ein und nimmt an, dass dieses Phänomen nicht
+auftritt.
+Wie bleibt nun der Gleichgewichtszustand über die Zeit erhalten?
+
+Ein Einkommen von $Y \alpha \sigma$ benötigt Investitionen von $Y
+\alpha \sigma / s$. 2 Fälle müssen daher beachtet werden:
+\begin{enumerate}
+\item $\sigma = s$ Das Gleichgewicht wird erhalten.
+\item $\sigma < s$ Das Gleichgewicht wird zerstört.
+\end{enumerate}
+
+\subsection{Produktionsannahmen bei Solow}
+
+Bei Solow gibt es eine Produktionsfunktion mit der ein Gut produziert,
+welche die Volkswirtschaft dann konsumieren kann. In Ergänzung zu
+Domar gibt es bei Solow nun einen Faktor $n$, der die natürliche
+Wachstumsrate der Bevölkerung angibt. D.h. das Wirtschaftswachstum
+hängt sehr stark von diesem Wachstum ab. Mit dieser Erkenntnis kann
+man weitergehende Untersuchungen anstreben wie: Wie müssen die
+Investitionen beschaffen sein, damit Vollbeschäftigung erhalten
+bleibt? Was passiert wenn diese Rate $n$ negativ ist? Wie wirkt sich
+Migration auf das Wirtschaftswachstum aus?
+
+
+\section{Kritik an den Modellen}
+\label{sec:km}
+
+In beiden Modellen werden stark vereinfachende Annahmen getroffen. Es
+werden zum Beispiel die außenwirtschaftlichen Beziehungen nicht in
+Betracht gezogen. Außerdem handelt es sich um eine statische
+Wirtschaft.
+Staatsausgaben werden nicht (oder nur geringfügig) erfasst, obwohl
+diese in der Realität einen beträchtlichen Teil einer Volkswirtschaft
+ausmachen. 
+
+Außerdem wird im normativen Modell von Domar das Wachstum mit seinen Ursachen
+nicht näher erklärt. Es
+wird zwar eine Veränderung der Bevölkerung erwähnt, aber als exogen
+angenommen. Laut \cite{wikipedia06:domarmodel} wird daher diese Theorie heutzutage
+nicht mehr als Wachstumstheorien im eigentlichen Sinne angesehen,
+sondern lediglich als wichtiger Baustein für diese, als Herleitung der
+Bedingungen, unter welchen ein gleichgewichtiges Wachstum möglich ist.
+
+Ein Kritikpunkt bei Solows Modell ist, dass im Solow-Modell der
+technologische Fortschritt als einziger Faktor langfristigen Wachstums
+genannt wird, Solow aber in seinem Artikel nicht erklärt wie dieser
+Faktor zustande kommt. Hier wird der Technologischer Fortschritt als
+exogen gegeben angesehen und daher nicht durch das Modell erklärt
+(\cite{wikipedia06:solowmodel}). Ein weiteres Problem stellt die Ein-Gut-Parabel
+dar. Vielleicht ist diese vereinfachende Annahme zu sehr von der
+Realität entfernt, sodass bei genauerer Analyse mittels des Modells
+einige Probleme auftreten können.
+
+
+\bibliographystyle{plainnat}
+\bibliography{hue2}
+
+
+\end{document}
