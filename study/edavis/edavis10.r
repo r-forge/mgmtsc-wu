@@ -44,7 +44,8 @@ X2 <- rmvnorm(n, rep(1.5,p),diag(p:1)) %*% trans
 X <- scale(rbind(X1,X2))
 grp <- c(rep(1,n),rep(2,n))
 
-
+## Scatterplot
+pairs(X)
 
 ## Projection Pursuit
 
