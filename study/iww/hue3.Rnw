@@ -35,6 +35,7 @@ eingegangen.
 <<init,echo=FALSE>>=
 ## ---------------------------------------------
 ## data handling funtions
+library(MASS)
 countries <- c("Austria","Belgium","Finland","France","Germany","Greece","Ireland","Italy","Luxembourg","Netherlands","Portugal","Spain")
 n.countries <- length(countries)
 n.entries <- 28
@@ -69,11 +70,13 @@ cor.matrix <- function(X, Y){
   corr
 }
 
-# read data source
+
+## read data source
 X<-read.delim("Euro-Zone_80-06.txt")
 
-# generate datamatrices
-# GDP per capita constant prices
+## generate datamatrices
+
+7# GDP per capita constant prices
 GDPpcConst <- extract.data(X,14)
 # GDP per capita current prices USD
 GDPpcCur <- extract.data(X,15)
@@ -89,6 +92,11 @@ GDPConstPer <- extract.data(X,18)
 # Inflation, annual percentage change
 inf.perc <- extract.data(X,25)
 
+# Government debt in percent of GDP
+GovDGDP <- extract.data(X,6)
+
+# Government debt in percent of GDP
+UnemplR <- extract.data(X,28)
 ## end
 ## ----------------------------------------------
 
@@ -97,23 +105,33 @@ inf.perc <- extract.data(X,25)
 
 
 \section{Wachstumstrends, allgemein}
+
 \subsection{Vergleich Österreich - Deutschland}
-Das Wirtschaftswachstum in Österreich sieht man in Abbildung~\ref{fig:wwoe}.
+Das Wirtschaftswachstum in Österreich sieht man in Abbildung~\ref{fig:wwoe}, die geglättete Zeitreihe (mit LOWESS Algorithmus) ist in Abbildung~\ref{fig:wwoegeg} dargestellt. 
 \begin{figure}
 \centering
 <<fig=TRUE,echo=FALSE>>=
-GDPcurpUS<-extract.data(X,start=19)
-plot(dates,GDPcurpUS[,1],type="l",main="GDP current prices USD, Austria")
+plot(dates,GDPCur[,1],type="l",main="GDP current prices USD, Austria")
 @
 \caption{Wirtschaftswachstum in Österreich seit 1980}
 \label{fig:wwoe}
 \end{figure}
-\newline
-Deutschland hat von 1980 - 2004 ein Wachstum (siehe Abbildung~\ref{fig:wwde}) aufzuweisen, welches einen interessanten Verlauf annimmt.
-\begin{figure} 
+
+\begin{figure}
 \centering
 <<fig=TRUE,echo=FALSE>>=
-plot(dates,GDPcurpUS[,5],type="l",main="GDP current prices USD, Germany")
+plot(dates,GDPCur[,1],type="l",main="GDP current prices USD, Austria")
+lines(dates,lowess(GDPCur[,1])$y,lty="dashed",col="blue")
+@
+\caption{Wirtschaftswachstum in Österreich seit 1980, geglättet}
+\label{fig:wwoegeg}
+\end{figure}
+\newline
+Deutschland hat von 1980 - 2004 ein Wachstum (siehe Abbildung~\ref{fig:wwde}) aufzuweisen, welches einen interessanten Verlauf annimmt.
+\begin{figure}
+\centering
+<<fig=TRUE,echo=FALSE>>=
+plot(dates,GDPCur[,5],type="l",main="GDP current prices USD, Germany")
 @
 \caption{Wirtschaftswachstum in Deutschland seit 1980}
 \label{fig:wwde}
@@ -151,7 +169,7 @@ Wirtschaft ab dem  Jahre 1987. Das kann begründet werden durch die Wirtschaftskr
 
 \begin{figure}
 \centering
-<<fig=TRUE>>=
+<<fig=TRUE,echo=FALSE>>=
 ## BIP Finnland
 plot(dates,GDPConst[,3],type="l",col=4)
 @
@@ -160,7 +178,43 @@ plot(dates,GDPConst[,3],type="l",col=4)
 \end{figure}
 
 \subsection{\texteuro  Raum}
-Im Großen und Ganzen kann gesagt werden, dass im EURO - Raum im Durchschnitt ein positives Wachstum herrschte. Die Mittelwerte der Wachstumsraten der einzelnen Länder sieht man in Abbildung~\ref{fig:wwmean}. 
+
+Einleiten möchte ich diesen Abschnitt mit einem Vergleich des Wirtschaftswachstums aller Euro-Länder. Die Abbildung~\ref{fig:wweuro85} stellt den Verlauf des BIP zu heutigen Preisen in USD dar. Als Basisjahr wurde 1985 gewählt.
+\begin{figure}
+\centering
+<<fig=TRUE, echo=FALSE>>=
+## BIP Vergleich EURO
+b.gdpc85 <- calc.basis(GDPCur,index=6)
+lty<-rep(c("solid","dotted","dashed"),4)
+plot(dates,b.gdpc85[,1],type="l",lty=lty[1],col=1)
+for(i in 2:n.countries)
+  lines(dates,b.gdpc85[,i],col=i,lty=lty[i])
+legend("topleft",countries,col=c(1:n.countries),lty=lty)
+@ 
+\caption{Vergleich - EURO Raum Basis -1985}
+\label{fig:wweuro85}
+\end{figure}
+Interessant ist der Einbruch 1995. Das deutet wohl auf eine allgemeine Wirtschaftskrise hin, die alle Euro-Länder getroffen hat.
+
+Wählt man nun 1995 als Basisjahr (u.a. treten Österreich und Finnland)
+der EU bei) dann ergibt sich ein Trend wie in Abbildung~\ref{fig:wweuro95}
+\begin{figure}
+\centering
+<<fig=TRUE, echo=FALSE>>=
+## BIP Vergleich EURO
+b.gdpc95 <- calc.basis(GDPCur,index=16)
+lty<-rep(c("solid","dotted","dashed"),4)
+plot(dates[c(15:25)],b.gdpc95[c(15:25),1],type="l",lty=lty[1],col=1)
+for(i in 2:n.countries)
+  lines(dates[c(15:25)],b.gdpc95[c(15:25),i],col=i,lty=lty[i])
+legend("topleft",countries,col=c(1:n.countries),lty=lty)
+@ 
+\caption{Vergleich - EURO Raum Basis -1995}
+\label{fig:wweuro95}
+\end{figure}
+Man sieht einen Trend, wo Irland alle in den Schatten stellt. Irland hebt so deutlich ab, da dieses Land verstand, mit einer exzellenten Steuerpolitik viele ausländische (meist US-amerkanische) Dienstleistungsunternehmen anzuziehen. Weiters kann sich im letzten Jahrzehnt Luxemburg sehr gut positionieren. Das liegt zu einem großen Teil an den Bankgeschäften, die dort getätigt werden.
+
+Im Großen und Ganzen kann aber gesagt werden, dass im EURO - Raum im Durchschnitt ein positives Wachstum herrschte. Die durchwegs positiven Mittelwerte der Wachstumsraten der einzelnen Länder sieht man in Abbildung~\ref{fig:wwmean}. 
 
 \begin{figure}
 \centering
@@ -173,7 +227,7 @@ as.data.frame(x, row.names=countries)
 \label{fig:wwmean}
 \end{figure}
 
-
+\pagebreak
 \section{Weiterführende Untersuchungen}
 
 \subsection{Wechselwirkung Wachstum - Varianz der Wachstumsraten}
@@ -195,6 +249,18 @@ as.data.frame(x, row.names=countries)
 
 Abbildung~\ref{fig:wwvar} zeigt, dass Luxemburg und Irland tatsächlich eine weitaus höhere Varianz aufweisen als die anderen Länder.
 
+Zur weiteren Veranschaulichung kann man die Wachstumsraten einander in einem Boxplot gegenüberstellen (Abbildung~\ref{fig:wwbp}).
+\begin{figure}
+\centering
+<<echo=FALSE>>=
+# Vergleich der der Wachstumsraten über Boxplot
+colnames(GDPConstPer)<-countries
+boxplot(as.data.frame(GDPConstPer),las=2)
+@
+\caption{Wirtschaftswachstums im Euroraum - Boxplot}
+\label{fig:wwbp}
+\end{figure}
+Hier sieht man sehr schön, dass bei hohem Wachstum die Quartilsabstände sehr groß sind, dh. das Wachstum streut stärker.
 
 \subsection{Korrelation zwischen Wachstum und Inflation?}
 
@@ -210,7 +276,12 @@ as.data.frame(x, row.names=countries)
 \label{fig:wwcorwwinf}
 \end{figure}
 
-Abbildung~\ref{fig:wwcorwwinf} zeigt, das kein eindeutiger Trend erkennbar ist. Es gibt Länder wie Portugal, bei dem Wachstum mit Inflation stark negativ korreliert ist, andererseits wiederum ist bei Ländern mit hohem Wachstum (Luxemburg, Irland) die korrelation relativ gering.
+Abbildung~\ref{fig:wwcorwwinf} zeigt, das Inflation in gewisser Weise mit Wirtschaftswachstum zusammenhängt.
+Es herrscht hauptsächlich negative Korrelation vor, dh. bei höherer Inflation gibt es ein geringeres WW 
+(z.B. Griechenland), 
+bzw. bei geringerer Inflation gibt es ein höheres WW (Irland). Was jeglicher ökonomischer Logik widerspricht.
+Man sollte hier beachten, dass WW und Inflation nicht zur selben Zeit auftreten muss, es sind eher Lags über mehrere
+Perioden zu beachten.
 
 Wie Unterschiedlich Inflation im Euroraum ausfiel zeigt Abbildung~\ref{fig:wwinf}.
 
@@ -225,18 +296,91 @@ as.data.frame(x, row.names=countries)
 \end{figure}
 
 
-
 %% <<>>=
 %% # negative Korrelation bei den Niederlanden
 %% plot(dates,GDPConstPer[,10],type="l",col="green",main="Gegenüberstellung Wirtschaftswachstum-Inflation")
 %% lines(dates,inf.perc[,10],col="red")
 %%@ 
 
-%% \subsection{Begünstigt Offenheit einer Wirtschaft das Wirtschaftswachstum}
-%% \subsection{hohe Budgetdefizite Wachstumsfördernd?}
-%% \section{Zusammenhang Arbeitslosigkeit-Wirtschaftswachstum}
+\subsection{Begünstigt Offenheit einer Wirtschaft das Wirtschaftswachstum}
+
+Der nächste Schritt wäre, den Einfluss der Handelsbilanz auf das WW zu messen. Eine exportorientierte Volkswirtschaft weißt eine positive Handelsbilanz aus. %(Abbildung~\ref{hbeuro}).
+\newline
+Die Theorie konnte ich empirisch nicht überprüfen, da mir Daten wie \textit{balance of trade} fehlten.
+
+%\begin{figure}
+%\centering
+%<<echo=FALSE>>=
+%x<-apply(inf.perc,2,mean)
+%as.data.frame(x, row.names=countries)
+%@ 
+%
+%\caption{Handelsbilanzen}
+%\label{fig:hbeuro}
+%\end{figure}
 
 
+\subsection{hohe Budgetdefizite wachstumsfördernd?}
+
+In diesem Abschnitt soll untersucht werden, ob ein
+Zusammenhang zwischen enem hohen Budgetdefizit und Wirtschaftswachstum
+besteht. Die Idee wäre, dass ein Staat mit einem hohen Budgetdefizit
+auch ein entsprechend hohes Wirtschaftswachstum aufweisen
+würde. Abbildung~\ref{fig:bdeuro} zeigt nun die Nettoverschuldung in Prozent des BIP, um eine Vergleichbarkeit
+zu gewährleisten.
+
+\begin{figure}[htb]
+\centering
+<<fig=TRUE, echo=FALSE>>=
+## Staatsverschuldung in % des BIP
+ts.plot(ts(GovDGDP[,4],start=1980,frequency=1),ts(GovDGDP[,5],start=1980,frequency=1),ts(GovDGDP[,8],start=1980,frequency=1),col=c(2:4))
+legend("bottomright",countries[c(4,5,8)],col=c(2:4),lty="solid")
+@ 
+\caption{Gegenüberstellung Staatsverschuldung in \% des BIP}
+\label{fig:bdeuro}
+\end{figure}
+
+Man sieht, dass Italien eine sehr große Nettoverschuldung gemessen am BIP aufweist. Erstaunlich ist weiterhin, dass ein steigender Trend erkennbar ist. Wenn man nun einen Zusammenhang vermutet, dann müssen sich auch die Wachstumsraten mit fortschreitender Zeit einen Trend aufweisen. Abbildung~\ref{wwbd} zeigt für die entsprechenden Länder die jeweiligen Wachstumsraten.
+
+\begin{figure}
+\centering
+<<fig=TRUE, echo=FALSE>>=
+## Wachstumsraten
+plot(dates,GDPConstPer[,4],type="l",col=2)
+lines(dates,GDPConstPer[,5],col=3)
+lines(dates,GDPConstPer[,8],col=4)
+legend("bottomright",countries[c(4,5,8)],col=c(2:4),lty="solid")
+@ 
+\caption{Wachstumsraten - Deutschland, Frankreich, Italien}
+\label{fig:wwbd}
+\end{figure}
+Man sieht, dass die Wachstumsraten keinen eindeutigen Trend aufweisen. Und Italien schafft es mit einer exorbitanten Verschuldung nicht besser zu sein als Deutschland und Frankreich.
+
+\subsection{Zusammenhang Arbeitslosigkeit-Wirtschaftswachstum}
+
+Als Abschluss soll noch das Thema Arbeitslosigkeit im Kontext des WW behandelt werden.
+Als Beispiel verwende ich eine Gegenüberstellung der Graphen für die Jahre 1980 bis 2004 für Österreich
+(Abbildung~\ref{fig:alwwoe}).
+
+\begin{figure}[htb]
+\centering
+<<fig=TRUE, echo=FALSE>>=
+## Wachstumsrate Arbeitslosigkeit AUT
+ts.plot(ts(GDPConstPer[,1],start=1980,frequency=1),ts(UnemplR[,1],start=1980,frequency=1),col=c(2,3))
+legend("bottomright",c("Wirtschaftswachstum","Arbeitslosigkeit"),col=c(2,3),lty="solid")
+@ 
+\caption{Gegenüberstellung Arbeitslosigkeit - Wachstum in Österreich}
+\label{fig:alwwoe}
+\end{figure}
+
+Da wir wissen, dass das Wirtschaftswachstum langfristig im Durchschnitt ziemlich konstant bleibt und langfristig
+ein steigender Trend der Arbeitslosigkeit zu beobachten ist, kann man eine langfristige Abhängigkeit ausschließen.
+Kurzfristig kann Wirtschaftswachstum sehr wohl die Arbeitslosigkeit senken. Die Hauptgründe steigender Arbeitslosigkeit
+liegen aber im Eintreten der geburtenstarken Jahrgänge ins Berufsleben, der vermehrten Erwerbspartizipation der Frauen
+und einer in den Westen tendierenden Migration.
+
+
+\listoffigures
 
 \bibliographystyle{plainnat}
 \bibliography{references}
