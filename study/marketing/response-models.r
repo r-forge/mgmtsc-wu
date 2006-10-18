@@ -6,9 +6,10 @@ linear.model <- function(x,a,b)
   a + b*x
 
 power.series.model <- function(x,coef){
-  if(length(coef)==1)
+  len <- length(coef)
+  if(len==1)
     return(coef)
-  out <- c(coef[length(coef)]*x^(length(coef)-1),power.series.model(x,coef[-length(coef)]))
+  out <- c(coef[len]*x^(len-1),power.series.model(x,coef[-len]))
   sum(out)
 }
 
