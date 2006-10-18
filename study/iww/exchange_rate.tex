@@ -1,0 +1,215 @@
+\documentclass[a4paper]{article}
+% PREAMBLE
+\usepackage[austrian]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[authoryear,round]{natbib}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title{Zusammenfassung: Wechselkurse}
+\author{Stefan Theußl, 0352689}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents 
+
+\begin{abstract}
+Wechselkurse sind ein fester Bestandteil im internationalen
+Handel. Diese Zusammenfassung beschäftigt sich mit diesem
+Thema. Zuerst wird auf die Definition des Wechselkurses näher
+eingegangen, danach wird der Artikel von Meese und Rogoff über den
+Vergleich von out-of-sample Vorhersagemodellen~(\cite{Meese-Rogoff83}), sowie der Artikel von
+Chinn über das Verhalten von Wechselkurse~(\cite{Chinn03}) näher diskutiert. 
+\end{abstract}
+
+\pagebreak
+
+\section{Definition des Wechselkurse}
+\label{sec:el}
+
+\begin{description}
+ \item[Wechselkurs] ist der Preis einer
+   Währung ausgedrückt in einer anderen Währung. 
+  
+ \item[Devisenmarkt] auf diesem Markt bilden sich die Preise von Währungen. 
+\end{description}
+
+Wie können sich nun diese Preise bilden? Eine Stärke der Ökonomie ist,
+dass man vieles theoretisch fundiert mit dem Konzept 
+\textit{Angebot und
+Nachfrage} erklären kann. Auch hier kann man dieses Prinzip aufgreifen
+und Güter- sowie Finanztransaktionen der Preisbildung zuordnen. Wobei
+die Finanztransaktionen mengenmäßig dominieren.
+\newline
+
+Arten von Wechselkursen:
+\begin{description}
+ \item[nominaler WK] Verhältnis von der Währung eines Landes gegenüber
+   der Währung des anderen Landes.
+  
+ \item[realer WK] Verhältnis von Warenkorb eines Landes gegenüber dem
+   Warenkorb des anderen Landes. Der reale Wechselkurs ist somit als
+   Index definiert.
+
+ \item[bilateraler bzw. effektiver WK] der bilaterale WK bezieht sich
+   auf 2 Währungen. der effektive WK vergleicht eine Währung mit einem
+   Währungskorb (multilateral). 
+\end{description}
+
+2 Notationsmöglichkeiten:
+
+\begin{description}
+ \item[Mengennotation] $ \frac{ausl"andische_W"ahrung}{inl"andische_W"a
+hrung} $
+ \item[Preisnotation] $ \frac{inl"andische_W"ahrung}{ausl"andische_W"ahrung}
+  $
+\end{description}
+
+
+\section{Empirical Exchange Rate Models of the Seventies}
+\label{sec:em70}
+
+Meese und Rogoff untersuchen in ihrem Artikel~(\cite{Meese-Rogoff83})
+die Prognosefähigkeit verschiedener Wechselkursmodelle. Im Folgenden
+sollen diese kurz beschrieben und untersucht werden.
+
+\textbf{Strukturmodell}\newline
+
+Folgende Modelle wurden von den Autoren extensiv getestet:
+
+\begin{itemize}
+  \item flexible-price monetary model (Frenkel-Bilson)
+  \item sticky-price monetary model (Dornbusch-Frankel)
+  \item sticky-price asset model (Hooper-Morton)
+\end{itemize}
+
+
+Alle diese Modelle postulieren ceteris paribus, dass der Wechselkurs
+first-degree Homogenität im relativen Geldangebot zeigt. Außerdem ist
+interessant, dass fast alle ausländische und inländische Variablen in
+Differentialform angeschrieben sind (Achtung: Gleichheit der Parameter
+Geldnachfrage und Preisanpassung).
+\newline
+Ein Problem dieser Modelle ist die Einteilung der Variablen in endogene
+und exogene.
+
+Generelle Spezifikation der Modelle:
+$$ a_0 + a_1(m-m^*)+a_2(y-y^*)+a_3(r_s-r_s^*)+a_4(\pi^c -
+\pi^{*c})+a_5TB+a_6TB^*+u $$
+\begin{description}
+\item{$s$} Logarithmus der Dollarpreise der ausländischen Währungen
+  (Wechselkurs)
+\item{$ m - m^* $} Logarithmus des Verhältnisses zwischen
+  Realeinkommen der USA zu den Ausländischen
+\item{$r-r_s$} kurzfristige Zinsraten
+\item{$\pi^c-\pi^{*c}$} langfristig erwarteten Inflationsraten 
+\item{$TB -TB^*$} kumulierte Leistungsbilanzen
+\item{$u$} Störterm
+\end{description}
+
+
+\textbf{Univariate und multivariate Zeitreihenmodelle}
+
+Meese und Rogoff testeten einige Zeitreihenmodelle mit verschiedensten
+prefeltering und lag length Selektionskrieterien. Geschätzt wurde
+wiederum der Logarithmus des Wechselkurses.
+
+Sie stellten folgendes Problem fest:
+\begin{itemize}
+\item Minimierung auf Basis von quadratischen Abweichungen (bei
+  gewissen Verteilungen schlecht) => besser absolute Abweichungen
+\end{itemize}
+
+Weiters verwendeten die Autoren das Random Walk Modell. Dieses Modell
+verwendet die derzeitige Spot Rate zur Schätzung aller zukünftigen
+Spot Rates. Normalerweise benötigt dieses Modell kein
+Schätzverfahren. Aber eine möglich Erweiterung wurde verwendet:
+Einführung eines Drift Paramters (geschätzt über monatliche
+logarithmische Wechselkursänderung).
+
+Die Daten wurden so ausgewählt, sodass ein Vergleich mit den
+Strukturmodellen möglich ist.
+\newline
+\textbf{Vergleich der Modelle}
+
+Es wurden mehrere out of sample Prognosen durchgeführt (Prognosen für
+1, 3, 6 und 12 Monate).
+
+Strukturmodelle besitzen dabei sehr große Erklärungskraft, aber sind
+weniger gut um Schätzungen durchzuführen, da die erklärenden Variablen
+selbst, schwer zu schätzen sind.
+
+Die out of sample Prognosegenauigkeit wurde mit folgenden Maßen aus
+der Statistik gemessen:
+\begin{itemize}
+\item mittlere Fehler (ME)
+\item mittlere absolute Fehler (MAE)
+\item Wurzel aus dem mittlere quadratische Fehler (RMSE)
+\end{itemize}
+Prinzipiell wird nun mit dem RMSE verglichen, aber wie schon vorher
+erwähnt führt dies teilweise zu Fehlern. Daher wird in manchen Fällen
+auf den MAE zurückgegriffen.
+
+Das Ergebnis ihrer Untersuchung war nun, dass die alternativen Modelle
+keine Verbesserungen gegenüber  dem Random Walk Modell erzielen
+konnten. Die Strukturmodellen schnitten sehr schlecht ab. Das kann man
+auf verschiedene Tatsachen, wie z.B. stochastische Bewegungen der
+Parameter, Probefehler, etc, zurückgeführt werden. Da es sich um
+Regressionsschätzungen handelt, wurde somit auch Linearität
+unterstellt. Einzig das Hooper-Morton Modell scheint teilweise
+geringfügige Verbesserungen aufzuweisen.
+
+Die Zeitreihenmodelle enttäuschten sehr. Keine der Modelle konnte das
+Random Walk Model mit Drift schlagen.
+Man muss aber auch festhalten, dass die Autoren keine Signifikanz
+feststellten, dass das Random Walk Modell besser ist.
+\newline
+Im Allgemeinen ist es für jedes dieser Modell schwierig Strukturbrüche zu
+erfassen. Hier sollte man sich anderer Modelle bedienen.
+
+\section{Explaining Exchange Rate Behavior}
+
+Chinn geht auf die Schwierigkeit ein, Wechselkurse
+vorherzusagen. Daher versucht er die empirischen Determinanten der Wechselkurse zu
+identifizieren.
+\newline
+Zuerst versuchte er die Veränderung in der Produktivität betreffend
+den Wechselkurs näher zu untersuchen (zu diesem Thema existierte
+bereits sehr viel Literatur). Dieses Modell wird sehr oft auf
+Volkswirtschaften angewendet, die ein sehr starkes Wachstum und somit
+starke Produktivitätsänderung aufweisen (z.B. Ostasien). Aber
+erstaunlicherweise ist dieses Modell besser geeignet, auf schon
+entwickelte Volkswirtschaften anzuwenden (z.B. Euro-Dollar Kurs). 
+
+Chinn stellte fest, dass eine langfristige Beziehung zwischen
+Wechselkurs und relativen Preisen für alle Währungen existiert, wenn
+man mindestens eine Referenzwährung (Dollar oder Yen) bzw. Preis
+Deflator heranzieht.
+Er geht in diesem Zusammenhang auf die Überbewertung der Währungen
+näher ein und ob dies einen Einfluss auf den Wechselkurs hat.
+\newline
+
+Den größten Teil seiner Arbeit verbrachte er damit, den langfristigen
+Wert des Wechselkurses zu untersuchen, welcher über identische
+Warenkörbe beschrieben werden kann (reale Wechselkurse). Er
+beschäftigte sich mit dem Thema, ob bestimmte Güter (Sektoren)
+Einfluss nehmen. Weiters bezieht er noch andere Faktoren in seine
+Überlegungen ein, wie z.B. Zinsen (forward rates als Prädiktoren für
+den zukünftigen Wechselkurs), Erwartungen (darüber, dass Großkonzerne
+teilweise den Wechselkurs beeinflussen können; Betrachtung von
+Makroökonomischen Veränderungen,...), Vermögenswerte...
+\newline
+
+Zum Schluss geht Chinn noch auf die Vorhersagbarkeit im Speziellen
+ein. Hier verweist er auf den, in dieser Zusammenfassung schon
+behandelten, Artikel von Meese und Rogoff.
+
+
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+
+\end{document}
