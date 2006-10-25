@@ -1,0 +1,9 @@
+Region Advertising Sales
+A   0	5
+B   2	7
+C   4	13
+D   6	22
+E   8	25
+F   10	27
+G   12	31
+H   14	33
