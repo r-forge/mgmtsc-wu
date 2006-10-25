@@ -187,18 +187,24 @@ pnet(Rdaily,type="l")
     # Create Quantile Plot:
     par(mfrow = c(1,1))
     set.seed(4711)
-    x = rnig(1000, alpha, beta, delta, mu)
-    x = sort(x)
+
+    x <- sort(r_weekdays)
     p = (1:length(x) - 1/2)/length(x)
     # Quantiles - this will take some time ...
-    y = qnig(p = p, alpha, beta, delta, mu) 
+    #y = qnig(p = p, alpha, beta, delta, mu) 
+    load("y.rda")
+    lim <- 1
     plot(x, y, pch = 19, col = "steelblue", type="l",
         xlab = "Empirical Quantiles", ylab = "estimated Quantiles",
-        xlim = c(-0.6, 0.6), ylim = c(-0.6, 0.6))
+        xlim = c(-lim, lim), ylim = c(-lim, lim))
     grid()
-    lines(x = c(-0.6, 0.6), y = c(-0.6, 0.6), col = "orange")
+    lines(x = c(-lim, lim), y = c(-lim, lim), col = "orange")
     title(main = "USDCHF - NIG Quantile Plot")
-    
+
+    xnorm = qnorm(p,mean(r_weekdays),sd(r_weekdays))
+    xnorm = sort(xnorm)
+
+    points(x,xnorm,col="grey", type="l")
     
     # Homewok: Normal QQ-Plot.
 
