@@ -98,5 +98,6 @@ r
 }
 
 x=seq(-15,15,by=0.001)
-hist(rgsh(100000,3),breaks=100,probability=T)
-lines(x,dgsh(x,3),col=2)
+hist(rgsh(100000,-2),breaks=100,probability=T)
+lines(x,dgsh(x,-2),col=2)
+lines(x,dnorm(x),col=3)
