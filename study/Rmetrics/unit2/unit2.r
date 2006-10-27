@@ -162,7 +162,7 @@ pnet(Rdaily,type="l")
     args(nigFit)
     par(mfrow = c(1, 1))
     x = as.vector(returnsWeekdays)
-    fit = nigFit(x[abs(x)>0], trace = TRUE)
+    fit = nigFit(x[abs(x)>0], trace = F)
     
     # Print(Parameters:
     slotNames(fit)
@@ -181,6 +181,7 @@ pnet(Rdaily,type="l")
         xlim = c(-0.4, 0.4), col = "steelblue", border = "white",
         main = "Excluding Weekends")
     s = seq(-0.4, 0.4, length = 501)
+    Returns<- returnsWeekdays
     lines(s, dnorm(s, mean(Returns), sd(Returns)), lwd = 2, col = "orange") 
     lines(s, dnig(s, alpha, beta, delta, mu), lwd = 2, col = "brown")    
     
@@ -188,7 +189,8 @@ pnet(Rdaily,type="l")
     par(mfrow = c(1,1))
     set.seed(4711)
 
-    x <- sort(r_weekdays)
+
+    x <- sort(returnsAllDays)
     p = (1:length(x) - 1/2)/length(x)
     # Quantiles - this will take some time ...
     #y = qnig(p = p, alpha, beta, delta, mu) 
@@ -201,40 +203,12 @@ pnet(Rdaily,type="l")
     lines(x = c(-lim, lim), y = c(-lim, lim), col = "orange")
     title(main = "USDCHF - NIG Quantile Plot")
 
-    xnorm = qnorm(p,mean(r_weekdays),sd(r_weekdays))
-    xnorm = sort(xnorm)
+    ynorm = qnorm(p,mean(r_weekdays),sd(r_weekdays))
+    ynorm = sort(ynorm)
 
-    points(x,xnorm,col="grey", type="l")
+    points(x,ynorm,col="grey", type="l")
     
-    # Homewok: Normal QQ-Plot.
-
-    Q_25 <- quantile(x, 0.25)
-    Q_75 <- quantile(x, 0.75)
-    
-    sim_Q_25 <- quantile(rnig(1000, alpha, beta))#mean(x), sd(x)), 0.25)
-    sim_Q_75 <- quantile(rnig(1000, alpha, beta))#mean(x), sd(x)), 0.75)
-    
-    slope <- (Q_75-Q_25) / (sim_Q_75 - sim_Q_25)
-    intercept <- sim_Q_25 - slope * Q_25
-      abline(intercept, slope, col="blue")
-    
-   
-      
-    
-    r_weekdays=sort(returnsWeekdays)
-    #y=sort(rnorm(length(r_weekdays),mean(r_weekdays),sd(r_weekdays)))
-    
-    p = (1:length(r_weekdays) - 1/2)/length(r_weekdays)
-    plot(r_weekdays,y)
-    
-    qqplot(r_weekdays,qnig(p=p))
-    
-    qqnorm(y)
-   qqline(rnorm(1000,mean(returnsWeekdays),sd(returnsWeekdays)),col="red")
-   y=qnorm(p)
-   points(x,y,type="l")
-   lines(
-      
+  
     
 # 7. Write a R function which creates a NIG Shape Tringle. Estimate the
 # parameters for USCHF on different time horizons and display
@@ -255,6 +229,31 @@ pnet(Rdaily,type="l")
     #   create several sample, eg. for 1 h data you can start at the full
     #   hour, but also every half hour.
     
+    xi=NULL
+    chi=NULL
+    j=0
+    beta=NULL
+    for(i in c(1,3,12,24,36,60)){
+    returns = apply(matrix(returnsAllDays[isWeekday(seriesPositions(R))],nrow=i*2),2,sum)
+    x = as.vector(returns)
+    fit = nigFit(x[abs(x)>0], trace = F)
+    # Assign Parameters:
+    alpha_n = fit@fit$estimate[1]
+    beta_n = fit@fit$estimate[2]
+    beta=c(beta,beta_n)
+    delta_n = fit@fit$estimate[3]
+    xi =c(xi,  1 /  sqrt( 1 + delta_n * sqrt(alpha_n^2 - beta_n^2) ))
+    j=j+1
+    chi = c(chi,( beta_n / alpha_n ) / xi[j]   )
+    }                              
+    par(mfrow = c(1, 1))
+    xTriangle = c(-1, 0, 1, -1)
+    yTriangle = c( 1, 0, 1,  1)
+    plot(xTriangle, yTriangle, type = "l", xlab = "chi", ylab = "xi")
+   text(chi, xi, c(1,3,12,24,36,60))
+    
+    
+    
     
 # 8. Create a scaling law plot for the estimated parameters, figure 5.
 # Show the influence on slightly modifying the skewness parameter, figures 6.
@@ -270,3 +269,9 @@ pnet(Rdaily,type="l")
     
     # Homework:
     #   Investigate the Influence for changing beta.
+        par(mfrow = c(3, 2))
+        
+    for(i in 1:length(beta)) {
+      x = rnig(100000, alpha, beta[i], delta, mu)
+       scalinglawPlot(x, span = 8)
+       }
