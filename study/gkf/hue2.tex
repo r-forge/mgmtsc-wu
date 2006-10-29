@@ -1,0 +1,81 @@
+\documentclass[a4paper]{article}
+% PREAMBLE
+\usepackage[austrian]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[authoryear,round]{natbib}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title{Vorteile von Banken - Liquidität}
+\author{Stefan Theußl, 0352689}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+In dieser Zusammenhang von \cite{FreixasRochet} soll gezeigt werden,
+dass in einer Ökonomie, in welcher Agenten individuellen
+Liquiditätsschocks ausgesetzt sind, die Marktallokation durch
+Verwahrungsverträge von Finanzintermediären verbessert
+werden kann.
+\end{abstract}
+
+\section{Idee der Liquiditätsversicherung}
+\label{sec:lv}
+
+Die Idee dahinter ist, dass sich durch mehrere Haushalte ein
+Liquiditätspool bildet. Dieser Pool bietet eine gewisse
+\textit{Versicherung} gegen Liquiditätsschocks. So lange diese Schocks
+nicht perfekt korreliert sind (Regelfall), steigt die Barreserve einer
+Bank der Größe $N$ (interpretiert als eine Koalition von $N$
+Haushalten) unterproportional zu $N$.
+Jene Mittel, die über die Barreserve
+hinausgehen, können für illiquide Investitionen verwendet werden, die
+einen gewissen Profit einbringen können (\textit{fractional reserve system}). Ein Problem, das hier 
+auftreten kann, ist, dass viele Einleger auf einmal ihre Einlage
+abheben. Sei es
+auch ohne Liquiditätsgründen.
+
+\section{Das Modell}
+
+\textbf{Annahme:}~1~Gut - 3 Perioden Ökonomie, jeder Agent besitzt in $t = 0$
+eine Einheit des Gutes, welches in den Perioden 1 oder 2 konsumiert
+wird.
+\newline
+Der erwartete Nutzen soll nun maximiert werden. Betrachtet werden nun
+folgende Fälle:
+
+\begin{description}
+ \item[Autarkie] Im einfachsten Fall gibt es keinen Handel zwischen
+   den Agenten. Jeder Agent wählt ein Verhältnis I, welches in die
+   illiquide Technologie investiert
+   werden soll (perfekte Teilbarkeit ist angenommen). Bei Autarkie
+   wählt jeder Konsument jenes Konsumprofil, welches seinen ex-ante
+   Nutzen unter Nebenbedingungen maximiert.
+  
+ \item[Markt Ökonomie] Existiert ein Markt, so wird angenommen, dass
+   Handel die Wohlfahrt erhöht. Agenten können zum Zeitpunkt t=1 das
+   Gut gegen eine risikolose Anleihe tauschen. Diese Marktallokation
+   paretodominiert die Autarkie, da in diesem Fall keine Liquidation
+   vorliegt. Jedoch kann gezeigt werden, dass diese Form von
+   Allokation keine perfekte Versicherung gegen Liquiditätsschocks
+   darstellt.
+
+ \item[Optimale Allokation durch Finanzintermediäre] Aufgrund der
+   Tatsache, dass niemand beobachten kann, wer früher konsumiert, kann
+   die Marktallokation kein Pareto Optimum sein (der Anleihenmarkt
+   selbst ist kein Garant für effiziente Risikostreuung). Das Pareto
+   Optimum kann einfach über einen Finazintermediär implementiert
+   werden. Dieser Intermediär stellt im Gegenzug für eine Einlage dem
+   Individuum zum Zeitpunkt 1 bzw. 2 entsprechende Mittel zur
+   Verfügung. Der FI investiert in die illequide Technologie um seinen
+   Verpflichtungen nachzukommen.
+\end{description}
+
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+
+\end{document}
