@@ -101,3 +101,12 @@ x=seq(-15,15,by=0.001)
 hist(rgsh(100000,-2),breaks=100,probability=T)
 lines(x,dgsh(x,-2),col=2)
 lines(x,dnorm(x),col=3)
+
+
+####SGSH Distribution
+
+dsgsh=function(x,t,g){
+
+  (2/(g+1/g))*((dgsh(x/g,t)*(x>=0))+ (dgsh((x*g),t))*(x<0))
+ }
+ 
