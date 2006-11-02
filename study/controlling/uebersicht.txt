@@ -1,0 +1,78 @@
+Bau-Leitbetriebe Austria	&	Anzahl 	&	Bauleistung	&	Anteil 	&		\\
+nach WKO	&	Mitarb.	&	2005 in	&	Ausland	&	Sparten	\\
+	&	ca.	&	Mrd. Euro	&	in \%	&		\\
+
+\hline									
+STRABAG AG	&	33.287	&	9.000	&		&	Straßenbau	\\
+Wien	&		&		&		&	Hoch- und Ingenieurbau	\\
+	&		&		&		&	Dienstleistungen 	\\
+\hline									
+PORR AG Allg. Baug. 	&	10.300	&	2.258	&	31	&	Hoch- und Ingenieurbau	\\
+Wien	&		&		&		&	Straßenentwicklung	\\
+\hline									
+Alpine Mayreder BaugesmbH	&	8.255	&	2.010	&	38	&	Hochbau	\\
+Salzburg	&		&		&		&	Straßenbau	\\
+	&		&		&		&	Tunnelbau	\\
+	&		&		&		&	Spezialtiefbau	\\
+\hline									
+SWIETELSKY Bauges. m.b.H.	&	6.500	&	1.100	&	40	&	Straßenbau	\\
+Linz	&		&		&		&	 Hochbau	\\
+	&		&		&		&	Eisenbahnbau	\\
+\hline									
+Teerag-Asdag AG 	&	4.600	&	770	&	15	&	Straßenbau-	\\
+Wien	&		&		&		&	Tiefbau	\\
+\hline									
+HABAU Hoch- \& Tiefbau GmbH 	&	2.600	&	625	&	30	&	Hoch -und Tiefbau	\\
+Perg	&		&		&		&	Fertigteil- und Pipelinebau	\\
+\hline									
+Rhomberg Gleisbau GmbH	&	616	&	248	&	48	&	Hoch- und Tiefbau	\\
+Bregenz	&		&		&		&	Ingenieurbau	\\
+	&		&		&		&	Umwelttechnik 	\\
+\hline									
+Bilfinger Berger BaugmbH, Wien	&	463	&	201	&	10	&	Hoch- und Tiefbau	\\
+%Wien                    & & & &\\									
+\hline									
+Fröschl AG \& Co KG, Hall	&	900	&	185	&		&	Hoch- und Industriebau	\\
+\hline									
+Pittel \& Brausewetter GmbH	&	975	&	128	&	5	&	Hoch- und Tiefbau	\\
+%Wien                    & & & &\\									
+\hline									
+Hinteregger \& Söhne BaugmbH	&	650	&	125	&	12	&	Hochbau	\\
+%Salzburg                    & & & &\\									
+\hline									
+Ast BaugesmbH	&	385	&	105 (2004)	&	15	&	Industriebau	\\
+Graz	&		&		&		&	Ingenieurbau	\\
+	&		&		&		&	Baudienstleistungen	\\
+\hline									
+Züblin BaugmbH, Wien	&	165	&	84	&	0	&	Tiefbau	\\
+\hline									
+Jäger BaugmbH, Schrungs	&	350	&	80	&	25	&	Hoch- und Tiefbau	\\
+\hline									
+Dyckerhoff \& Widmann GmbH	&	260	&	72	&		&	Hoch- und Tiefbau	\\
+%Wien                    & & & &\\									
+\hline									
+Durst Bau GmbH	&	220	&	57	&		&	Hoch- und Kanalbau	\\
+Wien	&		&		&		&	Hochgebirgsspezialbau	\\
+\hline									
+WIEHAG GmbH, Altheim	&	262	&	50	&	71	&	Holzbau	\\
+\hline									
+HAZET Bauuntern. GmbH	&	400	&	43	&		&	Revitalisierungs-,	\\
+Wien	&		&		&		&	Denkmalschutz- und	\\
+	&		&		&		&	Generalsanierungssektor	\\
+\hline									
+DI Herbert Leithäusl KG	&	400	&	42	&		&	Tiefbau	\\
+%Wien                    & & & &\\									
+\hline									
+Mischek Systembau GmbH   &	450	&	30	&		&	Hochbau	\\	
+%Wien                    & & & &\\									
+\hline									
+Gleitbau GmbH, Salzburg	&	85	&	16	&		&	Gleitschalung 	\\
+\hline									
+Bauunternehmung Granit GmbH	&	1.000	&		&		&	Hoch- und Tiefbau	\\
+\hline									
+Felbermayr Bau GmbH, Wels	&	1.250	&		&	17	&	Spezialtiefbau	\\
+\hline									
+Unger Stahlbau GmbH	&	1.200	&		&	70	&	Stahlbau	\\
+\hline									
+WIBEBA, Wien	&	850	&		&	0	&	Hochbau	\\
+	&		&		&		&	techn. Dienstleistungen	\\

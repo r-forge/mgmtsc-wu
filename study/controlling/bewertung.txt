@@ -1,0 +1,30 @@
+	&	\textbf{Heute}	&	\textbf{Zukunft}	\\
+\hline					
+\textbf{Wettbewerb in der Branche}	&	\textbf{2,6}	&	\textbf{2,5}	\\
+\hline					
+~~\ref{sec:Anzahl} Anzahl Wettbewerber	&	4	&	3	\\
+~~\ref{sec:Differenzierung} Differenzierung \& Positionierung	&		&		\\
+~~~~nach Kunden	&	4	&	5	\\
+~~~~nach Produkten	&	1	&	1	\\
+~~~~nach Qualit‰t	&	2	&	3	\\
+~~~~nach M‰rkten	&	2	&	1	\\
+\hline					
+~~\ref{sec:Marktwachstum} Marktwachstum	&		&		\\
+~~~~Hochbau	&	3	&	4	\\
+~~~~Tiefbau	&	2	&	1	\\
+~~~~Straﬂenbau	&	2	&	1	\\
+~~~~Osteuropa	&	2	&	1	\\
+\hline					
+~~\ref{sec:Barrieren} Regulative Barrieren	&		&		\\
+~~~~Harmonisierung	&	3	&	2	\\
+~~~~Besch‰ftigung	&	3	&	4	\\
+~~~~Bundesvergabegesetz	&	3	&	2	\\
+~~~~Umweltvertr‰glichkeit	&	3	&	4	\\
+\hline					
+\textbf{Potentielle Mitbewerber}	&		&		\\
+\hline					
+\textbf{Ersatzprodukte}	&		&		\\
+\hline					
+\textbf{Lieferanten}	&		&		\\
+\hline					
+\textbf{Kunden}	&		&		\\
