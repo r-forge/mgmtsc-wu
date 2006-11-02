@@ -64,25 +64,7 @@ Dyckerhoff \& Widmann GmbH	&	Abwicklung groﬂer Bauvorhaben als Generalunternehme
 Durst Bau GmbH	&	Wohnungsbau	\\
 	&	Wirtschaftsbau	\\
 	&	Revitalisierung und Bautr‰gergesch‰ft 	\\
-\hline			
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\hline
 
 
 

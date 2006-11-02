@@ -26,5 +26,5 @@ Unger Stahlbau GmbH	&	Full Service	\\
 	&	von Cork in Irland bis Athen	\\
 	&	von Dubai im Süden und Kasan im Osten	\\
 \hline			
-WIBEBA	&	"Stahlbau f\""ur anspruchsvolle und "	\\
+WIBEBA	&	Stahlbau f\"ur anspruchsvolle und 	\\
 	&	ungewöhnliche Sonderkonstruktionen	\\
