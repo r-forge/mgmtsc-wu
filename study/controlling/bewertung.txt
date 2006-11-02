@@ -26,5 +26,15 @@
 \textbf{Ersatzprodukte}	&		&		\\
 \hline					
 \textbf{Lieferanten}	&		&		\\
+~~~~Verhandlungsmacht Materiallieferanten	&	2	&	2	\\
+~~~~Verhandlungsmacht Subunternehmer	&	2	&	1	\\
+~~~~Produktdifferenzierung	&	2	&	1	\\
+~~~~Umstellungskosten	&	2	&	3	\\
+~~~~Ersatzprodukte	&	2	&	2	\\
+~~~~Auftragsvolumen	&	2	&	1	\\
+~~~~Lieferantenkonzentration	&	2	&	2	\\
+~~~~Vorwärtsintegration	&	1	&	1	\\
+~~~~Verhandlungsmacht Arbeitskräfte	&	2	&	1	\\
+~~~~Verhandlungsmacht Kapital	&	2	&	3	\\
 \hline					
 \textbf{Kunden}	&		&		\\
