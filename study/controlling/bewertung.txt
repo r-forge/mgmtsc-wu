@@ -25,7 +25,7 @@
 \hline					
 \textbf{Ersatzprodukte}	&		&		\\
 \hline					
-\textbf{Lieferanten}	&		&		\\
+\textbf{Ressourcen}	&	\textbf{1,9}	&	\textbf{1,7}	\\
 ~~~~Verhandlungsmacht Materiallieferanten	&	2	&	2	\\
 ~~~~Verhandlungsmacht Subunternehmer	&	2	&	1	\\
 ~~~~Produktdifferenzierung	&	2	&	1	\\
