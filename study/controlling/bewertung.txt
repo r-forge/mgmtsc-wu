@@ -21,11 +21,21 @@
 ~~~~Bundesvergabegesetz	&	3	&	2	\\
 ~~~~Umweltverträglichkeit	&	3	&	4	\\
 \hline					
-\textbf{Potentielle Mitbewerber}	&		&		\\
+\textbf{Potentielle Mitbewerber}	&	\textbf{2,0}	&	\textbf{2,4}	\\
 \hline					
-\textbf{Ersatzprodukte}	&		&		\\
+~~Know How	&	1	&	1	\\
+~~Größenersparnis	&	2	&	2	\\
+~~Kunden	&	2	&	2	\\
+~~Mitarbeiter	&	2	&	3	\\
+~~Regionale Vorteile	&	3	&	4	\\
+\hline					
+\textbf{Ersatzprodukte}	&	\textbf{2,5}	&	\textbf{2,5}	\\
+\hline					
+~~Ersatzg\"uter im Hochbau	&	3	&	4	\\
+~~Substitutionsgefahr im Tiefbau	&	2	&	1	\\
 \hline					
 \textbf{Ressourcen}	&	\textbf{1,9}	&	\textbf{1,7}	\\
+\hline					
 ~~~~Verhandlungsmacht Materiallieferanten	&	2	&	2	\\
 ~~~~Verhandlungsmacht Subunternehmer	&	2	&	1	\\
 ~~~~Produktdifferenzierung	&	2	&	1	\\
@@ -34,7 +44,18 @@
 ~~~~Auftragsvolumen	&	2	&	1	\\
 ~~~~Lieferantenkonzentration	&	2	&	2	\\
 ~~~~Vorwärtsintegration	&	1	&	1	\\
-~~~~Verhandlungsmacht Arbeitskräfte	&	2	&	1	\\
+~~~~Verhandlungsmacht Arbeitskräfte	&	2	&	2	\\
 ~~~~Verhandlungsmacht Kapital	&	2	&	3	\\
 \hline					
-\textbf{Kunden}	&		&		\\
+\textbf{Kunden}	&	\textbf{2,0}	&	\textbf{2,4}	\\
+\hline					
+~~Kundenkonzentration	&	2	&	3	\\
+~~Ersatzprodukte Tiefbau	&	1	&	1	\\
+~~Ersatzprodukte Hochbau	&	3	&	4	\\
+~~R\"uckwärtsintegration	&	1	&	1	\\
+~~Preis	&	2	&	3	\\
+~~Gefahrenpotentiale	&	3	&	4	\\
+~~Öffentliche Aufträge	&	2	&	1	\\
+\hline					
+\textbf{Gesamt}	&	\textbf{2,16}	&	\textbf{2,21}	\\
+\hline					

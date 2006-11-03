@@ -40,10 +40,6 @@ Pittel \& Brausewetter GmbH	&	975	&	128	&	5	&	Hoch- und Tiefbau	\\
 Hinteregger \& Söhne BaugmbH	&	650	&	125	&	12	&	Hochbau	\\
 %Salzburg                    & & & &\\									
 \hline									
-Ast BaugesmbH	&	385	&	105 (2004)	&	15	&	Industriebau	\\
-Graz	&		&		&		&	Ingenieurbau	\\
-	&		&		&		&	Baudienstleistungen	\\
-\hline									
 Züblin BaugmbH, Wien	&	165	&	84	&	0	&	Tiefbau	\\
 \hline									
 Jäger BaugmbH, Schrungs	&	350	&	80	&	25	&	Hoch- und Tiefbau	\\
