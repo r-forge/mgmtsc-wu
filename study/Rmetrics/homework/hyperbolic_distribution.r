@@ -106,7 +106,41 @@ lines(x,dnorm(x),col=3)
 ####SGSH Distribution
 
 dsgsh=function(x,t,g){
-
-  (2/(g+1/g))*((dgsh(x/g,t)*(x>=0))+ (dgsh((x*g),t))*(x<0))
+                                                       
+  (2/(g+1/g))*((dgsh(x/g,t)*(x<0))+ (dgsh((x*g),t))*(x>=0))
  }
  
+psgsh <- function(x,t,g)
+{
+2*g^2/(g^2+1)*(pgsh(x/g,t)*(x<0)+ ((g^2-1+2*pgsh(g*x,t))/(2*g^2)) * (x>=0) )
+}
+
+
+qsgsh <- function(x,t,g)
+{
+y <- NULL
+for(i in 1 : length(x)) {
+if(x[i] < g^2 / (1 + g)) {
+  y <- c(y, g*qgsh( (x[i]*(g^2+1)/(2*g^2)),t)) }
+else  {
+
+y <- c(y, 1/g * qgsh((x[i]*(g+1)/2-(g-1)/2),t))}
+}
+y
+}
+
+
+rsgsh=function(x,t,g)
+{
+y=runif(x,0,1)
+r=qsgsh(y,t,g)
+r
+}
+
+x=seq(-5,5,by=0.001)
+hist(rsgsh(1000,1,0.3),breaks=100,probability=T)
+lines(x,dsgsh(x,1,0.3),col=2)
+lines(x,dnorm(x),col=3)
+
+
+
