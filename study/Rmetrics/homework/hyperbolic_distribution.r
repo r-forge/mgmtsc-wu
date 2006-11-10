@@ -35,16 +35,20 @@ acoth=function(x){
 
 dgsh<-function(x,t){
 
-if(-pi<t && t<=0){
+if(-pi<t && t<0){
 a<-cos(t)
 c2<-sqrt((pi^2-t^2)/3)
 c1<-sin(t)/t*c2}
 if(t< (-pi)){
 warning("t between -pi and infinity")
 }
+if(t == 0){
+	a<-cos(t)
+	c2<-sqrt((pi^2-t^2)/3)
+	c1<-1*c2}
 else{
 a<-cosh(t)
-c2<-sqrt((pi^2-t^2)/3)
+c2<-sqrt((pi^2+t^2)/3)
 c1<-sinh(t)/t*c2}   
 
 c1*exp(c2*x)/(exp(2*c2*x)+2*a*exp(c2*x)+1)
@@ -64,7 +68,7 @@ p=exp(pi*x/sqrt(3))/(1+exp(pi*x/sqrt(3)))
 
 else
 {
-c2<-sqrt((pi^2-t^2)/3)
+c2<-sqrt((pi^2+t^2)/3)
 p=1-1/t*acoth((exp(c2*x)+cosh(t))/sinh(t))
 }
 p
@@ -85,7 +89,7 @@ q=sqrt(3)/pi*log(u/(1-u))
 
 else
 {
-c2<-sqrt((pi^2-t^2)/3)
+c2<-sqrt((pi^2+t^2)/3)
 q=1/c2*log((sinh(t*u))/(sinh(t*(1-u))))
 }
 q
