@@ -1,0 +1,154 @@
+## Greedy Randomized Adaptive Search Procedure
+## by Stefan Theussl, Martin Gartner, Gerold Koeb, Goran Lovric
+## last modified 29.5.2006
+
+# library(R.oo) das funzt bei mir net
+# library(R.utils)
+
+## Also hier mal die vollständige Distanzmatrix: ACHTUNG: Das file ("dist.csv") liegt derzeit noch im gleichen Ordner wie "GRASP.R"!
+
+dist <- read.csv("dist.csv", header = TRUE, sep = ";")
+dist <- dist + t(dist)
+z <- as.matrix(dist)
+
+## Da wir den header drinnen haben, können wir noch sagen:
+attach(dist)
+
+## Einlesen der Städtenamen aus "staedte.csv"
+names <- dimnames(dist)[[2]]
+rownames(dist) <- names
+
+## Nun können wir die Spalte von Wien zB ansprechen durch:
+Wien
+
+grasp.solve <- function(x, start, iterations, ...){
+  tsp <- as.tsproblem(x)
+  tsp$optimum <- sum(x)
+  for(i in 1:iterations){
+    tsp$solution <- .construct_greedy(tsp$matrix, start)
+    optimum <- local_search(tsp$solution,tsp$matrix)
+    if(optimum < tsp$optimum){
+      tsp$optimum <- optimum
+      opt_values <- x$values ##??
+    }
+  }
+  tsp
+}
+
+
+x <- Wien
+
+.construct_greedy <- function(start = Wien) {   ## Da die Städte attached sind, kann einfach der Stadtname (Achtung
+                                                ## bei "Muenchen" und bei "St..Petersburg") eingegeben werden
+  n <- 1:length(start)                          ## Indizes mit Anzahl der Städte
+  T <- which(start == 0, arr.ind = TRUE)        ## hier war ein Fehler, wir haben nämlich nicht den Index erhalten
+  n <- n[-T]
+  C <- which(n != T, arr.ind = TRUE)            ## C ist nun die Menge aller Kandidaten, die vom Startpunkt erreicht
+                                                ## werden können
+  alpha <- runif(1, 0 ,1)                       ## eine gleichverteilte zufallszahl
+
+  while(length(C) != 0) {
+    #c0 <- min(start[C])                         ## sucht nach der kuerzesten Entfernung von T nach i aus C
+    c0 <- min(dist[, T[1]][-T])
+    # c1 <- max(start[C])
+    c1 <- max(dist[, T[1]][-T])
+    dummy1 <- c0 + alpha * (c1 - c0)
+    # C_s <- which(start[C] <= dummy1)            ## gibt mir die Indizes jener Entfernungen die kleinergleich sind als ...
+    C_s <- which(dist[, T[1]][-T] <= dummy1)
+    z <- C_s[order(runif(length(C_s), 0, 1)) == 1]  ## wählt eine zufällige Komponente aus C_s, in z gibt den Index an
+    T <- c(n[z], T)                              ## hier verwende ich n[z], weil ich ansonsten den Index von C nehme,
+                                                 ## und somit könnte dann in der Endlösung fuer T zB 3 mal Index 1 vor
+                                                 ## kommen
+    n <- n[-z]
+    C <- C[-z]
+  }
+  rev(T)                                              ## in T sind die Indizes der Städte
+  #names[T]                                     ## dies wuerde die Namen der Städte liefern
+}
+
+
+objective_function <- function(T) {
+  distances <- NULL
+  while(length(T) > 1) {
+    i <- T[1]
+    j <- T[2]
+    distances <- c(distances, dist[[i, j]])
+    T <- T[-1]
+  }
+  sum(distances)
+}
+
+objective_function2 <- function(T) {
+  x <- T[-length(T)]
+  y <- T[-1]
+  sum(diag(z[x[1:length(x)], y[1:length(y)]]))
+}
+
+objective_function3 <- function(T) {
+  i <- T[-length(T)]
+  j <- T[-1]
+  sum(z[(j-1)*nrow(z) + i])
+}
+
+three_opt_move <- function(T) {
+  c <- sample(2:length(T), 3)
+  d <- T[c]
+  T <- replace(T, c[c(2,3,1)], d)
+  append(T, T[1])
+}
+
+local_search <- function(T) {
+  start_value <- objective_function2(append(T, T[1]))
+	three_opt_move <- three_opt_move(T)
+          ## hier steckt noch ein Fehler: das replace muss so erfolgen, dass nur die indizes getauscht werden, ohne
+          ## dass irgendein index verschwindet oder doppelt vorkommt
+  new_value <- objective_function2(three_opt_move)
+  while(start_value < new_value) {
+    three_opt_move <- three_opt_move(T)
+    new_value <- objective_function2(three_opt_move)
+  }
+ three_opt_move
+}
+
+
+
+## eine funktionierende aber ineffiziente lösung:
+
+grasp <- function(iterations = 1000) {                                ## # of iterations (as stop criterion)
+  optimal_value <- 1000000000000000                            ## a very high number
+  i <- 1
+  while(i < iterations) {
+    T <- .construct_greedy()
+    # T <- foo.min(dist)
+    T <- local_search(T)
+    objective_value <- objective_function(T)
+    
+    if(objective_value < optimal_value) {
+      optimal_value <- objective_value
+      optimal_route <- T
+    }
+    else {
+      not_optimal_route <- T                                   ## diese Routen sollten wir mit einer hash-tabelle
+                                                               ## verknuepfen, damit wir nicht dieselben routen
+                                                               ## nochmals durchlaufen lassen
+    }
+    i <- i + 1
+  }
+  #c(names[optimal_route], optimal_value)			#wie man sieht kommen manche Städte doppelt vor...
+  #optimal_value
+  list(names[optimal_route], optimal_value)
+}
+
+
+foo.min <- function(dist) {
+  T <- 29
+  i <- 0
+  while(i < 29) {
+
+  min <- min(dist[, T[1]][-T])
+  T <- c(which(dist[, T[1]] == min), T)
+  i <- i + 1
+}
+rev(T)
+}
+

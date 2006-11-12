@@ -1,0 +1,244 @@
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>
+<html>
+  <head>
+  <title>towns.txt</title>
+  
+  
+    <link rel="stylesheet" type="text/css" href="/media/css/site-master.css" media="all">
+  
+    <link rel="stylesheet" type="text/css" href="/media/css/tlf-master.css" media="all">
+  
+    <link rel="stylesheet" type="text/css" href="/media/css/elements.css" media="all">
+  
+    <link rel="stylesheet" type="text/css" href="/media/css/lists.css" media="all">
+  
+    <link rel="stylesheet" type="text/css" href="/media/css/forms.css" media="all">
+  
+    <link rel="stylesheet" type="text/css" href="/media/css/acs-developer-support.css" media="all">
+      
+  <script type="text/javascript" src="/media/js/core.js"></script>
+	
+ 	
+</head>
+<body bgcolor="white" text="black">
+<div>
+  <map name="mainheader"><area shape="rect" coords="285,6,377,24" href="http://www.siemens.at/" alt="Siemens Österreich" target="_blank">
+  </map>
+   <map name="siemensnews"><area shape="rect" coords="0,0,93,18" href="http://www.siemens.at/" alt="Siemens Österreich" target="_blank">
+  </map>
+</div>  
+
+
+
+  <!-- Developer Support Toolbar -->
+  
+
+  <!-- Site Header -->
+  <div id="site-header" style="background:url(/media/img/netz_mit_bildern3.png) no-repeat top right">
+    <img src="/media/img/mausi3.png" /><img style="margin-left:5px;margin-bottom:5px;" src="/media/img/learn4-trans.gif" /><br />
+  </div>
+
+  <!-- Top level navigation -->
+  <div id="navbar-div">
+    <div id="navbar-container">
+      <div id="navbar"> 
+        <div class="tab">
+          <a href="/" ><span style="text-transform:uppercase;">Startseite</span></a>
+        </div>
+        
+          <div class="tab" >
+            <a href="/dotlrn/" id='navbar-here'>MY-LEARN</a>
+          </div>       
+        
+        <div class="tab">
+          <a href="/tlf-basic/course-catalog/" ><span style="text-transform:uppercase;">Lehrveranstaltungen</span></a>
+        </div>
+        
+        <div class="tab">
+          <a href="/all-forums" ><span style="text-transform:uppercase;">Diskussionsforen</span></a>
+        </div>
+        <div class="tab">
+          <a href="/search/?c=5856586" ><span style="text-transform:uppercase;">Suche</span></a>
+        </div>
+        
+        <div class="tab2">
+          <a href="/register/logout">Abmelden</a>
+        </div>  
+        
+        <div class="tab2">
+          <a href="/info/customercare">Hilfe</a>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Second level navigation -->
+  <div id="navbar-body">
+    	<script type="text/javascript">
+	startList = function() {
+		if (document.all&&document.getElementById) {
+			navRoot = document.getElementById("subnavbar");
+			for (i=0; i<navRoot.childNodes.length; i++) {
+				node = navRoot.childNodes[i];
+				if (node.nodeName=="LI") {
+					node.onmouseover=function() {
+						this.className+=" over";
+					}
+					node.onmouseout=function() {
+						this.className=this.className.replace(" over", "");
+					}
+				}
+			}
+		}
+	}
+	window.onload=startList;
+	
+	</script>
+
+<!-- Top level navigation -->
+
+  <div id="subnavbar-div">
+  <div id="subnavbar-container">
+  <ul id="subnavbar"> 
+    
+        <li class="tab">
+          
+            <a href="/dotlrn/classes/kmbop/one-community" title="">Home</a>
+          
+        </li>
+      
+        <li class="tab">
+          
+            <a href="/dotlrn/classes/kmbop/calendar/." title="">Kalender</a>
+          
+        </li>
+      
+        <li class="tab">
+          
+            <a href="/dotlrn/classes/kmbop/faq/." title="">FAQs</a>
+          
+        </li>
+      
+        <li class="tab">
+          
+            <a href="/dotlrn/classes/kmbop/forums/." title="">Diskussionsforen</a>
+          
+        </li>
+      
+        <li class="tab">
+          
+            <a href="/dotlrn/classes/kmbop/news/." title="">Ankündigungen</a>
+          
+        </li>
+      
+        <li class="tab">
+          
+            <a href="/res/index?c=5856586" title="">Lernressourcen</a>
+          
+        </li>
+      
+ 			<li class="tab2">
+				<a href="/dotlrn/control-panel">Stefan Theußl</a>
+			</li>
+    						
+  </ul>
+  </div>
+  </div>
+
+<!-- Second level navigation -->
+  
+    
+  </div>
+
+  
+  	<!-- Body ANFANG -->
+	<div id="page-body">
+    <div>
+      <div style="clear:both;"></div>
+      <!-- Pagetitle -->
+      
+          <div class="course">Kombinatorische Optimierung</div>
+        
+          <div id="context-bar">
+            <div id="breadcrumbs"><a href="/dotlrn/classes/kmbop/">Kombinatorische Optimierung</a> : Dateien</div>
+            
+          </div>
+        
+      <div style="clear:both;"></div>
+    </div>
+
+    <table style="width:100%;">
+      <tr>
+        
+
+        <!-- Inhalt ANFANG -->
+        <td style="vertical-align:top;">
+          <div class="lv" style="margin-left:10px;">
+            <!-- Seitentitel ANFANG -->
+            
+              <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr valign="top">
+                <td width="100%" class="page-title">towns.txt</td>
+                
+              </tr></table>
+            
+            <!-- Seitentitel ENDE -->
+            <!-- Seite ANFANG -->
+            
+Amsterdam<br />
+Athen<br />
+Bergen<br />
+Berlin<br />
+Bordeaux<br />
+Bratislava<br />
+Budapest<br />
+Genf<br />
+Graz<br />
+Hamburg<br />
+Helsinki<br />
+Innsbruck<br />
+Kiev<br />
+Kopenhagen<br />
+Linz<br />
+Marseille<br />
+Madrid<br />
+München<br />
+Paris<br />
+Prag<br />
+Rom<br />
+Salzburg<br />
+Siena<br />
+Stockholm<br />
+St. Petersburg<br />
+Venedig<br />
+Villach<br />
+Warschau<br />
+Wien<br />
+Zagreb
+
+            <!-- Seite ENDE -->
+          </div>
+        </td>
+        <!-- Inhalt ENDE -->
+      </tr>
+    </table>
+  </div><!-- Body ENDE -->
+      
+
+  <!-- Footer ANFANG -->
+  <div id="site-footer">
+      <span id="footer-copyright">
+        &copy; Entwicklung &amp; Design der Learn@WU-Plattform: Abteilung für Wirtschaftsinformatik, Wirtschaftsuniversität Wien
+      </span>
+      <span id="footer-acknowledgements">
+        <a href="/acknowledgements/">Nutzungsbedingungen</a>
+      </span>
+  </div>
+  <!-- Footer ENDE -->
+
+  
+  
+    
+</body>
+</html>
+

@@ -1,0 +1,10 @@
+Package: GRASP
+Type: Package
+Title: Heuristic Problem Solving with GRASP-Algorithm
+Version: 0.9
+Date: 2006-10-18
+Author: Martin Gartner, Gerold Koeb, Goran Lovric, Stefan Theussl 
+Maintainer: Stefan Theussl <stefan.theussl@wu-wien.ac.at>
+Description: This Package allows you to solve NP hard problems\
+ with the Greedy Randomized Adaptive Search Procedures.
+License: GPL version 2.1 or newer

@@ -1,0 +1,56 @@
+
+\documentclass[notes=show,beamer]{beamer}
+
+%\usepackage{ngerman}
+
+
+\usetheme{Boadilla}
+
+\title{Greedy Randomized Adaptive Search Procedure}
+\author{Gartner, K"ob, Lovric, Theu"sl}
+%\institute{WU Wien, }
+\date{WU Wien, 30. June 2006}
+
+\begin{document}
+
+\frame{\titlepage}
+\section[contents]{}
+\frame{\tableofcontents}
+
+<<>>=
+library("GRASP")
+data(dist)
+@ 
+
+\section{Introduction}
+
+\subsection{GRASP}
+
+\begin{frame}
+\frametitle{GRASP}
+
+\begin{itemize}
+\item second
+
+\item second item
+
+\item ...
+
+\item and so on
+
+\end{itemize}
+
+\end{frame} 
+
+\subsection{test}
+
+\begin{frame}
+
+<<figure=TRUE>>=
+sol <- grasp.solve(dist,29)
+plot(sol)
+@ 
+
+\end{frame}
+
+\end{document}
