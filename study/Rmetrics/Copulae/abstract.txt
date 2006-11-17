@@ -1,0 +1,24 @@
+
+Peter Blum, Alexandra Dias, Paul Embrechts
+
+The ART of dependence modelling: 
+The latest advances in correlation analysis
+
+Abstract:
+
+Both at the design stage as well as at the pricing stage of Alternative
+Risk Transfer (ART) products, the notion of low (zero) beta plays an
+important role. By now it is well known that for these non-standard
+products, the interpretation of dependence through linear correlation,
+and hence the portfolio beta language becomes dubious. We review some of 
+the new tools like copulas to handle the measurement of dependence in ART 
+products. An example will be discussed.
+
+
+
+1   Read the paper of Blum, Dias and Embrechts.
+
+2   Reproduce figure 1 and 2 from Chapter 2.
+
+3   Verify the results of the example given in Chapter 3.
+
