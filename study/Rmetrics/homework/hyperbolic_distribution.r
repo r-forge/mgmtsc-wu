@@ -1,4 +1,4 @@
-## Homework
+## Homework v. 2.0
 ## Implementation of Hyperbolic Distribution
 ## Group: Köb Gerold, Theussl Stefan, Gartner Martin
 
@@ -12,15 +12,18 @@ dhyp <- function(x){
   1 / (2 * cosh(pi * x * 0.5))
 }
 
-phyp <- function(x){
+phyp <- function(q){
+  x <- q
   0.5 + 1/ pi * atan(sinh(pi * x * 0.5))
 }
 
-qhyp <- function(q){
+qhyp <- function(p){
+  q <- p
   -2 / pi * asinh(tan(pi / 2 - pi * q))
 }
 
-rhyp <- function(x){
+rhyp <- function(n){
+  x <- n
   y = runif(x,0,1)
   r = qhyp(y)
   r
@@ -44,9 +47,13 @@ rhyp <- function(x){
       pi/2-atan(z)
     }
 
-    acoth = function(x){
-      1 / 2 * log((x + 1) / (x - 1))
+    acoth <- function(x) {
+      1/2 * ( log (1+1/x) - log( 1- 1/x))
     }
+
+    # acoth = function(x){
+    #   1 / 2 * log((x + 1) / (x - 1))
+    # }
 
 dgsh <- function(x, t){
   if(-pi < t && t < 0){
@@ -67,11 +74,18 @@ dgsh <- function(x, t){
     a <- cosh(t)
     c2 <- sqrt((pi^2+t^2)/3)
     c1 <- sinh(t)/t*c2
-  }   
-  c1 * exp(c2 * x) / (exp(2 * c2 * x) + 2 * a * exp(c2 * x) + 1)
+  }
+  c1 / (exp(c2 * x) + 2 * a + exp(- c2 * x) )  
+  # c1 * exp(c2 * x) / (exp(2 * c2 * x) + 2 * a * exp(c2 * x) + 1)
 }
 
-pgsh <- function(x, t){
+pgsh <- function(q, t){
+  x <- q
+  positive <- c(rep(FALSE, length(x)))
+  ind <- which(x > 0) 
+    x[ind] = -x[ind]
+    positive[ind] <- TRUE
+  
   if(-pi < t && t < 0){
     c2 <- sqrt((pi^2 - t^2) / 3)
     p = 1 + 1 / t * acot(-(exp(c2 * x) + cos(t)) / sin(t))
@@ -86,10 +100,12 @@ pgsh <- function(x, t){
     c2 <- sqrt((pi^2 + t^2) / 3)
     p = 1 - 1 / t * acoth((exp(c2 * x) + cosh(t)) / sinh(t))
   }
+  p[ind] <- 1 - p[ind]
   p
 }
 
-qgsh = function(u, t){
+qgsh = function(p, t){
+  u <- p
   if(-pi < t && t < 0) {
     c2 <- sqrt((pi^2 - t^2) / 3)
     q = 1 / c2 * log(sin(t * u) / (sin(t * (1 - u))))
@@ -109,7 +125,8 @@ qgsh = function(u, t){
 }
 
 
-rgsh = function(x, t) {
+rgsh = function(n, t) {
+  x <- n
   y = runif(x, 0, 1)
   r = qgsh(y, t)
   r
@@ -146,12 +163,14 @@ dsgsh = function(x, t, g) {
   (2 /(g + 1 / g)) * ((dgsh(x / g, t) * (x < 0))+ (dgsh((x * g), t)) * (x >= 0))
 }
  
-psgsh <- function(x, t, g) {
+psgsh <- function(q, t, g) {
+  x <- q
   2 * g^2 / (g^2 + 1) * (pgsh(x / g, t) * (x < 0)+ ((g^2 - 1 + 2 * pgsh(g * x, t)) / (2 * g^2)) * (x >= 0))
 }
 
 
-qsgsh <- function(x, t, g) {
+qsgsh <- function(p, t, g) {
+  x <- p
   y <- NULL
   for(i in 1 : length(x)) {
     if(x[i] < g^2 / (1 + g)) {
@@ -165,7 +184,8 @@ qsgsh <- function(x, t, g) {
 }
 
 
-rsgsh = function(x, t, g) {
+rsgsh = function(n, t, g) {
+  x <- n
   y = runif(x, 0, 1)
   r = qsgsh(y, t, g)
   r
@@ -185,13 +205,65 @@ sgshFit <- function(x, t = 1, g = 1) {
   r
 }
 
-
 ## Bsp: Histogramm ueber Zufallszahlen und theoretische Dichte:
 x = seq(-5, 20, by = 0.001)
 hist(rsgsh(1000, 1, 0.3), breaks = 100, probability = T)
 lines(x, dsgsh(x, 1, 0.3), col = 2)
 
 
+
+## .distCheck der GSH-Verteilung:
+
+.distCheck(fun = "gsh", t = 0)
+
+
+## .distCheck der SGSH-Verteilung:
+
+.distCheck(fun = "sgsh", t = 0, g = 1)
+
+
+
+##################################################################
+## Sliderfunktion ################################################
+##################################################################
+
+sgshSlider = function () 
+{
+    refresh.code = function(...) {
+        N = .sliderMenu(no = 1)
+        t = .sliderMenu(no = 2)
+        g = .sliderMenu(no = 3)
+        xmin = round(qsgsh(0.01, t, g), digits = 2)
+        xmax = round(qsgsh(0.99, t, g), digits = 2)
+        s = seq(xmin, xmax, length = N)
+        y1 = dsgsh(s, t, g)
+        y2 = psgsh(s, t, g)
+        main1 = paste("SGSH Density\n", "t = ", as.character(t), 
+            " | ", "g = ", as.character(g))
+        main2 = paste("SGSH Probability\n", "xmin 0.01% = ", as.character(xmin), 
+            " | ", "xmax 0.99% = ", as.character(xmax), " | ")
+        par(mfrow = c(2, 1), cex = 0.7)
+        plot(s, y1, type = "l", xlim = c(xmin, xmax), col = "steelblue")
+        abline(h = 0, lty = 3)
+        title(main = main1)
+        plot(s, y2, type = "l", xlim = c(xmin, xmax), ylim = c(0, 
+            1), col = "steelblue")
+        abline(h = 0, lty = 3)
+        abline(h = 1, lty = 3)
+        abline(h = 0.5, lty = 3)
+        #  abline(v = mu, lty = 3, col = "red")
+        title(main = main2)
+        par(mfrow = c(1, 1), cex = 0.7)
+    }
+    .sliderMenu(refresh.code, names = c("N", "t", "g"), minima = c(50, -pi, 0.1), maxima = c(1000, 
+        10, 2), resolutions = c(50, 0.2, 0.2), 
+        starts = c(50, 1, 1))
+}
+
+
+## Anwendung:
+
+sgshSlider()
 
 #########################################
 ############### Beispiele ###############
@@ -262,7 +334,7 @@ lines(seq(-5, 5, 0.01), dnorm(seq(-5, 5, 0.01), mean(x), sd(x)), col = 3)
 
 ## Beispiel: Anpassung mit gshFit an 1000 Zufallszahlen
 
-a <- rgsh(1000, t = 3)
+a <- rgsh(1000, t = 2)
 erg <- gshFit(a)
 t_est <- erg $estimate[1]
 hist(a, breaks = 100, probability = T)
@@ -274,7 +346,7 @@ lines(seq(-5, 20, 0.01), dgsh(seq(-5, 20, 0.01), 2), col = 3)
 
 X = readSeries("sp500dge.csv")
 x <- 100 * as.vector(X)
-hist(x, breaks = 200, probability = TRUE, xlim = c(-7, 7))
+hist(x, breaks = 100, probability = TRUE, xlim = c(-7, 7))
 erg <- gshFit(x)
 t_est <- erg $estimate[1]
 lines(seq(-5, 5, 0.01), dgsh(seq(-5, 5, 0.01), t_est), col = 2)
