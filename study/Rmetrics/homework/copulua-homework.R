@@ -47,17 +47,19 @@ Z <- matrix(NA, nrow = length(x), ncol = length(y))
 for(i in 1:length(x)){
   Z[i,] <- pfgmCopula(x[i], y, theta)
 }
-persp(x, y, Z)
-contour(x,y,Z)
+persp(x, y, Z, main = "FGM Probability", xlab = "u", ylab = "v", zlab =
+      "C(u,v)")
+contour(x,y,Z, main = "FGM Probabiltiy Contours", xlab = "u", ylab = "v")
 
 ## Plot der Dichte:
 
 W <- matrix(NA, nrow = length(x), ncol = length(y))
 for(i in 1:length(x)){
-  W[i,] <- dcubicCopula(x[i], y, theta)
+  W[i,] <- dfgmCopula(x[i], y, theta)
 }
-persp(x, y, W)
-contour(x, y, W)
+persp(x, y, W, main = "FGM Density", xlab = "u", ylab = "v", zlab =
+      "Density C(u,v)")
+contour(x, y, W ,main = "FGM Density Contours", xlab = "u", ylab = "v")
 
 
 
@@ -117,19 +119,14 @@ beta <- 0.3
 gamma <- 0.1
 delta <- 0.4
 
-alpha <- theta
-beta <- theta
-gamma <- theta
-delta <- theta
-
 x <- seq(0,1, by = 0.01)
 y <- seq(0,1, by = 0.01)
 Z <- matrix(NA, nrow = length(x), ncol = length(y))
 for(i in 1:length(x)){
   Z[i,] <- pcubicCopula(x[i], y, alpha, beta, gamma, delta)
 }
-persp(x, y, Z)
-contour(x,y,Z)
+persp(x, y, Z, main = "Cubic Probability", xlab = "u", ylab = "v", zlab = "C(u,v)")
+contour(x,y,Z, main = "Cubic Probability Contours", xlab = "u", ylab = "v")
 
 ## Plot der Dichte:
 
@@ -137,8 +134,8 @@ W <- matrix(NA, nrow = length(x), ncol = length(y))
 for(i in 1:length(x)){
   W[i,] <- dfgmCopula(x[i], y, theta)
 }
-persp(x, y, W)
-contour(x, y, W)
+persp(x, y, W, main = "Cubic Density", xlab = "u", ylab = "v", zlab = "C(u,v)")
+contour(x, y, W, main = "Cubic Density Contours", xlab = "u", ylab = "v")
 
 
 #####################################################################   
@@ -187,8 +184,11 @@ for(i in 1:length(x)){
     Z[i,j] <- pCuadrasAugeCopula(x[i], y[j], alpha, beta)
   }
 }
-persp(x, y, Z)
-contour(x,y,Z)
+par(mfrow = c(2,2))
+persp(x, y, Z, main = "Cuadras Auge Probability", xlab = "u", ylab =
+      "v", zlab = "C(u,v)")
+contour(x,y,Z, main = "Cuadras Auge Probability Contours", xlab = "u",
+        ylab = "v")
 
 ## Plot der Dichte:
 
@@ -200,5 +200,7 @@ for(i in 1:length(x)){
     W[i,j] <- dCuadrasAugeCopula(x[i], y[j], alpha, beta)
   }
 }
-persp(x, y, W)
-contour(x, y, W)
+persp(x, y, W, main = "Cuadras Auge Density", xlab = "u", ylab = "v",
+      zlab = "Density C(u,v)")
+contour(x, y, W, main = "Cuadras Auge Probability Contours", xlab =
+        "u", ylab = "v")
