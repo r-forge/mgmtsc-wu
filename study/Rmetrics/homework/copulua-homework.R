@@ -1,0 +1,204 @@
+#####################################################################   
+## Farlie-Gumbel-Morgenstern family                                ##
+#####################################################################
+
+## Anmerkung: Wenn Daten verwendet werden (zB Renditen des DJI und
+## DAX), dann muss zunächst die Randverteilung geschätzt werden. Dann
+## gilt zB: U = F(DJI) und V = G(DAX) wobei F und G fuer die je-
+## weilige Verteilungsfunktion steht.
+
+
+.checkValuesFGM <- function(u, v, theta){
+    if(any(u < 0) || any(u > 1)) {
+    stop("u must be between 0 and 1")
+  }
+  if(any(v < 0) || any(v > 1)) {
+    stop("v must be between 0 and 1")
+  }
+  if(any(theta < -1) || any(theta > 1)) {
+    stop("theta must be between -1 and 1")
+  }
+}
+
+pfgmCopula <- function(u = 0.5, v = u, theta = 0){
+  ## Check Values:
+  .checkValuesFGM(u, v, theta)
+  ## Calcualte probability
+  pC.uv <- u * v + theta * u * v * (1 - u) * (1 - v)
+  pC.uv
+}
+
+dfgmCopula <- function(u = 0.5, v = u, theta = 0){
+  ## Check Values:
+  .checkValuesFGM(u, v, theta)
+  ## Calculate density:
+  dC.uv <- 1 + (-1 + 2 * u) * (-1 + 2 * v) * theta
+  dC.uv
+}
+
+par(mfrow = c(2,2))
+
+## Plot der Verteilung:
+
+theta <- 0.2
+x <- seq(0,1, by = 0.01)
+y <- seq(0,1, by = 0.01)
+Z <- matrix(NA, nrow = length(x), ncol = length(y))
+for(i in 1:length(x)){
+  Z[i,] <- pfgmCopula(x[i], y, theta)
+}
+persp(x, y, Z)
+contour(x,y,Z)
+
+## Plot der Dichte:
+
+W <- matrix(NA, nrow = length(x), ncol = length(y))
+for(i in 1:length(x)){
+  W[i,] <- dcubicCopula(x[i], y, theta)
+}
+persp(x, y, W)
+contour(x, y, W)
+
+
+
+
+#####################################################################   
+## Copulas cubic in u and in v                                     ##
+#####################################################################
+
+.checkCubic <- function(x, y) {
+  if(x^2 - x * y + y^2 - 3 * x + 3 *y <= 0) TRUE
+  else FALSE
+}
+
+.checkSet <- function(x, y){
+  alpha <- x
+  beta <- y
+  if(alpha * -2 <= beta && beta <= alpha * 1) {
+    if(-beta <= alpha && alpha <= 2 * beta) TRUE
+    else FALSE
+  }
+  else FALSE
+}
+
+pcubicCopula <- function(u, v, alpha, beta, gamma, delta) {
+  if(.checkSet(alpha, beta) || .checkCubic(alpha, beta)) TRUE
+  if(.checkSet(alpha, gamma) || .checkCubic(alpha, gamma)) TRUE
+  if(.checkSet(delta, beta) || .checkCubic(delta, beta)) TRUE
+  if(.checkSet(delta, gamma) || .checkCubic(delta, gamma)) TRUE
+  else stop("invalid parameter!!")
+ 
+  pC.uv <- u * v + u * v * (1-u) * (1-v) * (alpha * u * v + beta * u *
+  (1-v) + gamma * v* (1-u) + delta * (1-u) * (1-v))
+  pC.uv
+}
+
+dcubicCopula <- function(u, v, alpha, beta, gamma, delta) {
+  if(.checkSet(alpha, beta) || .checkCubic(alpha, beta)) TRUE
+  if(.checkSet(alpha, gamma) || .checkCubic(alpha, gamma)) TRUE
+  if(.checkSet(delta, beta) || .checkCubic(delta, beta)) TRUE
+  if(.checkSet(delta, gamma) || .checkCubic(delta, gamma)) TRUE
+  else stop("invalid parameter!!")
+      
+  dC.uv <- (1 + delta - 2 * u *(-beta +v * ( ( -2 + 3 * v) * alpha + 4
+  * (beta + gamma - 2*delta) -3 * v *(beta + 2 *gamma - 2*delta)) + 2
+  * delta) + v *((2 - 3*v) * gamma + (-4 + 3 * v) * delta) + 3 * u^2
+  * (-beta + delta + 3*v^2*(alpha - beta -gamma + delta) - 2* v* (alpha
+  - 2*beta - gamma + 2 *delta)))
+  dC.uv
+}
+
+par(mfrow = c(2,2))
+
+## Plot der Verteilung:
+
+alpha <- 0.2
+beta <- 0.3
+gamma <- 0.1
+delta <- 0.4
+
+alpha <- theta
+beta <- theta
+gamma <- theta
+delta <- theta
+
+x <- seq(0,1, by = 0.01)
+y <- seq(0,1, by = 0.01)
+Z <- matrix(NA, nrow = length(x), ncol = length(y))
+for(i in 1:length(x)){
+  Z[i,] <- pcubicCopula(x[i], y, alpha, beta, gamma, delta)
+}
+persp(x, y, Z)
+contour(x,y,Z)
+
+## Plot der Dichte:
+
+W <- matrix(NA, nrow = length(x), ncol = length(y))
+for(i in 1:length(x)){
+  W[i,] <- dfgmCopula(x[i], y, theta)
+}
+persp(x, y, W)
+contour(x, y, W)
+
+
+#####################################################################   
+## Cuadras-Augé Copulas                                            ##
+#####################################################################
+
+.checkValuesCuadras <- function(u, v, alpha, beta){
+    if(any(u < 0) || any(u > 1)) {
+    stop("u must be between 0 and 1")
+  }
+  if(any(v < 0) || any(v > 1)) {
+    stop("v must be between 0 and 1")
+  }
+  if(any(alpha < 0) || any(alpha > 1)) {
+    stop("alpha must be between -1 and 1")
+  }
+  if(any(beta < 0) || any(beta > 1)) {
+    stop("beta must be between -1 and 1")
+  }
+}
+
+pCuadrasAugeCopula <- function(u, v, alpha, beta) {
+  .checkValuesCuadras(u, v, alpha, beta)
+
+  pC.uv <- min(u^(1- alpha) * v, u * v^(1- beta))
+  pC.uv
+}
+
+dCuadrasAugeCopula <- function(u, v, alpha, beta){
+  .checkValuesCuadras(u, v, alpha, beta)
+  # browser()
+  I <- ((u^(1-alpha) * v) <  (u * v^(1- beta)))
+  dC.uv <- ((-u ^(-alpha) * (alpha - 1) * I) + (-v^(-beta)* (beta -1) *
+  (1 - I)))
+  dC.uv
+}
+
+
+alpha <- 0.3
+beta <- 0.7
+x <- seq(0,1, by = 0.01)
+y <- seq(0,1, by = 0.01)
+Z <- matrix(NA, nrow = length(x), ncol = length(y))
+for(i in 1:length(x)){
+  for(j in 1: length(y)){
+    Z[i,j] <- pCuadrasAugeCopula(x[i], y[j], alpha, beta)
+  }
+}
+persp(x, y, Z)
+contour(x,y,Z)
+
+## Plot der Dichte:
+
+x <- seq(0.01, 1, by = 0.01)
+y <- seq(0.01, 1, by = 0.01)
+W <- matrix(NA, nrow = length(x), ncol = length(y))
+for(i in 1:length(x)){
+  for(j in 1:length(y)){
+    W[i,j] <- dCuadrasAugeCopula(x[i], y[j], alpha, beta)
+  }
+}
+persp(x, y, W)
+contour(x, y, W)

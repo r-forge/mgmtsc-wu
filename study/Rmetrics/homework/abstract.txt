@@ -1,0 +1,26 @@
+
+
+Roger B. Nelsen
+
+Properties and applications of copulas: A brief survey
+
+
+--------------------------------------------------------------------------------
+
+
+1.  Read the paper.
+
+2.  Implement functions for the probability and density function
+    for the 
+    
+    a) The Farlie-Gumbel-Morgenstern Copula family (Chapter 3.1)
+    
+    b) Copulas cubic in u and in v (Chapter 3.2)
+    
+    c) Cuadras-Aug´e copulas (Chapter 3.4)
+    
+3.  Plot the Copula density and probability functions
+
+4.  Optional - Try to implement Kendall's tau and Spearman's rho
+
+5.  Optional - Try to investigate the tail dependence of theses Copulae
