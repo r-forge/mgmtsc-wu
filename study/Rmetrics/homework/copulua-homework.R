@@ -36,6 +36,29 @@ dfgmCopula <- function(u = 0.5, v = u, theta = 0){
   dC.uv
 }
 
+taufgmCopula <- function(theta){
+  if(theta < -1 || theta > 1) {
+    stop("invalid theta!")
+  }
+  else {
+    tau <- 2 * theta / 9
+    tau
+  }
+}
+
+rhofgmCopula <- function(theta){
+  if(theta < -1 || theta > 1) {
+    stop("invalid theta!")
+  }
+  else {
+    rho <- theta/3
+    rho
+  }
+}
+
+  
+
+
 par(mfrow = c(2,2))
 
 ## Plot der Verteilung:
@@ -110,6 +133,27 @@ dcubicCopula <- function(u, v, alpha, beta, gamma, delta) {
   dC.uv
 }
 
+taucubicCopula <- function(alpha, beta, gamma, delta){
+  if(.checkSet(alpha, beta) || .checkCubic(alpha, beta)) TRUE
+  if(.checkSet(alpha, gamma) || .checkCubic(alpha, gamma)) TRUE
+  if(.checkSet(delta, beta) || .checkCubic(delta, beta)) TRUE
+  if(.checkSet(delta, gamma) || .checkCubic(delta, gamma)) TRUE
+  else stop("invalid parameter!!")
+  tau <- 1/450 * (-beta * (-25 + gamma) + alpha * (25 + delta) + 25 *
+  (gamma + delta) )
+  tau
+}
+
+rhocubicCopula <- function(alpha, beta, gamma, delta){
+  if(.checkSet(alpha, beta) || .checkCubic(alpha, beta)) TRUE
+  if(.checkSet(alpha, gamma) || .checkCubic(alpha, gamma)) TRUE
+  if(.checkSet(delta, beta) || .checkCubic(delta, beta)) TRUE
+  if(.checkSet(delta, gamma) || .checkCubic(delta, gamma)) TRUE
+  else stop("invalid parameter!!")
+  rho <- 1/12 * (alpha + beta + gamma + delta)
+  rho
+}   
+
 par(mfrow = c(2,2))
 
 ## Plot der Verteilung:
@@ -171,6 +215,31 @@ dCuadrasAugeCopula <- function(u, v, alpha, beta){
   dC.uv <- ((-u ^(-alpha) * (alpha - 1) * I) + (-v^(-beta)* (beta -1) *
   (1 - I)))
   dC.uv
+}
+
+tauCuadrasAugeCopula <- function(alpha, beta) {
+  if(any(alpha < 0) || any(alpha > 1)) {
+    stop("alpha must be between -1 and 1")
+  }
+  if(any(beta < 0) || any(beta > 1)) {
+    stop("beta must be between -1 and 1")
+  }
+  else {tau <- alpha * beta / ( alpha - alpha * beta + beta)
+        tau
+      }
+}
+
+rhoCuadrasAugeCopula <- function(alpha, beta) {
+  if(any(alpha < 0) || any(alpha > 1)) {
+    stop("alpha must be between -1 and 1")
+  }
+  if(any(beta < 0) || any(beta > 1)) {
+    stop("beta must be between -1 and 1")
+  }
+  else {
+    rho <- - (3 * alpha) / (-2 + alpha)
+    rho
+  }
 }
 
 
