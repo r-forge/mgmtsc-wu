@@ -301,8 +301,8 @@ cuadrasAugeSlider = function ()
 
         par(mfrow = c(2, 1), cex = 0.7)
 
-        persp(x, y, W, main = main1, xlab = "u", ylab = "v",
-              zlab = "Density C(u,v)",phi,theta)
+        persp(x, y, dens2d, main = main1, xlab = "u", ylab = "v",
+              zlab = "Density C(u,v)",phi=phi,theta=theta)
 
         
         #plot(s, y2, type = "l", xlim = c(xmin, xmax), ylim = c(0, 
@@ -315,7 +315,7 @@ cuadrasAugeSlider = function ()
         par(mfrow = c(1, 1), cex = 0.7)
         
     }
-    .sliderMenu(refresh.code, names = c("N", "alpha", "beta", "theta", "phi"), minima = c(50, 0, 0, 0, 0), maxima = c(1000, 1, 1, 360, 360), resolutions = c(50, 0.1, 0.1, 1, 1), starts = c(500, 0.3, 0.7, 0, 15))
+    .sliderMenu(refresh.code, names = c("N", "alpha", "beta", "theta", "phi"), minima = c(10, 0, 0, 0, 0), maxima = c(200, 1, 1, 360, 100), resolutions = c(10, 0.1, 0.1, 1, 1), starts = c(50, 0.3, 0.7, 0, 15))
 }
 
 
