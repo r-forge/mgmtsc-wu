@@ -274,6 +274,8 @@ cuadrasAugeDensity <- function(x, y, alpha=0.3, beta=0.7){
   W
 }
 
+W <- cuadrasAugeDensity(x,y)
+
 persp(x, y, W, main = "Cuadras Auge Density", xlab = "u", ylab = "v",
       zlab = "Density C(u,v)")
 contour(x, y, W, main = "Cuadras Auge Probability Contours", xlab =
