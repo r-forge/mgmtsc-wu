@@ -263,13 +263,62 @@ contour(x,y,Z, main = "Cuadras Auge Probability Contours", xlab = "u",
 
 x <- seq(0.01, 1, by = 0.01)
 y <- seq(0.01, 1, by = 0.01)
-W <- matrix(NA, nrow = length(x), ncol = length(y))
-for(i in 1:length(x)){
-  for(j in 1:length(y)){
-    W[i,j] <- dCuadrasAugeCopula(x[i], y[j], alpha, beta)
+
+cuadrasAugeDensity <- function(x, y, alpha=0.3, beta=0.7){
+  W <- matrix(NA, nrow = length(x), ncol = length(y))
+  for(i in 1:length(x)){
+    for(j in 1:length(y)){
+      W[i,j] <- dCuadrasAugeCopula(x[i], y[j], alpha, beta)
+    }
   }
+  W
 }
+
 persp(x, y, W, main = "Cuadras Auge Density", xlab = "u", ylab = "v",
       zlab = "Density C(u,v)")
 contour(x, y, W, main = "Cuadras Auge Probability Contours", xlab =
         "u", ylab = "v")
+
+cuadrasAugeSlider = function () 
+{
+    refresh.code = function(...) {
+        N = .sliderMenu(no = 1)
+        alpha = .sliderMenu(no = 2)
+        beta = .sliderMenu(no = 3)
+        theta = .sliderMenu(no = 4)
+        phi = .sliderMenu(no = 5)
+        
+        xmin = 0.01
+        xmax = 1
+        
+        x <- y <- seq(xmin, xmax, length = N)
+        dens2d <- cuadrasAugeDensity(x,y,alpha,beta)
+        
+        main1 = paste("Cuadras Auge Perspective\n", "alpha = ", as.character(alpha), 
+            " | ", "beta = ", as.character(beta))
+        main2 = paste("Cuadras Auge Contour\n", "xmin 0.01% = ", as.character(xmin), 
+            " | ", "xmax 0.99% = ", as.character(xmax), " | ")
+
+        par(mfrow = c(2, 1), cex = 0.7)
+
+        persp(x, y, W, main = main1, xlab = "u", ylab = "v",
+              zlab = "Density C(u,v)",phi,theta)
+
+        
+        #plot(s, y2, type = "l", xlim = c(xmin, xmax), ylim = c(0, 
+        #    1), col = "steelblue")
+        #abline(h = 0, lty = 3)
+        #abline(h = 1, lty = 3)
+        #abline(h = 0.5, lty = 3)
+        #  abline(v = mu, lty = 3, col = "red")
+        #title(main = main2)
+        par(mfrow = c(1, 1), cex = 0.7)
+        
+    }
+    .sliderMenu(refresh.code, names = c("N", "alpha", "beta", "theta", "phi"), minima = c(50, 0, 0, 0, 0), maxima = c(1000, 1, 1, 360, 360), resolutions = c(50, 0.1, 0.1, 1, 1), starts = c(500, 0.3, 0.7, 0, 15))
+}
+
+
+## Anwendung:
+
+cuadrasAugeSlider()
