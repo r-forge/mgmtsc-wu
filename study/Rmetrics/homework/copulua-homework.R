@@ -265,21 +265,28 @@ x <- seq(0.01, 1, by = 0.01)
 y <- seq(0.01, 1, by = 0.01)
 
 cuadrasAugeDensity <- function(x, y, alpha=0.3, beta=0.7){
-  W <- matrix(NA, nrow = length(x), ncol = length(y))
+  dens2d <- matrix(NA, nrow = length(x), ncol = length(y))
   for(i in 1:length(x)){
     for(j in 1:length(y)){
-      W[i,j] <- dCuadrasAugeCopula(x[i], y[j], alpha, beta)
+      dens2d[i,j] <- dCuadrasAugeCopula(x[i], y[j], alpha, beta)
     }
   }
-  W
+  dens2d
 }
 
+<<<<<<< .mine
+## persp(x, y, W, main = "Cuadras Auge Density", xlab = "u", ylab = "v",
+##      zlab = "Density C(u,v)")
+## contour(x, y, W, main = "Cuadras Auge Probability Contours", xlab =
+##        "u", ylab = "v")
+=======
 W <- cuadrasAugeDensity(x,y)
 
 persp(x, y, W, main = "Cuadras Auge Density", xlab = "u", ylab = "v",
       zlab = "Density C(u,v)")
 contour(x, y, W, main = "Cuadras Auge Probability Contours", xlab =
         "u", ylab = "v")
+>>>>>>> .r147
 
 cuadrasAugeSlider = function () 
 {
