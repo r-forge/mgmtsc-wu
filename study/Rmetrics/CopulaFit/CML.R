@@ -3,23 +3,13 @@
 ## Es wird eine Beschränkung von theta benötigt, siehe Nelsen. Dazu
 ## hat Prof. Wuertz die Funktion .archmRange(##type) geschrieben.
 
-.checkRange <- function(range, type){
-  if(type == 3){
-    range[2] <<- range[2] - 1E-10
-  }
-}
-    
-
-
 .CMLfit <- function(x, y, ...){
-  browser()
   ## zunächst fuer alle archmCopulae
   u <- pemp(x, x)
   v <- pemp(y, y)
   fit <- NULL
-  # t <- c(1, 3:6, 9:10, 12:14, 16:17)  ## 19 und 20 funktionieren
+  t <- c(1, 3:6, 9:10, 12:14, 16:17)  ## 19 und 20 funktionieren
   # auch nicht
-  t <- 3
   for(i in t){  ## eigentlich von 1:22
 
     type <- i
@@ -27,13 +17,14 @@
     range <- .archmRange(type)
         
     fun = function(x, type) {
-      -mean(log(darchmCopula(u = u, v = v, alpha = x, type = type)))
+      -mean(log(darchmCopula(u = u, v = v, alpha = x, type = type,
+    alternative = TRUE)))
     }
   
     y = nlminb(start = alpha, objective = fun, lower = range[1],
       upper = range[2], type = type, ...)
 
-    fit $family <- c(fit $family, c("Archimedian Type ", type))
+    fit $family <- c(fit $family, paste("Archimedian Type", type))
     fit $par <- c(fit $par, y $par)
     fit $objective <- c(fit $objective, y $objective)
     fit $convergence <- c(fit $convergence, y $convergence)
