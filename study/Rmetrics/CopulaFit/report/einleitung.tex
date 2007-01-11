@@ -2,3 +2,67 @@
 \section{Einleitung}
 \label{sec:einleitung}
 
+Es besteht das Problem, dass die Finanzm‰rkte der Realit‰t h‰ufig
+nicht den Annahmen der Finanzmarkttheorie entsprechen. So sind
+beispielsweise Renditen von Marktdaten h‰ufig unkorreliert, aber
+dennoch abh‰ngig, sie weisen sogenannte \emph{fat tails} auf und
+entsprechen somit nicht der Annahme der Normalverteilung, treten in
+Clustern auf und die Volatilit‰t ist zuf‰llig. 
+
+Somit besteht vor allem die Schwierigkeit, die Verteilungsfunktion
+eines Portfolios zu sch‰tzen. Man kann zwar (unter Aufgabe der
+\emph{``Normalit‰t''}  sehr leicht die Randverteilungen der
+einzelnen Instrumente des Portfolios sch‰tzen, allerdings ist es
+schwierig die gemeinsame Verteilung aller Instrumente abzusch‰tzen.
+
+Die Unbekanntheit der gemeinsamen Verteilungsfunktion f\"uhrt zu zwei
+groﬂen Problemen: 
+
+\begin{itemize}
+\item Zun‰chst ist es f\"ur das Risikomanagement, das h‰ufig auf Basis
+  des \emph{VaR (Value at Risk)} betrieben wird, sehr schwierig,
+  VaR-Werte zu finden, die tats‰chlich jenen der gemeinsamen
+  Verteilung entsprechen. Angenommen man betrachtet zwei Zeitreihen
+  zweier unterschiedlicher Renditen. Kann man nun, um den VaR der
+  gemeinsamen Verteilung zu sch‰tzen, den VaR der beiden einzelnen
+  Zeitreihen einfach addieren bzw. unter welchen Bedingungen ist dies
+  die Obergrenze f\"ur den VaR\footnote{vgle \cite{embrechts2003}}.
+
+\item Auﬂerdem ist die Sch‰tzung der Abh‰ngigkeitsstruktur innerhalb
+  der Instrumente eines Portfolios sehr schwierig. Die Korrelation ist
+  eine gute Maﬂzahl f\"ur multivariate Normalverteilungen, weist aber
+  nach \cite{fantazzini2003} drei wesentliche Nachteile auf:
+  
+  \begin{enumerate}
+  
+  \item Die Varianz von den Zufallszahlen muss endlich sein, was f\"ur
+    Verteilungen mit \emph{fat tails} nicht mˆglich ist.
+  
+  \item Unabh‰ngigkeit zwischen zwei Zufallszahlen wird durch eine
+    Korrelation von null ausgedr\"uckt. Eine Interpretation in die
+    Gegenrichtung ist jedoch nur f\"ur eine multivariate
+    Normalverteilung richtig. Auﬂerdem h‰lt das Argument auch nicht,
+    wenn nur die Randverteilungen, nicht aber die gemeinsame Verteilung
+    normalverteilt sind.
+  
+  \item Die Korrelation ist nicht invariant bez\"uglich monotoner
+    Transformationen.
+  \end{enumerate}
+\end{itemize}
+
+Um nun den Umgang mit diesen Problemen zu erleichtern, setzt man
+vermehrt \emph{Copulae} ein. Mit Hilfe dieser kann die gemeinsame
+Verteilung gesch‰tzt werden. Auﬂerdem erlauben \emph{Copulae} die
+Anwendung invariater Abh‰ngigkeitsmaﬂe, welche die Nachteile der
+linearen Korrelation \"uberwinden.
+
+Im n‰chsten Kapitel folgt eine kurze Erkl‰rung des Konzepts von
+\emph{Copulae} und es werden die wesentlichsten Eigenschaften kurz
+beschrieben. Danach soll kurz vorgestellt werden, welche Familien von
+\emph{Copulae} es gibt und welche Eigenschaften diese besitzen.
+
+Kapitel \ref{sec:fitmethoden} stellt den wesentlichen Teil dieser
+Arbeit dar, n‰mlich die unterschiedlichen Methoden, mit welchen eine
+passende \emph{Copula} f\"ur Zeitreihen gefunden werden kann. Diese
+Methoden werden durch Demonstration f\"ur den bivariaten Fall mit dem
+Softwarepaket \emph{R} dargestellt.
