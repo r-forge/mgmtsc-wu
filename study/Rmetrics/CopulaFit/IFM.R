@@ -90,3 +90,19 @@
   ## Ueberlegen, wie ausgegeben werden kann, wie Randverteilung aussieht
     
 }
+
+
+
+
+
+## Bsp:
+
+x <- get.hist.quote("^atx", quote = "Close")
+y <- get.hist.quote("^n225", quote = "Close")
+x <- as.timeSeries(x)
+y <- as.timeSeries(y)
+x <- as.vector(returnSeries(x))
+y <- as.vector(returnSeries(y))
+y <- y[1:length(x)]
+
+a <- .IFMfit(x, y)
