@@ -10,10 +10,10 @@
   ## Formatierung, 1. Element = mean, 2. = sd
   for(i in c(2:5)){ 
     fit <- switch(paste(i),
-                  "2" = tFit(x, doplot = FALSE, trace = FALSE),
-                  "3" = ghFit(x, doplot = FALSE, trace = FALSE),
-                  "4" = hypFit(x, doplot = FALSE, trace = FALSE),
-                  "5" = nigFit(x, doplot = FALSE, trace = FALSE),
+                  "2" = tFit(x, doplot = FALSE, trace = 0),
+                  "3" = ghFit(x, doplot = FALSE, trace = 0),
+                  "4" = hypFit(x, doplot = FALSE, trace = 0),
+                  "5" = nigFit(x, doplot = FALSE, trace = 0),
                   "6" = stableFit(x, doplot = FALSE, trace = FALSE))
     ergebnis $estimate[[i]] <- fit @fit$estimate
     ergebnis $minimum[[i]] <- fit @fit$minimum

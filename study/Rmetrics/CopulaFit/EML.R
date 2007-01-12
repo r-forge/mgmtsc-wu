@@ -65,9 +65,8 @@ for(i in 1:5){
 
   for(j in 1:25){
     
-  
   for(i in t){  ## eigentlich von 1:22
-    cat(paste("Iteration: Type", i, "\n"))
+    cat(paste("Iteration: Copula Type", i, "Margins, combination", j, "\n"))
 
     type <- i
     alpha = .archmParam(type)$param
