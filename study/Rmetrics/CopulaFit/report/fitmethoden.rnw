@@ -1,0 +1,69 @@
+
+%E:\UNI\WS06\SVN Ordner\SVN neu\study\Rmetrics\CopulaFit\report
+
+\section{Fit-Methoden}
+\label{sec:fitmethoden}
+
+Copulae Funktionen sind einfache Ausdrücke von multivariaten Modellen jedoch kann darauf die klassische Statistik nicht angewandt werden. Die einzige Theorie die angewandt werden kann ist die asymptotische Maximum Likelihood Methode (MLE). Es gibt verschiedene Methoden die rechenintesive Berechnung der MLE´s durchzuführen. 
+Für unsere Berechnungen benötigen wir immer eine numerische Optimierungsfunktion die uns unsere Zielfunktion optimiert. In diesem Zusammenhang verwenden wir die in \emph{R} implementierten Funktionen. 
+Ein Problem bei der Optimierung liegt darin, dass es viele Kombinationen von Randverteilungen und Copulaes gibt und das wir die optimale Lösung der Kombination von Copulae und Randverteilung suchen.
+
+Es wird immer von stetigen Zufallszahlen (Renditen) ausgegangen, jedoch muss diese Bedingung nicht immer vorliegen. 
+
+\subsection{Exact Maximum Likelihood (EML) method (one stage method)}
+\label{sec:eml}
+
+Hierbei wird versucht sowohl die Randverteilungen als auch die Copulae gleichzeitig über einen MLE zu optimieren.
+Wobei wir eine Datenmatrix $ \chi = \left\{x_{1t},x_{2t},...,x_{nt}\right\}^{T}_{t=1} $ benötigen. Die zu optimierende Funktion lauted dann:
+
+$$ l(\theta) = \sum^{T}_{t=1} ln c(F_1(x_{1t}),...,F_n(x_{nt})) + \sum^{T}_{t=1}\sum^{n}_{j=1}ln f_j(x_{jt})$$
+
+wobei $\theta$ alle Parameter der Randverteilungen und der Copulae darstellt. Nehmen wir nun eine Vielzahl von Randverteilungen und Copulae her so erhalten wir durch:
+
+$$ \hat{\theta}_{MLE} = max_{\theta \in \ominus} l(\theta) $$
+
+den Maximum Likelihood Schätzer.
+
+\subsection{Inference Functions for Margins (IFM) method (two stage method)}
+\label{sec:ifm}
+
+Da die EML bei höheren Dimensionen sehr Rechenintensiv werden kann, verwenden wir noch andere Methoden wie die IFM. Wenn wir uns die obigen MLE anschauen so sehen wir, dass dieser aus 2 Funktionen besteht. Einerseits aus dem schätzen der richtigen Copulae und anderseits dem schätzen der besten Randverteilung. Genau diese Eigenschaft hat man sich bei der IFM - Methode bedient. Hierbei werden zuerst die Randverteilungen nach,
+
+$$ \hat{\theta}_{1} = ArgMax_{\theta_1} \sum^{T}_{t=1}\sum^{n}_{j=1}ln f_j(x_{jt};\theta_1) $$
+
+geschätzt. 
+Als zweiten Schritt wird mit den gefitteten Randverteilungen die Copulae nach,
+
+$$ \hat{\theta}_{2} = ArgMax_{\theta_2} \sum^{T}_{t=1} ln c(F_1(x_{1t}),...,F_n(x_{nt});\theta_1,\hat{\theta}_{1}) $$
+
+geschätzt.
+
+Der IFM Schätzer ist somit definiert als Vektor $ \hat{\theta}_{IFM}=(\hat{\theta}_{1},\hat{\theta}_{2})´$.
+
+\subsection{Canonical Maximum Likelihood (CML) method}
+\label{sec:cml}
+
+Bei vorhergehenden Methode haben wir die benötigte Verteilungsfunktion der Randverteilung geschätzt. Diesen Schritt wollen wir uns mit der CML-Methode ersparen. Dazu benötigen wir aber die Empirische Verteilungsfunktion ($\hat{F_i}(x_{it})$ mit $i = 1,....,n$) die wir wie folgt definiert haben:
+
+<<init,fig=FALSE,echo=TRUE>>=
+
+pemp <- function(t, x){
+  F <- NULL
+  for(i in 1:length(t)){
+    F <- c(F, 1 / length(x) * sum(x <= t[i]))
+  }
+  F
+}
+
+@
+
+Mit der empirischen Verteilungsfunktion berechnen wir mittels MLE die Parameter der zugrundeliegenden Copulae.
+
+$$ $$ \hat{\theta}_{2} = ArgMax_{\theta_2} \sum^{T}_{t=1} ln c(\hat{F_}1(x_{1t}),...,\hat{F_n}(x_{nt});\theta_1,\hat{\theta}_{2}) $$
+
+
+
+
+
+
+

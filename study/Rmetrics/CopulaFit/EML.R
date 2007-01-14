@@ -100,3 +100,6 @@ for(i in 1:5){
   ## Ueberlegen, wie ausgegeben werden kann, wie Randverteilung aussieht
     
 }
+
+
+### Funktion do.call verwenden...Tipp von Stefan dann können wir uns switch ersparen...
