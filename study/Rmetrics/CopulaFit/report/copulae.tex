@@ -39,11 +39,19 @@ Interpretation, n‰mlich dem Volumen $V_C\left([0,F(x)] \times [0,G(y)]
 Das wohl wichtigste Theorem in Zusammenhang mit \emph{Copulae} ist
 \emph{Sklar's Theorem}. Dieses besagt, dass die gemeinsame Verteilung
 durch die \emph{Copula} ausgedr\"uckt werden kann. Formal kann man
-dies folgendermaﬂen definieren:
+dies f\"ur alle $x,y \in [0, 1]$ folgendermaﬂen definieren:
 
 \begin{equation}
   \label{eq:sklar}
   H(x, y) = C(F(x), G(y))
+\end{equation}
+
+Das Theorem gilt auch f\"ur den multivariaten Fall (Beweise siehe
+\cite{cherubini2004}):
+
+\begin{equation}
+  \label{eq:sklarmultivar}
+  H(\mathbf{x}) = C(F_1(x_1), \ldots, F_n(x_n))
 \end{equation}
 
 Das bedeutet, dass f\"ur stetige multivariate Verteilungsfunktionen,
@@ -59,20 +67,21 @@ F\"ur eine zweidimensionale \emph{Copula} $C$ muss gelten:
 \begin{enumerate}
 \item $C(0,x) = C(x, 0) = 0$ und  $C(1, x) = C(x, 1) = x$ f\"ur alle
   $x \in \mathbf{I}$.
-\item $C$ ist eine zweidimensionale steigende Funktion.
-\item $C$ ist eine nicht-fallende Funktion in jeder Variable.
+\item $C$ ist eine zweidimensionale streng steigende Funktion
+  (Konkavit‰t). 
+\item $C$ ist eine nicht-fallende (konkave) Funktion in jeder Variable.
 \item $C$ erf\"ullt die Lipschitz Bedingung.
 \end{enumerate}
 
 F\"ur detailiertere Ausf\"uhrungen zu diesen Eigenschaften sei auf
 \cite{nelsen2003} verwiesen.
 
-\subsection{Die Frechet-Hoeffding Bounds}
+\subsection{Die Frech\'et-Hoeffding Bounds}
 \label{sec:bounds}
 
 Eine weitere wichtige Eigenschaft ist, dass alle \emph{Copulae}
 zwischen gewissen Grenzen liegen. Diese Grenzen werden als
-\emph{Frechet-Hoeffding-Bounds} bezeichnet:
+\emph{Frech\'et-Hoeffding-Bounds} bezeichnet:
 
 Man betrachte dazu zwei Copulae f\"ur $x,y \in [0,1]$ , n‰mlich
 \begin{eqnarray}

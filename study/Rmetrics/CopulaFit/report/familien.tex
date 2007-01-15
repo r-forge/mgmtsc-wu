@@ -2,12 +2,129 @@
 \section{Familien von Copulae}
 \label{sec:familien}
 
-\subsection{Archimedische Copulae}
-\label{sec:archimedische}
+Aus obiger Darstellung geht klar hervor, dass es viele Funktionen
+gibt, welche die Eigenschaften und Voraussetzungen einer Copula
+erf\"ullen. F\"ur statistische und ökonometrische Zwecke ist es daher
+durchaus dienlich, eine Reihe von verschiedenen Copulae zur
+Verf\"ugung zu haben. Man unterscheidet vor allem zwei große Gruppen
+von Copula-Familien, nämlich die archimedischen Copulae und die
+elliptischen Copulae.
+
 
 \subsection{Elliptische Copulae}
 \label{sec:elliptische}
 
-\subsection{Farlie-Gumbel-Morgenstern Familie}
-\label{sec:fgm}
+Mit einfachen Worten gesagt, sind ellipitische Copulae die Copulae von
+elliptischen Verteilungen. Daher ist es nicht verwunderlich, dass die
+\emph{Gauß'sche Copula} (oder Normal Copula) und die \emph{t-Copula}
+die wichtigsten Vertreter dieser Familie sind.
 
+Elliptische Copulae bieten den Vorteil, dass sie viele Eigenschaften
+einer multivariaten Normalveteilung mit sich bringen, dass sie leicht
+berechenbar sind und dass Simulationen von elliptischen Verteilungen
+(und somit auch von elliptischen Copulae) relativ einfach ist.
+
+\subsubsection{Normal-Copula}
+\label{sec:normal}
+
+Die Gauß'sche Copula (Normal-Copula) ist die Copula der multivariaten
+Normalverteilung. Sei $\mathbf{u}$ ein Vektor mit $n$ normalverteilten
+Werten $\mathbf{x}$, so dass $(u_1, \ldots, u_n) = (F_1(x_1), \ldots,
+F_n(x_n))$ wobei $F_i$ die Verteilungsfunktion einer Normalverteilung
+darstellt. Dann ist die Gauß'sche Copula definiert mit
+
+\begin{equation}
+  \label{eq:gauss}
+  C_G(\mathbf{u}) = \Phi_n(\Phi^{-1}(u_1), \ldots, \Phi^{-1}(u_n))
+\end{equation}
+
+wobei $\Phi_n$ die gemeinsame Verteilungsfunktion einer $n$-dimensionalen
+Standardnormalverteilung mit Korrelationsmatrix $R$ ist und
+$\Phi^{-1}$ die Quantilsfunktion der univariaten
+Standardnormalverteilung ist.
+
+Im zweidimensionalen Fall reduziert sich die Copula auf
+
+\begin{equation}
+  \label{eq:gauss2dim}
+  C_G(u,v) = \int_{-\infty}^{\Phi^{-1}(u)}
+  \int_{-\infty}^{\Phi^{-1}(v)} \frac{1}{2 \pi \sqrt{(1 - \rho^2)}}
+  \exp{ \left( -\frac{s^2 - 2 \rho s t + t^2} {2 (1 - \rho^2)}
+    \right) }ds dt
+\end{equation}
+
+wobei $\rho$ dem Korrelationskoeffizienten nach Pearson entspricht.
+
+
+\subsubsection{t-Copula}
+\label{sec:tcopula}
+
+Die t-Copula bezieht sich nun auf die multivariate t-Verteilung. Die
+Ränder sind also univariat t-verteilt, dh: $(u_1, \ldots, u_n) =
+t_{\nu}(x_1, \ldots, x_n)$. Sei $T_{\nu}^n$ die standardisierte
+$n$-dimensionale t-Verteilung und $t_{\nu}^{-1}$ die univariate
+Quantilsfunktion, so ist die t-Copula $C_t$ definiert mit
+
+\begin{equation}
+  \label{eq:t}
+  C_t(\mathbf{u}) = T_{\nu} (t_{\nu}^{-1}(u_1), \ldots, t_{\nu}^{-1}(u_n))
+\end{equation}
+
+Im zweidimensionalen Fall mit Korrelationskoeffizienten $\rho$
+vereinfacht sich das ganze auf 
+
+\begin{equation}
+  \label{eq:t2dim}
+  C_t(u, v) = \int_{-\infty}^{t_{\nu}^{-1}(u)}
+  \int_{-\infty}^{t-{\nu}^{-1}(v)} \frac{1}{2 \pi \sqrt{(1 - \rho^2)}}
+  \exp{ \left( -\frac{s^2 - 2 \rho s t + t^2} {2 (1 - \rho^2)}
+    \right) }ds dt
+\end{equation}
+
+
+\subsection{Archimedische Copulae}
+\label{sec:archimedische}
+
+Eine weitere wichtige Familie von Copulae sind die archimedischen
+Copulae. Diese werden nach \cite{nelsen2006} vor allem aus folgenden
+Gr\"unden gerne angewendet:
+
+\begin{itemize}
+\item Sie können sehr einfach erzeugt werden.
+\item Es gibt viele parametrische Familien von Copulae, die ebenfalls
+  zu den archimedischen Copulae gehören.
+\item Archimedische Copulae besitzen viele gew\"unschte Eigenschaften.
+\end{itemize}
+
+So vielfältig diese Klasse ist, so unterschiedlich ist auch die
+Abhängigkeitsstruktur, die erzeugt werden
+kann. Auf die Darstellung von Copulae dieser Familie wird hier
+verzichtet. Dazu sei auf \cite{nelsen2006} S. 116 -- 119 verwiesen, wo
+eine \"Ubersicht \"uber 22 verschiedene Copulae (jeweils mit einem
+Parameter) gegeben wird. Häufig verwendet werden von diesen vor allem
+die \emph{Clayton Copula} und die \emph{Gumbel Copula} (Copula 1 und 4
+bei \cite{nelsen2006}).
+
+An dieser Stelle sei nur noch die Einfachheit der Konstruktion
+demonstriert\footnote{vgl. \cite{fantazzini2003}}: Sei $\varphi$ 
+eine stetige und konvexe Funktion von $\mathbf{I}$ nach $[0, \infty]$,
+sodass $\varphi(1) = 0$ und $\varphi(0) = \infty$. Sei $\varphi^{[-1]}$ die
+Pseudo-Inverse von $\varphi$, f\"ur die gilt:
+
+\begin{displaymath}
+  \varphi^{[-1]}(t) = \left\{ \begin{array}{ll}
+    \varphi^{-1}(t) & \textrm{falls $0 \leq t \leq \varphi(0)$}\\
+    0 & \textrm{falls $\varphi(0) \leq t \leq \infty$}
+  \end{array} \right.
+\end{displaymath}
+
+Erf\"ullt $\varphi$ die Bedingung der Konvexität, so gilt nun f\"ur
+den zweidimensionalen Fall
+
+\begin{equation}
+  \label{eq:archm}
+  C(u, v) = \varphi^{[-1]}(\varphi(u) + \varphi(v))
+\end{equation}
+
+Daher wird $\varphi$ auch als Generatorfunktion bezeichnet. F\"ur die
+Erweiterung auf den multivariaten Fall sei auf \cite{embrechts2003} verwiesen.
