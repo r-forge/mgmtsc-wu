@@ -4,20 +4,29 @@
 \section{Fit-Methoden}
 \label{sec:fitmethoden}
 
-Copulae Funktionen sind einfache Ausdrücke von multivariaten Modellen, jedoch kann darauf die klassische Statistik nicht angewandt werden. Die einzige Theorie, die angewandt werden kann, ist die asymptotische Maximum Likelihood Methode (MLE). Es gibt verschiedene Methoden, die rechenintesive Berechnung der ML durchzuführen. 
-Für unsere Berechnungen wird immer eine numerische
-Optimierungsfunktion benötigt,  welche die Zielfunktion optimiert. In
-diesem Zusammenhang werden die in \emph{R} implementierten Funktionen genutzt. 
-Ein Problem bei der Optimierung liegt darin, dass es viele
-Kombinationen von Randverteilungen und Copulaes gibt. Es wird also die optimale Lösung der Kombination von Copulae und Randverteilung suchen.
+Copulae Funktionen sind einfache Ausdrücke von multivariaten Modellen,
+jedoch kann darauf die klassische Statistik nicht angewandt
+werden. Die einzige Theorie, die angewandt werden kann, ist die
+asymptotische Maximum Likelihood Methode (MLE). Es gibt verschiedene
+Methoden, die rechenintesive Berechnung der ML durchzuführen. Es wird
+immer eine numerische Optimierungsfunktion benötigt,  welche die
+Zielfunktion optimiert. In diesem Zusammenhang werden die in \emph{R}
+implementierten Funktionen genutzt. Ein Problem bei der Optimierung
+liegt darin, dass es viele Kombinationen von Randverteilungen und
+Copulaes gibt. Es wird also die optimale Lösung der Kombination von
+Copulae und Randverteilung suchen. 
 
-Es wird immer von stetigen Zufallszahlen (Renditen) ausgegangen, jedoch muss diese Bedingung nicht immer vorliegen. 
+Es wird immer von stetigen Zufallszahlen (Renditen) ausgegangen,
+jedoch muss diese Bedingung nicht immer vorliegen.  
 
 \subsection{Exact Maximum Likelihood (EML) method (one stage method)}
 \label{sec:eml}
 
-Bei der EML-Methode wird versucht, sowohl die Randverteilungen als auch die Copulae gleichzeitig über einen MLE zu optimieren.
-Hierbei wird eine Datenmatrix $ \chi = \left\{x_{1t},x_{2t},...,x_{nt}\right\}^{T}_{t=1} $ benötigt. Die zu optimierende Funktion lauted dann:
+Bei der EML-Methode wird versucht, sowohl die Randverteilungen als
+auch die Copula gleichzeitig über einen MLE zu optimieren. Hierbei
+wird eine Datenmatrix $ \chi =
+\left\{x_{1t},x_{2t},...,x_{nt}\right\}^{T}_{t=1} $ benötigt. Die zu
+optimierende Funktion lautet dann: 
 
 \begin{equation}
   \label{eq:EML}
@@ -27,7 +36,7 @@ Hierbei wird eine Datenmatrix $ \chi = \left\{x_{1t},x_{2t},...,x_{nt}\right\}^{
 
 wobei $\theta$ alle Parameter der Randverteilungen und der Copula und
 $c$ die Dichtefunktion der Copula darstellt. Nehmen wir nun eine
-Vielzahl von Randverteilungen und Copulae her, so erhälten man durch 
+Vielzahl von Randverteilungen und Copulae her, so erhält man durch 
 
 \begin{equation}
  \hat{\theta}_{MLE} = \max_{\theta \in \ominus} {l(\theta)}  
@@ -40,10 +49,10 @@ den Maximum Likelihood Schätzer.
 \label{sec:ifm}
 
 Da die EML bei höheren Dimensionen sehr rechenintensiv werden kann,
-verwenden wir noch andere Methoden wie beispielsweise die
+verwendet man noch andere Methoden wie beispielsweise die
 IFM-Methode. Betrachtet man die MLE-Methode genauer, so erkennt man,
 dass diese aus zwei Teilen besteht, nämlich einerseits aus dem
-Schätzen der richtigen Copulae und anderseits aus dem Schätzen der
+Schätzen der richtigen Copula und anderseits aus dem Schätzen der
 besten Randverteilung. Genau diese Eigenschaft hat man sich bei der
 IFM - Methode bedient. Hierbei werden zuerst die Randverteilungen
 nach
@@ -54,7 +63,8 @@ nach
 \end{equation}
 
 
-geschätzt. Im zweiten Schritt wird mit den angepassten Randverteilungen die Copulae nach
+geschätzt. Im zweiten Schritt wird mit den angepassten
+Randverteilungen die Copula nach 
 
 \begin{equation}
   \label{eq:IFMcopula}
@@ -69,11 +79,11 @@ Der IFM-Schätzer ist somit definiert als Vektor $ \hat{\theta}_{IFM}=(\hat{\thet
 \subsection{Canonical Maximum Likelihood (CML) method}
 \label{sec:cml}
 
-Bei der vorhergehenden Methode haben wir die benötigte
-Verteilungsfunktion der Randverteilung geschätzt. Diesen Schritt kann
-man bei der CML-Methode weglassen, indem die empirische
-Verteilungsfunktion ($\hat{F_i}(x_{it})$ mit $i = 1,....,n$) verwendet
-wird. Diese wurde folgendermaßen definiert:
+Bei der vorhergehenden Methode wurde die benötigte Verteilungsfunktion
+der Randverteilung geschätzt. Diesen Schritt kann man bei der
+CML-Methode weglassen, indem die empirische Verteilungsfunktion
+($\hat{F_i}(x_{it})$ mit $i = 1,....,n$) verwendet wird. Diese wurde
+folgendermaßen implementiert: 
 
 \begin{Schunk}
 \begin{Sinput}
