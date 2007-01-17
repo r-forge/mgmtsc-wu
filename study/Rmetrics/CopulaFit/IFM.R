@@ -51,7 +51,7 @@
 ## Schätzung der Copula
 
 .IFMfit <- function(x, y){
-  browser()
+  # browser()
   a <- .marginFit(x)
   b <- .marginFit(y)
   
@@ -97,12 +97,14 @@
 
 ## Bsp:
 
+library(tseries)
 x <- get.hist.quote("^atx", quote = "Close")
 y <- get.hist.quote("^n225", quote = "Close")
-x <- as.timeSeries(x)
-y <- as.timeSeries(y)
-x <- as.vector(returnSeries(x))
-y <- as.vector(returnSeries(y))
-y <- y[1:length(x)]
+length(y) <- length(x)
+#x <- as.timeSeries(x)
+#y <- as.timeSeries(y)
+#x <- as.vector(returnSeries(x))
+#y <- as.vector(returnSeries(y))
+#y <- y[1:length(x)]
 
-a <- .IFMfit(x, y)
+#a <- .IFMfit(x, y)
