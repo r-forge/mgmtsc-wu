@@ -283,21 +283,21 @@ function (x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE,
 .darchm2Copula <- 
 function (u = 0.5, v = u, alpha = NULL, type = 1:22, output = c("vector", 
     "list")) 
-{
+{#browser()
     output = match.arg(output)
     type = as.integer(type[1])
     if (is.null(alpha)) {
         alpha = .archmParam(type)$param
     }
     a = alpha
-    if (is.list(u)) {
-        v = u[[2]]
-        u = u[[1]]
-    }
-    if (is.matrix(u)) {
-        v = u[, 1]
-        u = u[, 2]
-    }
+    #if (is.list(u)) {
+    #    v = u[[2]]
+    #    u = u[[1]]
+    #}
+    #if (is.matrix(u)) {
+    #    v = u[, 1]
+    #    u = u[, 2]
+    #}
     if (type == 1) {
         c.uv = (1 + a) * u^(-1 - a) * v^(-1 - a) * (-1 + u^(-a) + 
             v^(-a))^(-2 - a^(-1))

@@ -122,7 +122,7 @@ makelist <- function(){
   
   fit <- NULL
   
-  for(n in t[1]){  ## eigentlich von 1:22
+  for(n in t){  ## eigentlich von 1:22
 
     type <- n
     alpha = .archmParam(type)$param
