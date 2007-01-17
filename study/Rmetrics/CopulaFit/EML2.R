@@ -98,7 +98,23 @@ makelist <- function(){
 .EMLfit <- function(x, y){
   # browser()
   liste <- makelist()
-            
+  ## Grenzen fuer Parameter der Verteilungen
+  lowerbounds <- list(
+    c(mean = -Inf, sd = -Inf),
+    c(df = 1),
+    c(alpha = 0.0001, beta = 1, delta = 0.0001, mu = -Inf, lambda = -Inf),   ## eigentlich: beta <= abs(alpha)
+    c(alpha = -Inf, beta = -Inf, delta = -Inf, mu = Inf),
+    c(alpha = 0.0001, beta = 1, delta = 0.0001, mu = Inf)                   ## eigentlich: beta <= abs(alpha)   
+  )
+
+  upperbounds <- list(
+                      c(mean = Inf, sd = Inf),
+                      c(df = Inf),
+                      c(alpha = Inf, beta = 1, delta = Inf, mu = Inf, lambda = Inf),## eigentlich: beta <= abs(alpha)
+                      c(alpha = Inf, beta = Inf, delta = Inf, mu = Inf),
+                      c(alpha = Inf, beta = 1, delta = Inf, mu = Inf))           ## eigentlich: beta <= abs(alpha)
+
+
   ## zunächst fuer alle archmCopulae
   fit <- NULL
   t <- c(1, 3:6, 9:10, 12:14, 16:17)  ## 19 und 20 funktionieren
@@ -129,7 +145,7 @@ makelist <- function(){
     range <- .archmRange(type)
 
 
-    for(i in 1:1){
+    for(i in 2){
     #for(i in 1:length(liste)){      
       fun <- function(star, type, ...){
         alpha <- star[1]
@@ -154,7 +170,8 @@ makelist <- function(){
       
       
       z = nlminb(start = c(alpha, startwerte[[liste[[i]][1] ]], startwerte[[liste[[i]][2] ]]),
-        objective = fun, lower = range[1], upper = range[2], type = type)
+        objective = fun, lower = c(range[1], lowerbounds[[i]][1], lowerbounds[[i]][2]),
+        upper = c(range[2], upperbounds[[i]][1], upperbounds[[i]][2]), type = type)
       
       fit $family <- c(fit $family, paste("Archimedian Type", type))
       fit $par <- c(fit $par, list(z $par))
@@ -176,14 +193,17 @@ makelist <- function(){
 lowerbounds <- list(
                c(mean = -Inf, sd = -Inf),
                c(df = 1),
-               c(alpha = 0.0001, beta = abs(alpha), delta = 0.0001, mu = -Inf, lambda = -Inf),
-               c(alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4)),
-               c(alpha = 1, beta = 0, delta = 1, mu = 0))
+               c(alpha = 0.0001, beta = 1, delta = 0.0001, mu = -Inf, lambda = -Inf),   ## eigentlich: beta <= abs(alpha)
+               c(alpha = -Inf, beta = -Inf, delta = -Inf, mu = Inf),
+               c(alpha = 0.0001, beta = 1), delta = 0.0001, mu = Inf))       ## eigentlich: beta <= abs(alpha)
 
 
-
-#             "4" = dhyp(x, alpha, beta, delta, mu, pm = c(1, 2, 3, 4)),
-#             "5" = dnig(x, alpha, beta, delta, mu))
+upperbounds <- list(
+                    c(mean = Inf, sd = Inf),
+                    c(df = Inf),
+                    c(alpha = Inf, beta = 1, delta = Inf, mu = Inf, lambda = Inf),## eigentlich: beta <= abs(alpha)
+                    c(alpha = Inf, beta = Inf, delta = Inf, mu = Inf),
+                    c(alpha = Inf, beta = 1, delta = Inf, mu = Inf))           ## eigentlich: beta <= abs(alpha)
 
 
 do.call(dichte_Randverteilung[1], param_Randverteilung[[1]]) -> b
