@@ -1,0 +1,219 @@
+
+\section{Implementierung in R}
+\label{sec:R}
+
+Die Fit-Funktion ist als generische Funktion implementiert und sieht
+folgendermaßen aus:
+
+\begin{Schunk}
+\begin{Sinput}
+> CopulaFit <- function(x, y, method = "CML", returns = FALSE, ...) {
++     UseMethod("CopulaFit")
++ }
+\end{Sinput}
+\end{Schunk}
+
+\begin{itemize}
+\item \verb|x| und \verb|y| sind die Datenpunkte der zwei Zeitreihen,
+  die untersucht werden sollen. Es m\"ussen entweder Kurswerte oder
+  gleich Renditen eingegeben werden.
+
+\item \verb|method| steht hierbei f\"ur die Fit-Methode, die verwendet 
+werden soll. Es stehen die Methoden \verb|"CML"|, \verb|"EML"| und 
+\verb|"IFM"| zur Verf\"ugung.
+
+\item \verb|returns| ist eine Kontrollvariable. Sind in den
+  Datenvektoren \verb|x| und \verb|y| bereits Renditen enthalten, so
+  muss \verb|returns = TRUE| gesetzt werden.
+\end{itemize}
+
+Die benötigte Klasse f\"ur die Funktion \verb|CopulaFit| heißt
+\verb|"ml"|. Die Datenreihen werden jedoch automatisch in diese Klasse
+umgewandelt. Allerdings kann dies auch manuell mit der Funktion geschehen:
+
+\begin{Schunk}
+\begin{Sinput}
+> as.ml <- function(x, returns = FALSE) {
++     library(fSeries)
++     if (returns == FALSE) {
++         x <- as.timeSeries(x)
++         x <- returnSeries(x)
++         x <- x@Data
++     }
++     class(x) <- "ml"
++     x
++ }
+\end{Sinput}
+\end{Schunk}
+
+Je nachdem, welche \verb|method| in \verb|CopulaFit| angegeben wird,
+wird die passende Funktion ausgef\"uhrt:
+
+\subsection{EML-Methode}
+\label{sec:Reml}
+
+Die Funktion, die aufgerufen wird, heißt \verb|.EMLfit|. Die Parameter
+werden automatisch \"ubergeben. Diese Methode funktioniert derzeit
+f\"ur zwölf Copulae (archimedische Copulae 1, 3-6, 9-10,
+12-14, 16-17 nach \cite{nelsen2006}) und f\"ur alle vier Kombinationen
+von Randverteilungen 
+(zB Randverteilung von \verb|x| = t-Verteilung und Randverteilung von
+\verb|y| = Normalverteilung). Bei Anwendung anderer Verteilungen
+treten derzeit noch Fehler auf.
+
+Da die Parameter der Randverteilungen und der Copulae gleichzeitig
+geschätzt werden m\"ussen, gibt es einige Hindernisse, die bei dieser
+EML-Methode \"uberwunden werden m\"ussen: 
+
+\begin{itemize}
+\item \verb|upperbounds| und \verb|lowerbounds| beschreibt die oberen
+  und unteren Grenzen, welche während der Parameterschätzung nicht
+  unter- bzw. \"uberschritten werden d\"urfen.
+\item \verb|startwerte| \"ubergibt dem Optimierer passende Startwerte.
+\item In \verb|fun| wird die zu minimierende Zielfunktion
+  definiert. Diese entspricht Gleichung \ref{eq:EML}. Mit der Funktion
+  \verb|do.call| wird daf\"ur gesorgt, dass immer alle möglichen
+  Kombinationen von Copulae und Randverteilungen mit den passenden
+  Parametern aufgerufen werden. Die möglichen Kombinationen werden mit
+  \verb|makelist()| erzeugt.
+\end{itemize}
+
+
+\subsection{IFM-Methode}
+\label{sec:Rifm}
+
+Diese Methode funktioniert derzeit ebenfalls f\"ur zwölf Copulae
+(archimedische Copulae 1, 3-6, 9-10, 12-14, 16-17 nach
+\cite{nelsen2006}) und f\"ur jeweils
+f\"unf verschiedene Randverteilungen (Normal- und t-Verteilung,
+Generalised Hyperbolic Distribution, Hyperbolic Distribution, Normal
+Inverse Gaussian Distribution).
+
+Die Funktion \verb|.IFMfit| sucht im ersten Schritt nach den
+Randverteilungen und deren Parametern, die am besten zu den
+Datenreihen \verb|x| und \verb|y| passen. Dies geschieht durch
+internen Aufruf der Funktion \verb|.marginFit|. \verb|.pmarginFit|
+berechnet dann die Wahrscheinlichkeiten der Datenpunkte mit den
+angepassten Verteilungen.
+
+In \verb|fun| wird wieder die zu minimierende Zielfunktion
+definiert. Diese entspricht Gleichung \ref{eq:IFMcopula}. Da bei der
+Schätzung der Copula nur der Parameter f\"ur die jeweilige Copula
+angepasst wird, reicht es einen Startparameter und die Grenzen f\"ur
+jede Copula zu definieren. Dies geschieht in den Objekten \verb|alpha|
+und \verb|range|.
+
+
+
+\subsection{CML-Methode}
+\label{sec:Rcml}
+
+Hier m\"ussen zunächst die empirischen Verteilungsfunktionen der
+Datenreihen \verb|x| und \verb|x| berechnet werden. Dazu wurde
+folgende Funktion implementiert:
+
+\begin{Schunk}
+\begin{Sinput}
+> pemp <- function(t, x) {
++     F <- NULL
++     for (i in 1:length(t)) {
++         F <- c(F, 1/length(x) * sum(x <= t[i]))
++     }
++     F
++ }
+\end{Sinput}
+\end{Schunk}
+
+Somit m\"ussen auch hier nur die Parameter der Copulae geschätzt
+werden. Die zu optimierende Funktion (Gleichung \ref{eq:CML}) ist in \verb|fun|
+definiert. Startparameter und Grenzen werden in \verb|alpha| und
+\verb|range| angegeben.
+
+
+\subsection{Anwendungsbeispiel}
+\label{sec:Rbeispiel}
+
+Nun soll die Funktion \verb|CopulaFit| an einem genierierten
+Beispieldatensatz angewendet werden:
+
+
+\begin{Schunk}
+\begin{Sinput}
+> x <- rnorm(100, 760, 23)
+> y <- rnorm(100, 500, 99)
+> x <- as.ml(x, returns = FALSE)
+> y <- as.ml(y, returns = FALSE)
+\end{Sinput}
+\end{Schunk}
+
+Die Datenvektoren werden jetzt aufbereitet. Auch diese haben eine
+eigene print-Methode:
+
+\begin{Schunk}
+\begin{Sinput}
+> x
+\end{Sinput}
+\begin{Soutput}
+This is a time series containing  99 returns.
+Prepared for calling the function "CopulaFit" 
+\end{Soutput}
+\begin{Sinput}
+> y
+\end{Sinput}
+\begin{Soutput}
+This is a time series containing  99 returns.
+Prepared for calling the function "CopulaFit" 
+\end{Soutput}
+\end{Schunk}
+
+Nun kann die Anpassung durchgef\"uhrt werden. Im folgenden Beispiel
+werden die Copulae der oben definierten Datenreihen nach der
+IFM-Methode geschätzt:
+
+\begin{Schunk}
+\begin{Sinput}
+> fit <- CopulaFit(x, y, method = "IFM", returns = TRUE)
+\end{Sinput}
+\end{Schunk}
+
+Die Ausgabe von \verb|fit| liefert nun eine \"Ubersicht \"uber die
+Parameter, den Log-Likelihood-Wert und der verwendeten Methode aller
+gefitteten Copulae.
+
+\begin{Schunk}
+\begin{Sinput}
+> fit
+\end{Sinput}
+\begin{Soutput}
+            fit.family      fit.par fit.objective fit.method
+1   Archimedian Type 1 7.752083e+00   -0.81519657        IFM
+2   Archimedian Type 3 1.000000e+00   -0.15449225        IFM
+3   Archimedian Type 4 5.707346e+00   -0.84670550        IFM
+4   Archimedian Type 5 1.682922e+01   -0.84271404        IFM
+5   Archimedian Type 6 8.518132e+00   -0.81247049        IFM
+6   Archimedian Type 9 1.000000e+00   -0.13150519        IFM
+7  Archimedian Type 10 7.458241e-01   -0.02627407        IFM
+8  Archimedian Type 12 4.009337e+00   -0.85369003        IFM
+9  Archimedian Type 13 1.371508e+01   -0.84091227        IFM
+10 Archimedian Type 14 5.306909e+00   -0.84966595        IFM
+11 Archimedian Type 16 2.422727e+09   -0.15449225        IFM
+12 Archimedian Type 17 2.477535e+01   -0.83985273        IFM
+\end{Soutput}
+\end{Schunk}
+
+Um schneller jene Copula wählen zu können, welche den maximalen
+Log-Likelihood-Wert liefert, kann der Befehl \verb|summary| verwendet werden:
+
+\begin{Schunk}
+\begin{Sinput}
+> summary(fit)
+\end{Sinput}
+\begin{Soutput}
+ Die best-fit Copula ist Typ:  Archimedian Type 12 
+ Minimaler Zielfunktionswert:  -0.85369 
+
+Summary:
+        a.family.ind. a.objective.ind. a.method.ind. a.par.ind.
+1 Archimedian Type 12         -0.85369           IFM   4.009337
+\end{Soutput}
+\end{Schunk}
