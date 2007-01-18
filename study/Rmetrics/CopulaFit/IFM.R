@@ -97,10 +97,10 @@
 
 ## Bsp:
 
-library(tseries)
-x <- get.hist.quote("^atx", quote = "Close")
-y <- get.hist.quote("^n225", quote = "Close")
-length(y) <- length(x)
+#library(tseries)
+#x <- get.hist.quote("^atx", quote = "Close")
+#y <- get.hist.quote("^n225", quote = "Close")
+#length(y) <- length(x)
 #x <- as.timeSeries(x)
 #y <- as.timeSeries(y)
 #x <- as.vector(returnSeries(x))

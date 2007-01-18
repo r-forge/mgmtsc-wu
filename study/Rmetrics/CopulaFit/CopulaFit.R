@@ -3,7 +3,13 @@ library(tseries)
 library(fSeries)
 source("IFM.R")
 source("CML.R")
+source("EML2.R")
 source("fCopulae.R")
+
+
+
+
+
 
 CopulaFit <- function(x, y, method = "CML", returns = FALSE, ...){
   UseMethod("CopulaFit")
@@ -37,7 +43,7 @@ as.ml <- function(x, returns = FALSE){
 
 
 CopulaFit.ml <- function(x, y, method, ...) {
-  browser()
+  #browser()
   x <- unclass(x)
   y <- unclass(y)
   if(method != "CML" && method != "IFM" && method != "EML" && method != "all"){
@@ -46,7 +52,7 @@ CopulaFit.ml <- function(x, y, method, ...) {
   fit <- switch(method,
                 "CML" = .CMLfit(x, y),
                 "IFM" = .IFMfit(x, y),
-                #"EML" = .EMLfit(x, y),
+                "EML" = .EMLfit(x, y),
                 "all" = c(.CMLfit(x, y), .IFMfit(x,y)))#, .EMLfit(x,y))
   
   #if(method == "all"){
@@ -91,4 +97,11 @@ summary.mloutput <- function(fit, ...){
 }
 
 
-a <- CopulaFit(x, y, method = "CML", returns = FALSE)
+
+
+## Beispiel:
+#x <- rnorm(100, 760, 23)
+#y <- rnorm(100, 500, 99)
+#x <- as.ml(x, returns = FALSE)
+#y <- as.ml(y, returns = FALSE)
+#a <- CopulaFit(x, y, method = "CML", returns = FALSE)
