@@ -1,14 +1,15 @@
 rm(list = ls())
 library(tseries)
 library(fSeries)
-source("IFM.R")
-source("CML.R")
-source("EML2.R")
-source("fCopulae.R")
+#source("IFM.R")
+#source("CML.R")
+#source("EML2.R")
+#source("fCopulae.R")
 
-
-
-
+source(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/IFM.R")
+source(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/CML.R")
+source(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/EML2.R")
+source(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/fCopulae.R")
 
 
 CopulaFit <- function(x, y, method = "CML", returns = FALSE, ...){
@@ -68,40 +69,66 @@ CopulaFit.ml <- function(x, y, method, ...) {
 
 print.ml <- function(x, ...){
   cat("This is a time series containing ", length(x),
-  "returns, which are prepared for calling the function \"CopulaFit\" \n")
+  "returns.\nPrepared for calling the function \"CopulaFit\" \n")
   invisible(x)
 
 }
 
 print.mloutput <- function(fit, iterations = FALSE, convergence =
   FALSE, message = FALSE, ...) {
-  FIT <- data.frame(fit $family, fit $par, fit $objective, fit
-  $method)
-  if(iterations) FIT <- data.frame(FIT, fit $iterations)
-  if(convergence) FIT <- data.frame(FIT, fit $convergence)
-  if(message) FIT <- data.frame(FIT, fit $message)
+  if(is.list(fit $par)){
+    FIT <- data.frame(fit $family, fit $parCopula, fit $objective, fit
+  $method, fit $convergence, fit $AIC)
+    if(iterations) FIT <- data.frame(FIT, fit $iterations)
+    if(convergence) FIT <- data.frame(FIT, fit $convergence)
+    if(message) FIT <- data.frame(FIT, fit $message)
+  }
+  else {
+    FIT <- data.frame(fit $family, fit $par, fit $objective, fit
+  $method, fit $convergence, fit $AIC)
+    if(iterations) FIT <- data.frame(FIT, fit $iterations)
+    if(convergence) FIT <- data.frame(FIT, fit $convergence)
+    if(message) FIT <- data.frame(FIT, fit $message)
+  }
   print(FIT)
   
   ## suche nach wert in fit, wo objective minimal ist
   ## ausgabe von fit $family, fit $par
 }
 
-summary.mloutput <- function(fit, ...){
-  ind <- which(a $objective == min(a $objective, na.rm = TRUE))  
-  cat(" Die best-fit Copula ist Typ: ", a $family[ind], "\n",
-  "Minimaler Zielfunktionswert: ", a $objective[ind], "\n\nSummary:\n")
-  A <- data.frame(a $family[ind], a $objective[ind], a $method[ind], a
-  $par[ind])
+summary.mloutput <- function(a, ...){
+  ind <- which(a $AIC == min(a $AIC, na.rm = TRUE))  
+  if(is.list(a $par)){
+    cat(" Die best-fit Copula ist Typ: ", a $family[ind], "\n",
+        "Minimaler Zielfunktionswert: ", a $objective[ind], "\n\nSummary:\n")
+    A <- data.frame(a $family[ind], a $objective[ind], a $method[ind], a
+                    $parCopula[ind], a$AIC[ind])    
+  }
+  else {
+    
+    cat(" Die best-fit Copula ist Typ: ", a $family[ind], "\n",
+        "Minimaler Zielfunktionswert: ", a $objective[ind], "\n\nSummary:\n")
+    A <- data.frame(a $family[ind], a $objective[ind], a $method[ind], a
+                    $par[ind], a $AIC[ind])
+  }
   A
   # invisible(ind)
 }
-
+## wähle nach minimaler AIC
 
 
 
 ## Beispiel:
-#x <- rnorm(100, 760, 23)
-#y <- rnorm(100, 500, 99)
-#x <- as.ml(x, returns = FALSE)
-#y <- as.ml(y, returns = FALSE)
-#a <- CopulaFit(x, y, method = "CML", returns = FALSE)
+# load(file = "x.Rda")
+# load(file = "y.Rda")
+
+# oder:
+
+# x <- rnorm(100, 760, 23)
+# y <- rnorm(100, 500, 99)
+# x <- as.ml(x, returns = FALSE)
+# y <- as.ml(y, returns = FALSE)
+
+# a <- CopulaFit(x, y, method = "CML", returns = TRUE)
+# b <- CopulaFit(x, y, method = "IFM", returns = TRUE)
+# c <- CopulaFit(x, y, method = "EML", returns = TRUE)

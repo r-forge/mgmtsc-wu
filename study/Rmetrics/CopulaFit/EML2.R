@@ -1,32 +1,3 @@
-    drand <- function(x, a, mean = 0, sd = 1, df = 4, alpha = 1, beta = 0, delta =1, mu = 0, lambda = 1){
-      switch(paste(a),
-             "1" = dnorm(x, mean, sd),
-             "2" = dt(x, df),
-             "3" = dgh(x, alpha, beta, delta, mu, lambda),
-             "4" = dhyp(x, alpha, beta, delta, mu, pm = c(1, 2, 3, 4)),
-             "5" = dnig(x, alpha, beta, delta, mu))
-    }
-
-    prand <- function(x, a, mean = 0, sd = 1, df = 4, alpha = 1, beta = 0, delta =1, mu = 0, lambda = 1){
-      switch(paste(a),
-             "1" = pnorm(x, mean, sd),
-             "2" = pt(x, df),
-             "3" = pgh(x, alpha, beta, delta, mu, lambda),
-             "4" = phyp(x, alpha, beta, delta, mu),
-             "5" = pnig(x, alpha, beta, delta, mu))
-    }
-
-    param <- function(a){
-      switch(paste(a),
-             "1" = c(mean = 0, sd = 1),
-             "2" = c(df = 4),
-             "3" = c(alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1),
-             "4" = c(alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4)),
-             "5" = c(alpha = 1, beta = 0, delta = 1, mu = 0)
-             )
-    }
-
-
 makelist <- function(){
   liste <- NULL
   ind <- 0
@@ -44,21 +15,25 @@ makelist <- function(){
   #browser()
   liste <- makelist()
   ## Grenzen fuer Parameter der Verteilungen
-  lowerbounds <- list(
-    c(-1,0),
-    c(1),
-    c(alpha = 0.0001, beta = 1, delta = 0.0001, mu = -Inf, lambda = -Inf),  ## eigentlich: abs(beta) <= alpha
-    c(alpha = -Inf, beta = -Inf, delta = -Inf, mu = Inf),
-    c(alpha = 0.5, beta = 0 , delta = 0.0001, mu = Inf)                   ## eigentlich: abs(beta) <= alpha   
-  )
 
   upperbounds <- list(
                       c(1, 5),
                       c(Inf),
-                      c(alpha = Inf, beta = 1, delta = Inf, mu = Inf, lambda = Inf),## eigentlich: abs(beta) <= alpha
+                      c(alpha = Inf, beta = 0.999, delta = Inf, mu = Inf, lambda = Inf),
+                      ## eigentlich: abs(beta) <= alpha
                       c(alpha = Inf, beta = Inf, delta = Inf, mu = Inf),
-                      c(alpha = Inf, beta = 0.5, delta = Inf, mu = Inf))           ## eigentlich: abs(beta) <= alpha
+                      c(alpha = Inf, beta = 0.5, delta = Inf, mu = Inf))           
+                      ## eigentlich: abs(beta) <= alpha
 
+  lowerbounds <- list(
+                      c(-1,0),
+                      c(1),
+                      c(alpha = 1, beta = 0, delta = 0.0001, mu = -Inf, lambda = -Inf),  
+                      ## eigentlich: abs(beta) <= alpha
+                      c(alpha = -Inf, beta = -Inf, delta = -Inf, mu = Inf),
+                      c(alpha = 0.5, beta = 0 , delta = 0.0001, mu = Inf)                   
+                      ## eigentlich: abs(beta) <= alpha   
+  )
 
   ## zunächst fuer alle archmCopulae
   fit <- NULL
@@ -73,21 +48,24 @@ makelist <- function(){
                      c(1, 0, 1, 0, 1),
                      c(1, 0, 1, 0),
                      c(1, 0, 1, 0))
+
+  ind <- 1
   
   fit <- NULL  
-  for(n in 1){  ## in t ...  eigentlich von 1:22
+  for(n in t){  ## in t ...  eigentlich von 1:22
 
+    
+    
     type <- n
     alpha = .archmParam(type)$param
     range <- .archmRange(type)
 
-    for(i in 1){
+    for(i in 2){
     #for(i in c(1,2,6,7)){
     #for(i in 1:length(liste)){      
       fun <- function(star, type, ...){
         alpha <- star[[1]]
         star <- star[-1]
-
         star2 <- c(list(x), star[(1:length(startwerte[[ liste[[i]][1] ]]) )]  )  ##star[(1:length(liste[[i]]))]
         star <- star[-(1:length(startwerte[[ liste[[i]][1] ]]))]   ##liste[[i]]))]
         star3 <- c(list(y), star)
@@ -109,12 +87,16 @@ makelist <- function(){
       
       fit $family <- c(fit $family, paste("Archimedian Type", type))
       fit $par <- c(fit $par, list(z $par))
+      fit $parCopula <- c(fit $parCopula, z $par[1])    
       fit $objective <- c(fit $objective, z $objective)
+      fit $AIC <- c(fit $AIC, -2*(fit $objective)[ind] + 2*length(fit
+      $par[[ind]]))
       fit $convergence <- c(fit $convergence, z $convergence)
       fit $message <- c(fit $message, z $message)
       fit $iterations <- c(fit $iterations, z $iterations)
       ## fit $evaluations[[i]] <- z $evaluations   ????
       fit $method <- c(fit $method, "EML")
+      ind <- ind + 1
     }
     fit
   }
