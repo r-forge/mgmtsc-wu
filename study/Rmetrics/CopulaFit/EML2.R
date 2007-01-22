@@ -24,7 +24,8 @@ makelist <- function(){
                       c(alpha = Inf, beta = Inf, delta = Inf, mu = Inf),
                       c(alpha = Inf, beta = 0.5, delta = Inf, mu = Inf))           
                       ## eigentlich: abs(beta) <= alpha
-
+                                                                              
+                                                                              
   lowerbounds <- list(
                       c(-1,0),
                       c(1),
@@ -60,7 +61,7 @@ makelist <- function(){
     alpha = .archmParam(type)$param
     range <- .archmRange(type)
 
-    for(i in 2){
+    for(i in 3){
     #for(i in c(1,2,6,7)){
     #for(i in 1:length(liste)){      
       fun <- function(star, type, ...){
@@ -70,7 +71,7 @@ makelist <- function(){
         star <- star[-(1:length(startwerte[[ liste[[i]][1] ]]))]   ##liste[[i]]))]
         star3 <- c(list(y), star)
 
-        (-mean(log(.darchm2Copula(
+        erg <-(-mean(log(.darchm2Copula(
                do.call(p_Randverteilung[liste[[i]][1]], star2) ,  ## u
                do.call(p_Randverteilung[liste[[i]][2]], star3),   ## v
                alpha = alpha,  ## = x,
@@ -78,6 +79,8 @@ makelist <- function(){
          - mean(log(do.call(dichte_Randverteilung[liste[[i]][1]], star2)))
          - mean(log(do.call(dichte_Randverteilung[liste[[i]][2]], star3)))
          )
+         erg[erg=="NaN"] <- 10
+         erg
       }
             
       z = nlminb(start = c(alpha, startwerte[[liste[[i]][1] ]], startwerte[[liste[[i]][2] ]]),

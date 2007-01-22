@@ -11,6 +11,11 @@ source(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/Co
 source(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/EML2.R")
 source(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/fCopulae.R")
 
+source("IFM.R")
+source("CML.R")
+source("EML2.R")
+source("fCopulae.R")
+
 
 CopulaFit <- function(x, y, method = "CML", returns = FALSE, ...){
   UseMethod("CopulaFit")
@@ -124,7 +129,7 @@ summary.mloutput <- function(a, ...){
 
 # oder:
 
-# x <- rnorm(100, 760, 23)
+# x <- rnorm(100, 760, 23)        
 # y <- rnorm(100, 500, 99)
 # x <- as.ml(x, returns = FALSE)
 # y <- as.ml(y, returns = FALSE)
