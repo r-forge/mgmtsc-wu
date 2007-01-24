@@ -1,0 +1,85 @@
+\subsection{IFM-Methode}
+\begin{frame}[containsverbatim]
+  \frametitle{Fitten eines Beispieldatensatzes:}
+  2 Zeitreihen: ATX und NIKKEI
+<<echo=FALSE>>=
+source(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/CopulaFit.R")
+@ 
+\footnotesize{
+<<>>=
+head(x)
+head(y)
+@ 
+}
+
+\normalsize{
+Fit nach der IFM-Methode
+}
+<<echo=FALSE>>=
+load(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/x.Rda")
+load(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/y.Rda")
+x <- as.ml(as.vector(x), returns = TRUE)
+y <- as.ml(as.vector(y), returns = TRUE)
+@ 
+\footnotesize{
+<<>>=
+ifm <- CopulaFit(x, y, method = "IFM", returns = TRUE)
+@ 
+<<echo=FALSE>>=
+#load(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/ifm.Rda")
+load(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/eml.Rda")
+load(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/cml.Rda")
+@ 
+}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{Ergebnisse IFM-Methode:}
+\scriptsize{
+<<>>=
+ifm
+@ 
+}
+\end{frame}
+
+\begin{frame}[containsverbatim]
+  \frametitle{S3-Objekte:}
+\scriptsize{
+<<>>=
+attributes(ifm)
+ifm $distrmargin2
+ifm $margin2
+@ 
+}
+
+\end{frame}
+
+\begin{frame}[containsverbatim]
+  \frametitle{Summary IFM-Methode:}
+
+\scriptsize{
+<<>>=
+summary(ifm)
+@ 
+}
+\end{frame}
+
+\subsection{Vergleich mit anderen Methoden}
+\begin{frame}[containsverbatim]
+  \frametitle{Vergleich CML-Methode:}
+\scriptsize{
+<<>>=
+summary(cml)
+@ 
+}
+\end{frame}
+
+\begin{frame}[containsverbatim]
+  \frametitle{Vergleich EML-Methode:}
+\scriptsize{
+<<>>=
+summary(eml)
+@ 
+}
+\end{frame}

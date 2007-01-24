@@ -32,16 +32,19 @@
     range <- .archmRange(type)
         
     fun = function(x, type) {
-      -mean(log(darchmCopula(u = u, v = v, alpha = x, type = type, alternative = TRUE)))
+      erg <- -mean(log(darchmCopula(u = u, v = v, alpha = x, type =
+      type, alternative = TRUE)))
+      if(erg == "NaN") {erg <- 10}
+      else erg
     }
   
     z = nlminb(start = alpha, objective = fun, lower = range[1],
       upper = range[2], type = type) #, ...)
 
-    fit $family <- c(fit $family, paste("Archimedian Type", type))
+    fit $family <- c(fit $family, paste("Archm.", type))
     fit $par <- c(fit $par, z $par)
     fit $objective <- c(fit $objective, z $objective)
-    fit $AIC <- c(fit $AIC, -2*(fit $objective)[ind] + 2*1)
+    fit $AIC <- c(fit $AIC, 2*(fit $objective)[ind] + 2*1)
     fit $convergence <- c(fit $convergence, z $convergence)
     fit $message <- c(fit $message, z $message)
     fit $iterations <- c(fit $iterations, z $iterations)

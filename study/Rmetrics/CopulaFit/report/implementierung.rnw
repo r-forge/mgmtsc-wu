@@ -127,6 +127,9 @@ definiert. Startparameter und Grenzen werden in \verb|alpha| und
 \subsection{Anwendungsbeispiel}
 \label{sec:Rbeispiel}
 
+\subsubsection{Durchf\"uhrung einer Anpassung}
+\label{sec:Durchfuehrung}
+
 Nun soll die Funktion \verb|CopulaFit| an einem genierierten
 Beispieldatensatz angewendet werden:
 
@@ -154,7 +157,7 @@ werden die Copulae der oben definierten Datenreihen nach der
 IFM-Methode geschätzt:
 
 <<>>=
-fit <- CopulaFit(x, y, method = "IFM", returns = TRUE)
+ifm <- CopulaFit(x, y, method = "IFM", returns = TRUE)
 @
 
 Die Ausgabe von \verb|fit| liefert nun eine \"Ubersicht \"uber die
@@ -162,12 +165,62 @@ Parameter, den Log-Likelihood-Wert und der verwendeten Methode aller
 gefitteten Copulae.
 
 <<>>=
-fit
+ifm
 @
 
 Um schneller jene Copula wählen zu können, welche den maximalen
-Log-Likelihood-Wert liefert, kann der Befehl \verb|summary| verwendet werden:
+Log-Likelihood-Wert liefert, kann der Befehl \verb|summary| verwendet
+werden. Die Ausgabe zeigt die besten drei Copulae an:
 
 <<>>=
-summary(fit)
+summary(ifm)
 @
+
+Weitere Informationen können \"uber S3-Attribute ausgegeben werden. Es
+stehen folgende Attribute zur Verf\"ugung:
+
+<<>>=
+attributes(ifm)
+@ 
+
+Mit Hilfe dieser Attribute können zusätzlich noch Informationen \"uber
+die Randverteilungen, die Anzahl der Iterationen und eine Nachricht
+\"uber das Konvergenzverhalten ausgegeben werden.
+
+
+\subsubsection{Vergleich der Fit-Methoden}
+\label{sec:VergleichFitMethoden}
+
+Nun sollen die verschiednen Fit-Methoden verglichen werden. Dazu
+werden zwei Zeitreihen verwendet, die von \emph{YahooFinance} besorgt
+wurden. Es handelt sich um Zeitreihen von ATX- und NIKKEI-Werten, die
+schon mit \verb|as.ml| f\"ur die Anpassung vorbereitet worden sind.
+
+<<echo=FALSE>>=
+load(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/x.Rda")
+load(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/y.Rda")
+@ 
+<<>>=
+ifm <- CopulaFit(x, y, method = "IFM", returns = TRUE)
+cml <- CopulaFit(x, y, method = "CML", returns = TRUE)
+eml <- CopulaFit(x, y, method = "EML", returns = TRUE)
+@
+
+<<>>=
+summary(cml)
+summary(ifm)
+summary(eml)
+@
+
+Wie man sieht, empfiehlt jede Fit-Methode die Archimedische Copula 5,
+wobei die Konvergenz bei der EML-Methode nicht gegeben ist. Um
+genauere Informationen \"uber die Konvergenzvariable zu erhalten, sei
+auf die Hilfe von \verb|nlminb| verwiesen.
+
+Bei der IFM- und CML-Methode sind die Parameter sehr ähnlich, nur die
+EML-Methode liefert einen unbrauchbaren Wert f\"ur $\theta$. Auch die
+zweitbesten Anpassungen stimmen bei CML- und IFM-Methode \"uberein.
+
+Wie erwartet, ist die Rechenzeit bei der EML-Methode am
+längsten. Jedoch kann trotz der hohen Anzahl an Iterationen keine
+Konvergenz erreicht werden.

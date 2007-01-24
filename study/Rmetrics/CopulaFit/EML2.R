@@ -61,7 +61,7 @@ makelist <- function(){
     alpha = .archmParam(type)$param
     range <- .archmRange(type)
 
-    for(i in 3){
+    for(i in 2){
     #for(i in c(1,2,6,7)){
     #for(i in 1:length(liste)){      
       fun <- function(star, type, ...){
@@ -88,11 +88,11 @@ makelist <- function(){
         upper = c(range[2], upperbounds[[liste[[i]][1]]], upperbounds[[liste[[i]][2]]]),
         type = type, control = list())
       
-      fit $family <- c(fit $family, paste("Archimedian Type", type))
+      fit $family <- c(fit $family, paste("Archm.", type))
       fit $par <- c(fit $par, list(z $par))
       fit $parCopula <- c(fit $parCopula, z $par[1])    
       fit $objective <- c(fit $objective, z $objective)
-      fit $AIC <- c(fit $AIC, -2*(fit $objective)[ind] + 2*length(fit
+      fit $AIC <- c(fit $AIC, 2*(fit $objective)[ind] + 2*length(fit
       $par[[ind]]))
       fit $convergence <- c(fit $convergence, z $convergence)
       fit $message <- c(fit $message, z $message)

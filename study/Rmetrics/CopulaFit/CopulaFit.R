@@ -11,11 +11,6 @@ source(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/Co
 source(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/EML2.R")
 source(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/fCopulae.R")
 
-source("IFM.R")
-source("CML.R")
-source("EML2.R")
-source("fCopulae.R")
-
 
 CopulaFit <- function(x, y, method = "CML", returns = FALSE, ...){
   UseMethod("CopulaFit")
@@ -81,6 +76,7 @@ print.ml <- function(x, ...){
 
 print.mloutput <- function(fit, iterations = FALSE, convergence =
   FALSE, message = FALSE, ...) {
+  ord <- order( fit $AIC)
   if(is.list(fit $par)){
     FIT <- data.frame(fit $family, fit $parCopula, fit $objective, fit
   $method, fit $convergence, fit $AIC)
@@ -102,19 +98,20 @@ print.mloutput <- function(fit, iterations = FALSE, convergence =
 }
 
 summary.mloutput <- function(a, ...){
-  ind <- which(a $AIC == min(a $AIC, na.rm = TRUE))  
+  #ind <- which(a $AIC == min(a $AIC, na.rm = TRUE))
+  ind <- order(a $AIC)[1:3]
   if(is.list(a $par)){
-    cat(" Die best-fit Copula ist Typ: ", a $family[ind], "\n",
-        "Minimaler Zielfunktionswert: ", a $objective[ind], "\n\nSummary:\n")
+    cat(" Die best-fit Copula ist Typ: ", a $family[ind][1], "\n",
+        "Minimaler Zielfunktionswert: ", a $objective[ind][1], "\n\nSummary:\n")
     A <- data.frame(a $family[ind], a $objective[ind], a $method[ind], a
-                    $parCopula[ind], a$AIC[ind])    
+                    $parCopula[ind], a$AIC[ind], a $convergence[ind])    
   }
   else {
     
-    cat(" Die best-fit Copula ist Typ: ", a $family[ind], "\n",
-        "Minimaler Zielfunktionswert: ", a $objective[ind], "\n\nSummary:\n")
+    cat(" Die best-fit Copula ist Typ: ", a $family[ind][1], "\n",
+        "Minimaler Zielfunktionswert: ", a $objective[ind][1], "\n\nSummary:\n")
     A <- data.frame(a $family[ind], a $objective[ind], a $method[ind], a
-                    $par[ind], a $AIC[ind])
+                    $par[ind], a $AIC[ind], a $convergence[ind])
   }
   A
   # invisible(ind)
@@ -124,8 +121,9 @@ summary.mloutput <- function(a, ...){
 
 
 ## Beispiel:
-# load(file = "x.Rda")
-# load(file = "y.Rda")
+load(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/x.Rda")
+load(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/y.Rda") 
+
 
 # oder:
 

@@ -20,7 +20,7 @@
     ergebnis $estimate[[i]] <- fit @fit$estimate
     ergebnis $minimum[[i]] <- fit @fit$minimum
     ergebnis $distr[[i]] <- fit @title
-    ergebnis $AIC[[i]] <- -2*(fit @fit$minimum) + 2*length(fit @fit$estimate)
+    ergebnis $AIC[[i]] <- 2*(fit @fit$minimum) + 2*length(fit @fit$estimate)
   }
   # ind <- which(ergebnis $minimum == min(ergebnis $minimum))
   ind <- which(ergebnis $AIC == min(ergebnis $AIC))
@@ -65,6 +65,10 @@
              
   ## zunächst fuer alle archmCopulae
   fit <- NULL
+  fit $margin1 <- a $estimate
+  fit $distrmargin1 <- a $distr
+  fit $margin2 <- b $estimate
+  fit $distrmargin2 <- b $distr
   t <- c(1, 3:6, 9:10, 12:14, 16:17)  ## 19 und 20 funktionieren
   # auch nicht
   ind <- 1
@@ -75,17 +79,19 @@
     range <- .archmRange(type)
         
     fun = function(x, type) {
-      -mean(log(darchmCopula(u = u, v = v, alpha = x, type = type,
+      erg <- -mean(log(darchmCopula(u = u, v = v, alpha = x, type = type,
     alternative = TRUE)))
+      if(erg == "NaN") {erg <- 10}
+      else erg
     }
   
     y = nlminb(start = alpha, objective = fun, lower = range[1],
       upper = range[2], type = type) #, ...)
 
-    fit $family <- c(fit $family, paste("Archimedian Type", type))
+    fit $family <- c(fit $family, paste("Archm.", type))
     fit $par <- c(fit $par, y $par)
     fit $objective <- c(fit $objective, y $objective)
-    fit $AIC <- c(fit $AIC, -2*(fit $objective)[ind] + 2*1)
+    fit $AIC <- c(fit $AIC, 2*(fit $objective)[ind] + 2*1)
     fit $convergence <- c(fit $convergence, y $convergence)
     fit $message <- c(fit $message, y $message)
     fit $iterations <- c(fit $iterations, y $iterations)

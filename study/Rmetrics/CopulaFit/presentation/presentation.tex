@@ -6,9 +6,10 @@
 \begin{document}
 \title{\textbf{Schätzung und Kalibrierung von Copulae}\\
   \emph{Welche Copula passt zu meinen Daten?} \\
-  \footnotesize{Implementierung von Schätzungsmethoden f\"ur den bivariaten Fall in
-  \emph{R}}
-  }
+  \footnotesize{Implementierung von Schätzungsmethoden f\"ur den
+    bivariaten Fall in 
+    \emph{R}}
+}
 
 \author{
   Gerold Köb (0250001)\\
@@ -16,60 +17,85 @@
 }
 \date{\today} 
 
-\frame{\titlepage} 
 
-\frame{\frametitle{Inhaltsverzeichnis}\tableofcontents} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frame{\titlepage} 
+\frame{\frametitle{Inhaltsverzeichnis}\footnotesize{\tableofcontents}}
 
 \section{Warum Copulae verwenden?}
-%\subsection{Motivation} 
+% \subsection{Motivation} 
 \frame{\frametitle{Motivation} 
+  Finanzmärkte der Realität entsprechen häufig nicht den Annahmen der
+  Finanzmarkttheorie, zB 
 
-Finanzmärkte der Realität entsprechen häufig nicht den Annahmen der Finanzmarkttheorie, zB
+  \begin{itemize}
+  \item \textit{fat tails} der Verteilungen
+  \item Korrelation von null bedeutet in Praxis nicht zwingend
+    Unabhängigkeit 
+  \item Auftreten von Clustern in Volatilität
+  \end{itemize}
 
-	\begin{itemize}
-	\item \textit{fat tails} der Verteilungen
-	\item Korrelation von null bedeutet in Praxis nicht zwingend Unabhängigkeit
-	\item Auftreten von Clustern in Volatilität
-	\end{itemize}
-
-Dies f\"uhrt zu Schwierigkeiten im Schätzen der gemeinsamen Verteilungsfunktion eines Portfolios.
+  Dies f\"uhrt zu Schwierigkeiten im Schätzen der gemeinsamen
+  Verteilungsfunktion eines Portfolios. 
 }
-%\subsection{Probleme gemeinsamer Verteilungsfunktionen}
+
+
+
+
+% \subsection{Probleme gemeinsamer Verteilungsfunktionen}
 \frame{\frametitle{Probleme gemeinsamer Verteilungsfunktionen}
-Probleme:
-\begin{itemize}
-	\item Kann man VaR zweier Instrumente einfach addieren um VaR des Portfolios zu erhalten?
-	\item Wie kann man Abhängigkeit innerhalb der Instrumente des Portfolios beschreiben?
-	\item Pearson's Korrelation hat einige Nachteile
-\end{itemize}
-
-Lösung:
-\begin{itemize}
-	\item Mit Copulae kann Abhängigkeitsstruktur und gemeinsame Verteilung besser geschätzt werden!
-\end{itemize}
-
+  Probleme:
+  \begin{itemize}
+  \item Kann man VaR zweier Instrumente einfach addieren um VaR des
+    Portfolios zu erhalten? 
+  \item Wie kann man Abhängigkeit innerhalb der Instrumente des
+    Portfolios beschreiben? 
+  \item Pearson's Korrelation hat einige Nachteile
+  \end{itemize}
+  
+  Lösung:
+  \begin{itemize}
+  \item Mit Copulae kann Abhängigkeitsstruktur und gemeinsame
+    Verteilung besser geschätzt werden! 
+  \end{itemize}  
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Copulae}
 \subsection{Was ist eine Copula?}
 \frame{\frametitle{Was ist eine Copula?}
-Eine \emph{Copula} ist eine Funktion, die eine
-multivariate Verteilungsfunktion mit ihren eindimensionalen
-Randverteilungen kombiniert.
+  Eine \emph{Copula} ist eine Funktion, die eine
+  multivariate Verteilungsfunktion mit ihren eindimensionalen
+  Randverteilungen kombiniert.
 
-\begin{itemize}
-	\item $X$, $Y$ \ldots zwei stetige Zufallsvariablen mit $F(x)~=~P(X \leq x)$ und $G(y) = P(Y \leq y)$
-	\item gemeinsame Verteilung $H(x, y) = P(X \leq x, Y \leq y)$
-	\item f\"ur $(x, y)~\in~[-\infty, \infty]^2$ gibt es Punkt $\left(F(x), G(y), H(x,y)\right)$
-	\item \emph{Copula} ist nun die Abbildung von $\mathbf{I}^2$ nach $\mathbf{I}$
-\end{itemize}
+  \begin{itemize}
+  \item $X$, $Y$ \ldots zwei stetige Zufallsvariablen mit $F(x)~=~P(X
+    \leq x)$ und $G(y) = P(Y \leq y)$ 
+  \item gemeinsame Verteilung $H(x, y) = P(X \leq x, Y \leq y)$
+  \item f\"ur $(x, y)~\in~[-\infty, \infty]^2$ gibt es Punkt
+    $\left(F(x), G(y), H(x,y)\right)$ 
+  \item \emph{Copula} ist nun die Abbildung von $\mathbf{I}^2$ nach
+    $\mathbf{I}$ 
+  \end{itemize}
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \frame{\frametitle{Interpretation als Volumen}
-Darstellbar als Volumen in $\mathbf{I}^3$:
+  Darstellbar als Volumen in $\mathbf{I}^3$:
   \begin{figure}[htb]  
-  	\centering
-        %\label{fig:copulabounds}
-        %\caption{Frechet-Hoeffding-Bounds}
+    \centering
+    % \label{fig:copulabounds}
+    % \caption{Frechet-Hoeffding-Bounds}
     \begin{minipage}[b]{.3\textwidth} % [b] => Ausrichtung an \caption
       \caption{$W(x, y)$}
       \includegraphics[width = \textwidth]{copulaM}
@@ -85,38 +111,49 @@ Darstellbar als Volumen in $\mathbf{I}^3$:
       \includegraphics[width = \textwidth]{copulaW}
     \end{minipage}
   \end{figure}
-
-und daher als Wahrscheinlichkeitskennzahl in $\mathbf{I}^2$ interpretierbar.
+  
+  und daher als Wahrscheinlichkeitskennzahl in $\mathbf{I}^2$
+  interpretierbar.
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Sklar's Theorem}
 \frame{\frametitle{Sklar's Theorem}
-Gemeinsame Verteilung kann durch die \emph{Copula} ausgedr\"uckt werden:
-\begin{equation}
-  \label{eq:sklar}
-  H(x, y) = C(F(x), G(y))
-\end{equation}
-Gilt auch f\"ur den multivariaten Fall!\\~\\
-
-Alle Copulae liegen zwischen zwei Grenzen. Seien $M$ und $W$ die Copulae
-\begin{eqnarray}
-  \label{eq:bounds}
-  M(x, y) & = & \min{(x, y)} \\
-  W(x, y) & = & \max{ (x + y - 1, 0)}
-\end{eqnarray}
+  Gemeinsame Verteilung kann durch die \emph{Copula} ausgedr\"uckt
+  werden:
+  \begin{equation}
+    \label{eq:sklar}
+    H(x, y) = C(F(x), G(y))
+  \end{equation}
+  Gilt auch f\"ur den multivariaten Fall!\\~\\
+  
+  Alle Copulae liegen zwischen zwei Grenzen. Seien $M$ und $W$ die
+  Copulae
+  \begin{eqnarray}
+    \label{eq:bounds}
+    M(x, y) & = & \min{(x, y)} \\
+    W(x, y) & = & \max{ (x + y - 1, 0)}
+  \end{eqnarray}
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Die Frech\'et-Hoeffding Bounds}
 \frame{\frametitle{Eigenschaften von Copulae}
-Es gilt
-\begin{equation}
-  \label{eq:frechethoeffding}
-  W(x, y) \leq C(x, y) \leq M(x, y)
-\end{equation}
+  Es gilt
+  \begin{equation}
+    \label{eq:frechethoeffding}
+    W(x, y) \leq C(x, y) \leq M(x, y)
+  \end{equation}
   \begin{figure}[htb]  
-  	\centering
-        %\label{fig:copulabounds}
-        %\caption{Frechet-Hoeffding-Bounds}
+    \centering
+    % \label{fig:copulabounds}
+    % \caption{Frechet-Hoeffding-Bounds}
     \begin{minipage}[b]{.3\textwidth} % [b] => Ausrichtung an \caption
       \caption{$W(x, y)$}
       \includegraphics[width = \textwidth]{copulaM}
@@ -134,71 +171,240 @@ Es gilt
   \end{figure}
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Familien von Copulae}
 \frame{\frametitle{Familien von Copulae}
 
-\begin{itemize}
-\item 
   \begin{block}{Elliptische Copulae}
     \begin{itemize}
     \item Copulae von	elliptischen Verteilungen\
     \item zB beide Randverteilungen sind normal- oder t-verteilt
     \end{itemize}
   \end{block}
-\item
+
   \begin{block}{Archimedische Copulae}
     \begin{itemize}
     \item einfach zu erzeugen
     \item viele parametrische Familien (22 nach Nelsen (2006))
-    \item können an viele gew\"unschte Eigenschaften angepasst werden
+    \item können an viele gew\"unschte Eigenschaften angepasst
+      werden
     \end{itemize}
   \end{block}
-\end{itemize}
-
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Elliptische Copulae}
 \frame{\frametitle{Elliptische Copulae f\"ur n = 2}
-\begin{itemize}
-	\item Gauß'sche Copula
-		\small{
-				\begin{equation}
-				  C_G(u,v) = \int_{-\infty}^{\Phi^{-1}(u)}
-				  \int_{-\infty}^{\Phi^{-1}(v)} \frac{1}{2 \pi \sqrt{(1 - \rho^2)}}
-				  \exp{ \left( -\frac{s^2 - 2 \rho s t + t^2} {2 (1 - \rho^2)}
-				    \right) }ds dt
-				\end{equation}
-			}
-	\item T-Copula
-		\small{
-						\begin{equation}
-						  C_t(u, v) = \int_{-\infty}^{t_{\nu}^{-1}(u)}
-						  \int_{-\infty}^{t_{\nu}^{-1}(v)} \frac{1}{2 \pi \sqrt{(1 - \rho^2)}}
-						  \exp{ \left( -\frac{s^2 - 2 \rho s t + t^2} {2 (1 - \rho^2)}
-						    \right) }ds dt
-						\end{equation}
-				}
-\end{itemize}
+  \begin{block}{Gauß'sche Copula}
+    \small{
+      \begin{equation}
+        C_G(u,v) = \int_{-\infty}^{\Phi^{-1}(u)}
+        \int_{-\infty}^{\Phi^{-1}(v)} \frac{1}{2 \pi \sqrt{(1 - \rho^2)}}
+        \exp{ \left( -\frac{s^2 - 2 \rho s t + t^2} {2 (1 - \rho^2)}
+          \right) }ds dt
+      \end{equation}
+    }
+  \end{block}
+  \begin{block}{T-Copula}
+    \small{
+      \begin{equation}
+        C_t(u, v) = \int_{-\infty}^{t_{\nu}^{-1}(u)}
+        \int_{-\infty}^{t_{\nu}^{-1}(v)} \frac{1}{2 \pi \sqrt{(1 - \rho^2)}}
+        \exp{ \left( -\frac{s^2 - 2 \rho s t + t^2} {2 (1 - \rho^2)}
+          \right) }ds dt
+      \end{equation}
+    }
+  \end{block}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{Archimedische Copulae}
+\frame{\frametitle{Archimedische Copulae}
+  \begin{block}{Eigenschaften:}
+    \begin{itemize}
+    \item können sehr einfach erzeugt werden
+    \item viele parametrische Familien 
+    \item besitzen viele gew\"unschte Eigenschaften
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Einfachheit der Kostruktion:}
+    
+    Sei $\varphi$ 
+    eine stetige und konvexe Funktion von $\mathbf{I}$ nach $[0, \infty]$,
+    sodass $\varphi(1) = 0$ und $\varphi(0) = \infty$. Sei $\varphi^{[-1]}$ die
+    Pseudo-Inverse von $\varphi$
+
+    \begin{equation}
+      \label{eq:archm}
+      C(u, v) = \varphi^{[-1]}(\varphi(u) + \varphi(v))
+    \end{equation}
+  \end{block}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Fit-Methoden}
+\frame{\frametitle{Fit-Methoden}
+  \begin{block}{3 Methoden:}
+  \begin{itemize}
+  \item Exact Maximum Likelihood (EML) method (one stage method)
+  \item Inference Functions for Margins (IFM) method (two stage method)
+  \item Canonical Maximum Likelihood (CML) method
+  \end{itemize}
+  \end{block}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{Exact Maximum Likelihood (EML) method}
+\frame{\frametitle{Exact Maximum Likelihood (EML) method}
+  \begin{itemize}
+  \item Versucht Parameter der Randverteilung und der Copula gleichzeitig zu
+    schätzen.  
+  \item $\theta$ steht f\"ur Vektor mit allen Parametern
+  \end{itemize}
+\begin{equation}
+    \label{eq:EML}
+    l(\theta) = \sum^{T}_{t=1} \ln c(F_1(x_{1t}),...,F_n(x_{nt})) +
+    \sum^{T}_{t=1}\sum^{n}_{j=1} \ln  f_j(x_{jt})
+  \end{equation}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Inference Functions for Margins (IFM) method}
+\frame{\frametitle{Inference Functions for Margins (IFM) method}
+  \begin{itemize}
+  \item 1. Schritt: Schätzen der Parameter  der Randverteilungen
+    $\theta_1$ und $\theta_2$ mit ML-Methode     
+  \item 2. Schritt: Schätzen der Parameter der Copula (angepasste
+    Randverteilungen bereits durch Schritt 1 gegeben)
+  \end{itemize}
+
+  \begin{equation}
+    \label{eq:IFMcopula}
+    \hat{\theta}_{2} = \arg\max_{\theta_2} \sum^{T}_{t=1} \ln
+    {c(F_1(x_{1t}),...,F_n(x_{nt});\theta_1,\hat{\theta}_{1})}
+  \end{equation}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Canonical Maximum Likelihood (CML) method}
+\frame{\frametitle{Canonical Maximum Likelihood (CML) method}
+  \begin{itemize}
+  \item 1. Schritt: Berechnung der empirischen Verteilungsfunktion
+  \item 2. Schritt: Schätzen der Parameter der Copula mittels
+    ML-Methode, wobei Werte der
+    empirischen Verteilungsfunktion verwendet werden
+  \end{itemize}
+  \begin{equation}
+    \label{eq:CML}
+    \hat{\theta}_{2} = \arg \max_{\theta_2} \sum^{T}_{t=1} \ln
+    c(\hat{F_1}(x_{1t}),...,\hat{F_n}(x_{nt});\theta_1,\hat{\theta}_{2})   
+  \end{equation}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Vor- und Nachteile}
+\frame{\frametitle{Vor- und Nachteile der einzelenen Methoden}
+  \begin{block}{EML-Methode:}
+    \begin{itemize}
+    \item schwierig, weil Randverteilungen unterschiedlich viele
+      Parameter besitzen können
+    \item Parameter m\"ussen sowohl in Dichtefunktion der Copula und
+      den Randverteilungen verwendet werden und \"ubereinstimmen
+    \item AIC - hoher Strafterm
+    \item lange Rechenzeit (viele Parameter werden gleichzeitig geschätzt)
+    \end{itemize}
+  \end{block}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frame{\frametitle{Vor- und Nachteile der einzelenen Methoden}
+  \begin{block}{IFM-Methode:}
+    \begin{itemize}
+    \item einfach, schnell
+    \item flexibel (viele Randverteilungen können verwendet werden)
+    \item AIC - möglicherweise verfälscht, weil zweistufiger
+      Optimierungsprozess 
+    \end{itemize}    
+  \end{block}
+
+  \begin{block}{CML-Methode:}
+  \begin{itemize}
+  \item einfach, schnell
+  \item unabhängig vom Aussehen der Randverteilungen
+  \end{itemize}
+  \end{block}
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Beispiel}
+\input{beispiel.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frame{\frametitle{Erfahrungen bei der Programmierung:}
+  \begin{itemize}
+  \item IFM- und CML-Methode
+  \item EML-Methode
+    \begin{itemize}
+    \item Schwierigkeiten bei Zielfunktion f\"ur Optimierung:\\
+      Verwendung der gleichen Randverteilung mit gleichen
+      Parametern in Dichtefunktion der Copuladichte und der Dichten
+      der Randverteilungen
+    \item viele Kombinationen von Randverteilungen und Copulae\\
+      (bei 5 versch. Randverteilungen und 12 versch. Copulae 300
+      Möglichkeiten!)
+    \end{itemize}
+  \item Umgang mit ``NA''- bzw. ``NaN''-Werten
+  \item AIC-Bewertung
+
+  \end{itemize}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frame{
+\begin{center}
+\LARGE{Danke f\"ur die Aufmerksamkeit!}
+\end{center}
 }
 
 
-
-\section{Blöcke}
-\subsection{Bl\"ocke}
-\frame{\frametitle{Bl\"ocke}
-
-\begin{block}{Blocktitel}
-Blocktext 
-\end{block}
-
-\begin{exampleblock}{Blocktitel}
-Blocktext 
-\end{exampleblock}
-
-
-\begin{alertblock}{Blocktitel}
-Blocktext 
-\end{alertblock}
-}
 \end{document}

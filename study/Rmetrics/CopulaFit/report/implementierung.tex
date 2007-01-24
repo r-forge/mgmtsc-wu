@@ -7,7 +7,8 @@ folgendermaßen aus:
 
 \begin{Schunk}
 \begin{Sinput}
-> CopulaFit <- function(x, y, method = "CML", returns = FALSE, ...) {
+> CopulaFit <- function(x, y, method = "CML", returns = FALSE, 
++     ...) {
 +     UseMethod("CopulaFit")
 + }
 \end{Sinput}
@@ -133,6 +134,9 @@ definiert. Startparameter und Grenzen werden in \verb|alpha| und
 \subsection{Anwendungsbeispiel}
 \label{sec:Rbeispiel}
 
+\subsubsection{Durchf\"uhrung einer Anpassung}
+\label{sec:Durchfuehrung}
+
 Nun soll die Funktion \verb|CopulaFit| an einem genierierten
 Beispieldatensatz angewendet werden:
 
@@ -172,7 +176,7 @@ IFM-Methode geschätzt:
 
 \begin{Schunk}
 \begin{Sinput}
-> fit <- CopulaFit(x, y, method = "IFM", returns = TRUE)
+> ifm <- CopulaFit(x, y, method = "IFM", returns = TRUE)
 \end{Sinput}
 \end{Schunk}
 
@@ -182,38 +186,151 @@ gefitteten Copulae.
 
 \begin{Schunk}
 \begin{Sinput}
-> fit
+> ifm
 \end{Sinput}
 \begin{Soutput}
-            fit.family      fit.par fit.objective fit.method
-1   Archimedian Type 1 7.752083e+00   -0.81519657        IFM
-2   Archimedian Type 3 1.000000e+00   -0.15449225        IFM
-3   Archimedian Type 4 5.707346e+00   -0.84670550        IFM
-4   Archimedian Type 5 1.682922e+01   -0.84271404        IFM
-5   Archimedian Type 6 8.518132e+00   -0.81247049        IFM
-6   Archimedian Type 9 1.000000e+00   -0.13150519        IFM
-7  Archimedian Type 10 7.458241e-01   -0.02627407        IFM
-8  Archimedian Type 12 4.009337e+00   -0.85369003        IFM
-9  Archimedian Type 13 1.371508e+01   -0.84091227        IFM
-10 Archimedian Type 14 5.306909e+00   -0.84966595        IFM
-11 Archimedian Type 16 2.422727e+09   -0.15449225        IFM
-12 Archimedian Type 17 2.477535e+01   -0.83985273        IFM
+   fit.family     fit.par fit.objective fit.method fit.convergence  fit.AIC
+1    Archm. 1  0.20053613 -2.386252e-03        IFM               0 1.995227
+2    Archm. 3  0.03803663 -1.869869e-05        IFM               0 1.999963
+3    Archm. 4  1.00000000 -2.242875e-18        IFM               0 2.000000
+4    Archm. 5  0.06693089 -1.636559e-05        IFM               0 1.999967
+5    Archm. 6  1.00000000  1.233581e-17        IFM               0 2.000000
+6    Archm. 9  0.00000000  0.000000e+00        IFM               0 2.000000
+7   Archm. 10  0.00000000  0.000000e+00        IFM               0 2.000000
+8   Archm. 12  1.00000000  5.460098e-02        IFM               0 2.109202
+9   Archm. 13  1.17860348 -4.582247e-04        IFM               0 1.999084
+10  Archm. 14  1.00000000  5.460098e-02        IFM               0 2.109202
+11  Archm. 16  0.32253662  1.949495e-02        IFM               0 2.038990
+12  Archm. 17 -0.70131228 -9.545983e-05        IFM               0 1.999809
 \end{Soutput}
 \end{Schunk}
 
 Um schneller jene Copula wählen zu können, welche den maximalen
-Log-Likelihood-Wert liefert, kann der Befehl \verb|summary| verwendet werden:
+Log-Likelihood-Wert liefert, kann der Befehl \verb|summary| verwendet
+werden. Die Ausgabe zeigt die besten drei Copulae an:
 
 \begin{Schunk}
 \begin{Sinput}
-> summary(fit)
+> summary(ifm)
 \end{Sinput}
 \begin{Soutput}
- Die best-fit Copula ist Typ:  Archimedian Type 12 
- Minimaler Zielfunktionswert:  -0.85369 
+ Die best-fit Copula ist Typ:  Archm. 1 
+ Minimaler Zielfunktionswert:  -0.002386252 
 
 Summary:
-        a.family.ind. a.objective.ind. a.method.ind. a.par.ind.
-1 Archimedian Type 12         -0.85369           IFM   4.009337
+  a.family.ind. a.objective.ind. a.method.ind. a.par.ind. a.AIC.ind.
+1      Archm. 1    -2.386252e-03           IFM  0.2005361   1.995227
+2     Archm. 13    -4.582247e-04           IFM  1.1786035   1.999084
+3     Archm. 17    -9.545983e-05           IFM -0.7013123   1.999809
+  a.convergence.ind.
+1                  0
+2                  0
+3                  0
 \end{Soutput}
 \end{Schunk}
+
+Weitere Informationen können \"uber S3-Attribute ausgegeben werden. Es
+stehen folgende Attribute zur Verf\"ugung:
+
+\begin{Schunk}
+\begin{Sinput}
+> attributes(ifm)
+\end{Sinput}
+\begin{Soutput}
+$names
+ [1] "margin1"      "distrmargin1" "margin2"      "distrmargin2" "family"      
+ [6] "par"          "objective"    "AIC"          "convergence"  "message"     
+[11] "iterations"   "method"      
+
+$class
+[1] "mloutput"
+\end{Soutput}
+\end{Schunk}
+
+Mit Hilfe dieser Attribute können zusätzlich noch Informationen \"uber
+die Randverteilungen, die Anzahl der Iterationen und eine Nachricht
+\"uber das Konvergenzverhalten ausgegeben werden.
+
+
+\subsubsection{Vergleich der Fit-Methoden}
+\label{sec:VergleichFitMethoden}
+
+Nun sollen die verschiednen Fit-Methoden verglichen werden. Dazu
+werden zwei Zeitreihen verwendet, die von \emph{YahooFinance} besorgt
+wurden. Es handelt sich um Zeitreihen von ATX- und NIKKEI-Werten, die
+schon mit \verb|as.ml| f\"ur die Anpassung vorbereitet worden sind.
+
+\begin{Schunk}
+\begin{Sinput}
+> ifm <- CopulaFit(x, y, method = "IFM", returns = TRUE)
+> cml <- CopulaFit(x, y, method = "CML", returns = TRUE)
+> eml <- CopulaFit(x, y, method = "EML", returns = TRUE)
+\end{Sinput}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> summary(cml)
+\end{Sinput}
+\begin{Soutput}
+ Die best-fit Copula ist Typ:  Archm. 5 
+ Minimaler Zielfunktionswert:  -0.0001179483 
+
+Summary:
+  a.family.ind. a.objective.ind. a.method.ind.  a.par.ind. a.AIC.ind.
+1      Archm. 5    -0.0001179483           CML  0.09181627   1.999764
+2      Archm. 3    -0.0001178839           CML  0.04533770   1.999764
+3     Archm. 17    -0.0001069186           CML -0.84801622   1.999786
+  a.convergence.ind.
+1                  0
+2                  0
+3                  0
+\end{Soutput}
+\begin{Sinput}
+> summary(ifm)
+\end{Sinput}
+\begin{Soutput}
+ Die best-fit Copula ist Typ:  Archm. 5 
+ Minimaler Zielfunktionswert:  -0.0001063884 
+
+Summary:
+  a.family.ind. a.objective.ind. a.method.ind.   a.par.ind. a.AIC.ind.
+1      Archm. 5    -1.063884e-04           IFM  0.102855182   1.999787
+2      Archm. 3    -1.053455e-04           IFM  0.050244838   1.999789
+3      Archm. 1    -9.037212e-05           IFM -0.008746649   1.999819
+  a.convergence.ind.
+1                  0
+2                  0
+3                  0
+\end{Soutput}
+\begin{Sinput}
+> summary(eml)
+\end{Sinput}
+\begin{Soutput}
+ Die best-fit Copula ist Typ:  Archm. 5 
+ Minimaler Zielfunktionswert:  -2.299921 
+
+Summary:
+  a.family.ind. a.objective.ind. a.method.ind. a.parCopula.ind. a.AIC.ind.
+1      Archm. 5        -2.299921           EML        12.529208   3.400158
+2      Archm. 4        -2.294417           EML         6.753759   3.411167
+3     Archm. 14        -2.293418           EML         6.870347   3.413164
+  a.convergence.ind.
+1                  1
+2                  1
+3                  1
+\end{Soutput}
+\end{Schunk}
+
+Wie man sieht, empfiehlt jede Fit-Methode die Archimedische Copula 5,
+wobei die Konvergenz bei der EML-Methode nicht gegeben ist. Um
+genauere Informationen \"uber die Konvergenzvariable zu erhalten, sei
+auf die Hilfe von \verb|nlminb| verwiesen.
+
+Bei der IFM- und CML-Methode sind die Parameter sehr ähnlich, nur die
+EML-Methode liefert einen unbrauchbaren Wert f\"ur $\theta$. Auch die
+zweitbesten Anpassungen stimmen bei CML- und IFM-Methode \"uberein.
+
+Wie erwartet, ist die Rechenzeit bei der EML-Methode am
+längsten. Jedoch kann trotz der hohen Anzahl an Iterationen keine
+Konvergenz erreicht werden.
