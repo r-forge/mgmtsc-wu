@@ -264,7 +264,7 @@ werden. Dazu wird der geschätzte Parameter und der geschätzte Typ verwendet:
 
 <<>>=
 theta <- ifm $par[4]
-a <- seq(0, 1, length = 100)
+a <- seq(0, 1, length = 30)
 ## Verteilung Copula
 P <- matrix(NA, length(a), length(a))
 for(j in 1:length(a)){

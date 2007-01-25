@@ -189,19 +189,19 @@ gefitteten Copulae.
 > ifm
 \end{Sinput}
 \begin{Soutput}
-   fit.family   fit.par fit.objective fit.method fit.convergence  fit.AIC
-1    Archm. 1 0.1343887 -0.0013165131        IFM               0 1.997367
-2    Archm. 3 0.3791463 -0.0015725636        IFM               0 1.996855
-3    Archm. 4 1.0534303 -0.0005729848        IFM               0 1.998854
-4    Archm. 5 1.0281886 -0.0017789535        IFM               0 1.996442
-5    Archm. 6 1.0234051 -0.0000845159        IFM               0 1.999831
-6    Archm. 9 0.0000000  0.0000000000        IFM               0 2.000000
-7   Archm. 10 0.0000000  0.0000000000        IFM               0 2.000000
-8   Archm. 12 1.0000000  0.0717295888        IFM               0 2.143459
-9   Archm. 13 1.3570685 -0.0016283506        IFM               0 1.996743
-10  Archm. 14 1.0000000  0.0717295888        IFM               0 2.143459
-11  Archm. 16 0.1346144  0.0349279910        IFM               0 2.069856
-12  Archm. 17 0.4341380 -0.0014907959        IFM               0 1.997018
+   fit.family     fit.par fit.objective fit.method fit.convergence  fit.AIC
+1    Archm. 1 -0.27201936 -1.786684e-03        IFM               0 1.996427
+2    Archm. 3 -0.21569129 -3.611206e-04        IFM               0 1.999278
+3    Archm. 4  1.01199711 -3.459022e-05        IFM               0 1.999931
+4    Archm. 5 -0.45218020 -3.976074e-04        IFM               0 1.999205
+5    Archm. 6  1.02732189 -1.253132e-04        IFM               0 1.999749
+6    Archm. 9  0.11067602 -3.647729e-04        IFM               0 1.999270
+7   Archm. 10  0.09959798 -3.256256e-04        IFM               0 1.999349
+8   Archm. 12  1.00000000  9.262746e-02        IFM               0 2.185255
+9   Archm. 13  0.82543061 -3.556938e-04        IFM               0 1.999289
+10  Archm. 14  1.00000000  9.262746e-02        IFM               0 2.185255
+11  Archm. 16  0.10562416  3.309014e-02        IFM               0 2.066180
+12  Archm. 17 -1.55784447 -2.594806e-04        IFM               0 1.999481
 \end{Soutput}
 \end{Schunk}
 
@@ -214,14 +214,14 @@ werden. Die Ausgabe zeigt die besten drei Copulae an:
 > summary(ifm)
 \end{Sinput}
 \begin{Soutput}
- Die best-fit Copula ist Typ:  Archm. 5 
- Minimaler Zielfunktionswert:  -0.001778954 
+ Die best-fit Copula ist Typ:  Archm. 1 
+ Minimaler Zielfunktionswert:  -0.001786684 
 
 Summary:
   a.family.ind. a.objective.ind. a.method.ind. a.par.ind. a.AIC.ind.
-1      Archm. 5     -0.001778954           IFM  1.0281886   1.996442
-2     Archm. 13     -0.001628351           IFM  1.3570685   1.996743
-3      Archm. 3     -0.001572564           IFM  0.3791463   1.996855
+1      Archm. 1    -0.0017866840           IFM -0.2720194   1.996427
+2      Archm. 5    -0.0003976074           IFM -0.4521802   1.999205
+3      Archm. 9    -0.0003647729           IFM  0.1106760   1.999270
   a.convergence.ind.
 1                  0
 2                  0
@@ -372,7 +372,7 @@ werden. Dazu wird der geschätzte Parameter und der geschätzte Typ verwendet:
 \begin{Schunk}
 \begin{Sinput}
 > theta <- ifm$par[4]
-> a <- seq(0, 1, length = 100)
+> a <- seq(0, 1, length = 30)
 > P <- matrix(NA, length(a), length(a))
 > for (j in 1:length(a)) {
 +     for (i in 1:length(a)) {
@@ -427,7 +427,7 @@ einen \emph{GARCH-Prozess} zu verwenden.
   \label{fig:vergleichSim}
   \centering
 \includegraphics{implementierung-020}
-  \end{figure}  
+\end{figure}
 
 
 
