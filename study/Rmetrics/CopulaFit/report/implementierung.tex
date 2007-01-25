@@ -189,19 +189,19 @@ gefitteten Copulae.
 > ifm
 \end{Sinput}
 \begin{Soutput}
-   fit.family     fit.par fit.objective fit.method fit.convergence  fit.AIC
-1    Archm. 1  0.20053613 -2.386252e-03        IFM               0 1.995227
-2    Archm. 3  0.03803663 -1.869869e-05        IFM               0 1.999963
-3    Archm. 4  1.00000000 -2.242875e-18        IFM               0 2.000000
-4    Archm. 5  0.06693089 -1.636559e-05        IFM               0 1.999967
-5    Archm. 6  1.00000000  1.233581e-17        IFM               0 2.000000
-6    Archm. 9  0.00000000  0.000000e+00        IFM               0 2.000000
-7   Archm. 10  0.00000000  0.000000e+00        IFM               0 2.000000
-8   Archm. 12  1.00000000  5.460098e-02        IFM               0 2.109202
-9   Archm. 13  1.17860348 -4.582247e-04        IFM               0 1.999084
-10  Archm. 14  1.00000000  5.460098e-02        IFM               0 2.109202
-11  Archm. 16  0.32253662  1.949495e-02        IFM               0 2.038990
-12  Archm. 17 -0.70131228 -9.545983e-05        IFM               0 1.999809
+   fit.family   fit.par fit.objective fit.method fit.convergence  fit.AIC
+1    Archm. 1 0.1343887 -0.0013165131        IFM               0 1.997367
+2    Archm. 3 0.3791463 -0.0015725636        IFM               0 1.996855
+3    Archm. 4 1.0534303 -0.0005729848        IFM               0 1.998854
+4    Archm. 5 1.0281886 -0.0017789535        IFM               0 1.996442
+5    Archm. 6 1.0234051 -0.0000845159        IFM               0 1.999831
+6    Archm. 9 0.0000000  0.0000000000        IFM               0 2.000000
+7   Archm. 10 0.0000000  0.0000000000        IFM               0 2.000000
+8   Archm. 12 1.0000000  0.0717295888        IFM               0 2.143459
+9   Archm. 13 1.3570685 -0.0016283506        IFM               0 1.996743
+10  Archm. 14 1.0000000  0.0717295888        IFM               0 2.143459
+11  Archm. 16 0.1346144  0.0349279910        IFM               0 2.069856
+12  Archm. 17 0.4341380 -0.0014907959        IFM               0 1.997018
 \end{Soutput}
 \end{Schunk}
 
@@ -214,14 +214,14 @@ werden. Die Ausgabe zeigt die besten drei Copulae an:
 > summary(ifm)
 \end{Sinput}
 \begin{Soutput}
- Die best-fit Copula ist Typ:  Archm. 1 
- Minimaler Zielfunktionswert:  -0.002386252 
+ Die best-fit Copula ist Typ:  Archm. 5 
+ Minimaler Zielfunktionswert:  -0.001778954 
 
 Summary:
   a.family.ind. a.objective.ind. a.method.ind. a.par.ind. a.AIC.ind.
-1      Archm. 1    -2.386252e-03           IFM  0.2005361   1.995227
-2     Archm. 13    -4.582247e-04           IFM  1.1786035   1.999084
-3     Archm. 17    -9.545983e-05           IFM -0.7013123   1.999809
+1      Archm. 5     -0.001778954           IFM  1.0281886   1.996442
+2     Archm. 13     -0.001628351           IFM  1.3570685   1.996743
+3      Archm. 3     -0.001572564           IFM  0.3791463   1.996855
   a.convergence.ind.
 1                  0
 2                  0
@@ -334,3 +334,100 @@ zweitbesten Anpassungen stimmen bei CML- und IFM-Methode \"uberein.
 Wie erwartet, ist die Rechenzeit bei der EML-Methode am
 längsten. Jedoch kann trotz der hohen Anzahl an Iterationen keine
 Konvergenz erreicht werden.
+
+
+\subsubsection{Grafische Darstellungen}
+\label{sec:plots}
+
+Zunächst können die gemeinsame Verteilung und ein Scatterplot der
+Randverteilungen dargestellt werden:
+
+\begin{Schunk}
+\begin{Sinput}
+> u <- pnorm(x, ifm$margin1[1], ifm$margin1[2])
+> v <- pnorm(y, ifm$margin2[1], ifm$margin2[2])
+\end{Sinput}
+\end{Schunk}
+
+Die beiden Grafiken sind in Abbildung \ref{fig:Randverteilungen}
+dargestellt.
+
+\begin{figure}
+  \caption{Randverteilungen}
+  \label{fig:Randverteilungen}
+  \centering
+  \begin{minipage}[b]{.49\textwidth} % [b] => Ausrichtung an \caption
+\includegraphics{implementierung-015}
+    \end{minipage}
+ \hspace{.0\linewidth}% Abstand zwischen Bilder
+ \begin{minipage}[b]{.49\textwidth} % [b] => Ausrichtung an \caption
+\includegraphics{implementierung-016}
+ \end{minipage}
+\end{figure}
+
+
+Auch die Verteilung und Dichte der Copula können dargestellt
+werden. Dazu wird der geschätzte Parameter und der geschätzte Typ verwendet:
+
+\begin{Schunk}
+\begin{Sinput}
+> theta <- ifm$par[4]
+> a <- seq(0, 1, length = 100)
+> P <- matrix(NA, length(a), length(a))
+> for (j in 1:length(a)) {
++     for (i in 1:length(a)) {
++         P[j, i] <- parchmCopula(a[i], a[j], alpha = theta, type = 5, 
++             alternative = TRUE)
++     }
++ }
+> D <- matrix(NA, length(a), length(a))
+> for (j in 1:length(a)) {
++     for (i in 1:length(a)) {
++         D[j, i] <- darchmCopula(a[i], a[j], alpha = theta, type = 5, 
++             alternative = TRUE)
++     }
++ }
+\end{Sinput}
+\end{Schunk}
+
+Die Grafiken sind in Abbildung \ref{fig:CopulaVuD} dargestellt.
+
+\begin{figure}
+  \caption{Verteilung und Dichter der angepassten Copula}
+  \label{fig:CopulaVuD}
+\includegraphics{implementierung-018}
+\centering
+  
+\end{figure}
+
+Jetzt könnte noch versucht werden, zufällige Renditen mit Hilfe der
+Copula zu simulieren. Dies kann folgendermaßen geschehen:
+
+\begin{Schunk}
+\begin{Sinput}
+> r <- rarchmCopula(n = length(x), alpha = theta, type = 5)
+> u = r[, 1]
+> v = r[, 2]
+> x.sim = qnorm(u, ifm$margin1[1], ifm$margin1[2])
+> y.sim = qnorm(v, ifm$margin2[1], ifm$margin2[2])
+\end{Sinput}
+\end{Schunk}
+
+In \verb|x.sim| und \verb |y.sim| sind nun die simulierten Renditen
+enthalten. Diese können nun grafisch mit den tatsächlichen Renditen
+verglichen werden (siehe Abbildung \ref{fig:vergleichSim}). Es ist
+aber nicht verwunderlich, dass die simulierten Daten nicht optimal
+sind. Dies liegt daran, dass nur Zufallszahlen f\"ur die Simulations
+herangezogen wurden. Eine bessere Alternatvie wäre, die Copula f\"ur
+einen \emph{GARCH-Prozess} zu verwenden.
+
+
+\begin{figure}
+  \caption{Vergleich tatsächlicher und simulierter Renditen}
+  \label{fig:vergleichSim}
+  \centering
+\includegraphics{implementierung-020}
+  \end{figure}  
+
+
+

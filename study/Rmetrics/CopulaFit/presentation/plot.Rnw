@@ -1,0 +1,176 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+<<echo=FALSE,eval=FALSE>>=
+source(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/CopulaFit.R")
+source(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/IFM.R")
+source(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/CML.R")
+source(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/EML2.R")
+source(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/fCopulae.R")
+library(fCopulae)
+load(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/x.Rda")
+load(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/y.Rda")
+load(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/ifm.Rda")
+load(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/eml.Rda")
+load(file = "C:/Dokumente und Einstellungen/Home/Desktop/cvs/study/Rmetrics/CopulaFit/cml.Rda")
+u <- pnorm(x, ifm $margin1[1], ifm $margin1[2])
+v <- pnorm(y, ifm $margin2[1], ifm $margin2[2])
+theta <- ifm $par[4]
+## Plot Copula
+a <- seq(0, 1, length = 100)
+P <- matrix(NA, length(a), length(a))
+for(j in 1:length(a)){
+  for(i in 1:length(a)){
+    P[j,i] <- parchmCopula(a[i], a[j], alpha = theta, type = 5,
+                           alternative = TRUE)
+  }
+}
+## Plot Density
+D <- matrix(NA, length(a), length(a))
+for(j in 1:length(a)){
+  for(i in 1:length(a)){
+    D[j,i] <- darchmCopula(a[i], a[j], alpha = theta, type = 5,
+                           alternative = TRUE)
+  }
+}
+@ 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[containsverbatim]
+  \frametitle{Plots:}
+  \begin{figure}[h]  
+    \centering
+    \begin{minipage}[b]{.49\textwidth} % [b] => Ausrichtung an \caption
+      \begin{figure}[htpb]
+        \centering
+
+<<echo=FALSE, fig=TRUE>>=
+plot(x, y, pch = 19, main = "Bivariate Verteilung")
+@ 
+
+      \end{figure}
+    \end{minipage}
+ \hspace{.0\linewidth}% Abstand zwischen Bilder
+ \begin{minipage}[b]{.49\textwidth} % [b] => Ausrichtung an \caption
+   \begin{figure}[htb]
+
+<<echo=FALSE, fig=TRUE>>=
+plot(u, v, pch = 19, main = "Normalverteilte Randverteilungen")
+@ 
+
+   \end{figure}
+ \end{minipage}
+\end{figure}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[containsverbatim]
+  \frametitle{Verteilung der Copula:}
+
+\begin{figure}[h]  
+  \centering
+  \begin{minipage}[b]{.49\textwidth} % [b] => Ausrichtung an \caption
+    \begin{figure}[htpb]
+      \centering
+<<echo=FALSE, fig=TRUE>>=
+persp(z = P, col = "steelblue", theta = -25, phi = 15, ticktype =
+      "detailed", main = "P Copula")
+@ 
+   \end{figure}
+ \end{minipage}
+ \hspace{.0\linewidth}% Abstand zwischen Bilder
+ \begin{minipage}[b]{.49\textwidth} % [b] => Ausrichtung an \caption
+   \begin{figure}[htb]
+<<echo=FALSE, fig=TRUE>>=
+contour(z = P)
+@ 
+   \end{figure}
+ \end{minipage}
+\end{figure}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  \frametitle{Dichte der Copula:}
+\begin{figure}[h]  
+  \centering
+  \begin{minipage}[b]{.45\textwidth} % [b] => Ausrichtung an \caption
+    \begin{figure}[htpb]
+      \centering
+<<echo=FALSE, fig=TRUE>>=
+persp(z = D, col = "steelblue", theta = 30, phi = 15, ticktype =
+  "detailed", main = "Dichte Copula")
+@ 
+   \end{figure}
+ \end{minipage}
+ \hspace{.0\linewidth}% Abstand zwischen Bilder
+ \begin{minipage}[b]{.45\textwidth} % [b] => Ausrichtung an \caption
+   \begin{figure}[htb]
+<<echo=FALSE, fig=TRUE>>=
+contour(z = D)
+@ 
+   \end{figure}
+ \end{minipage}
+\end{figure}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[containsverbatim]
+  \frametitle{Simulation mit Copula:}
+
+\scriptsize{  
+<<>>=
+r <- rarchmCopula(n = length(x), alpha = theta, type = 5)
+u = r[, 1]
+v = r[, 2]
+a = qnorm(u, ifm $margin1[1], ifm $margin1[2])
+b = qnorm(v, ifm $margin2[1], ifm $margin2[2])
+@
+} 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[containsverbatim]
+  \frametitle{Vergleich der Plots:}
+\begin{figure}
+\begin{minipage}[b]{\textheight} % [b] => Ausrichtung an \caption
+  \begin{figure}[htb]
+    \centering
+
+<<echo=FALSE, fig=TRUE>>=  
+par(mfrow = c(2, 2), cex =0.7)
+plot(x, type = "l", col = "steelblue", main = "ATX Returns")
+grid()
+plot(y, type = "l", col = "steelblue", main = "NIKKEI Returns")
+grid()
+plot(a, type = "l", col = "steelblue", main = "Simulated ATX")
+grid()
+plot(b, type = "l", col = "steelblue", main = "Simulated NIKKEI")
+grid()
+@ 
+  \end{figure}
+\end{minipage}
+\end{figure}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

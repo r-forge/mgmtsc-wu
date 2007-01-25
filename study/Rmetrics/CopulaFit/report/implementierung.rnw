@@ -224,3 +224,119 @@ zweitbesten Anpassungen stimmen bei CML- und IFM-Methode \"uberein.
 Wie erwartet, ist die Rechenzeit bei der EML-Methode am
 längsten. Jedoch kann trotz der hohen Anzahl an Iterationen keine
 Konvergenz erreicht werden.
+
+
+\subsubsection{Grafische Darstellungen}
+\label{sec:plots}
+
+Zunächst können die gemeinsame Verteilung und ein Scatterplot der
+Randverteilungen dargestellt werden:
+
+<<>>=
+u <- pnorm(x, ifm $margin1[1], ifm $margin1[2])
+v <- pnorm(y, ifm $margin2[1], ifm $margin2[2])
+@
+
+Die beiden Grafiken sind in Abbildung \ref{fig:Randverteilungen}
+dargestellt.
+
+\begin{figure}
+  \caption{Randverteilungen}
+  \label{fig:Randverteilungen}
+  \centering
+  \begin{minipage}[b]{.49\textwidth} % [b] => Ausrichtung an \caption
+<<echo=FALSE, fig=TRUE>>=
+library(fCopulae)
+plot(x, y, pch = 19, main = "Bivariate Verteilung")
+@ 
+    \end{minipage}
+ \hspace{.0\linewidth}% Abstand zwischen Bilder
+ \begin{minipage}[b]{.49\textwidth} % [b] => Ausrichtung an \caption
+<<echo=FALSE, fig=TRUE>>=
+plot(u, v, pch = 19, main = "Normalverteilte Randverteilungen")
+@ 
+ \end{minipage}
+\end{figure}
+
+
+Auch die Verteilung und Dichte der Copula können dargestellt
+werden. Dazu wird der geschätzte Parameter und der geschätzte Typ verwendet:
+
+<<>>=
+theta <- ifm $par[4]
+a <- seq(0, 1, length = 100)
+## Verteilung Copula
+P <- matrix(NA, length(a), length(a))
+for(j in 1:length(a)){
+  for(i in 1:length(a)){
+    P[j,i] <- parchmCopula(a[i], a[j], alpha = theta, type = 5,
+                           alternative = TRUE)
+  }
+}
+## Dichte Copula
+D <- matrix(NA, length(a), length(a))
+for(j in 1:length(a)){
+  for(i in 1:length(a)){
+    D[j,i] <- darchmCopula(a[i], a[j], alpha = theta, type = 5,
+                           alternative = TRUE)
+  }
+}
+@
+
+Die Grafiken sind in Abbildung \ref{fig:CopulaVuD} dargestellt.
+
+\begin{figure}
+  \caption{Verteilung und Dichter der angepassten Copula}
+  \label{fig:CopulaVuD}
+<<echo=FALSE, fig=TRUE>>=
+par(mfrow = c(2,2), cex = 0.7)
+persp(z = P, col = "steelblue", theta = -25, phi = 15, ticktype =
+      "detailed", main = "P Copula")
+persp(z = D, col = "steelblue", theta = -25, phi = 15, ticktype =
+      "detailed", main = "P Copula")
+contour(z = P)
+contour(z = D)
+@ 
+\centering
+  
+\end{figure}
+
+Jetzt könnte noch versucht werden, zufällige Renditen mit Hilfe der
+Copula zu simulieren. Dies kann folgendermaßen geschehen:
+
+<<>>=
+r <- rarchmCopula(n = length(x), alpha = theta, type = 5)
+u = r[, 1]
+v = r[, 2]
+x.sim = qnorm(u, ifm $margin1[1], ifm $margin1[2])
+y.sim = qnorm(v, ifm $margin2[1], ifm $margin2[2])
+@
+
+In \verb|x.sim| und \verb |y.sim| sind nun die simulierten Renditen
+enthalten. Diese können nun grafisch mit den tatsächlichen Renditen
+verglichen werden (siehe Abbildung \ref{fig:vergleichSim}). Es ist
+aber nicht verwunderlich, dass die simulierten Daten nicht optimal
+sind. Dies liegt daran, dass nur Zufallszahlen f\"ur die Simulations
+herangezogen wurden. Eine bessere Alternatvie wäre, die Copula f\"ur
+einen \emph{GARCH-Prozess} zu verwenden.
+
+
+\begin{figure}
+  \caption{Vergleich tatsächlicher und simulierter Renditen}
+  \label{fig:vergleichSim}
+  \centering
+<<echo=FALSE, fig=TRUE>>=  
+par(mfrow = c(2, 2), cex =0.7)
+plot(x, type = "l", col = "steelblue", main = "ATX Returns")
+grid()
+plot(y, type = "l", col = "steelblue", main = "NIKKEI Returns")
+grid()
+plot(x.sim, type = "l", col = "steelblue", main = "Simulated ATX")
+grid()
+plot(y.sim, type = "l", col = "steelblue", main = "Simulated NIKKEI")
+grid()
+@ 
+\end{figure}
+
+
+

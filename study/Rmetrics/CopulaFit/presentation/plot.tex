@@ -1,0 +1,121 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[containsverbatim]
+  \frametitle{Plots:}
+  \begin{figure}[h]  
+    \centering
+    \begin{minipage}[b]{.49\textwidth} % [b] => Ausrichtung an \caption
+      \begin{figure}[htpb]
+        \centering
+
+\includegraphics{plot-002}
+
+      \end{figure}
+    \end{minipage}
+ \hspace{.0\linewidth}% Abstand zwischen Bilder
+ \begin{minipage}[b]{.49\textwidth} % [b] => Ausrichtung an \caption
+   \begin{figure}[htb]
+
+\includegraphics{plot-003}
+
+   \end{figure}
+ \end{minipage}
+\end{figure}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[containsverbatim]
+  \frametitle{Verteilung der Copula:}
+
+\begin{figure}[h]  
+  \centering
+  \begin{minipage}[b]{.49\textwidth} % [b] => Ausrichtung an \caption
+    \begin{figure}[htpb]
+      \centering
+\includegraphics{plot-004}
+   \end{figure}
+ \end{minipage}
+ \hspace{.0\linewidth}% Abstand zwischen Bilder
+ \begin{minipage}[b]{.49\textwidth} % [b] => Ausrichtung an \caption
+   \begin{figure}[htb]
+\includegraphics{plot-005}
+   \end{figure}
+ \end{minipage}
+\end{figure}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  \frametitle{Dichte der Copula:}
+\begin{figure}[h]  
+  \centering
+  \begin{minipage}[b]{.45\textwidth} % [b] => Ausrichtung an \caption
+    \begin{figure}[htpb]
+      \centering
+\includegraphics{plot-006}
+   \end{figure}
+ \end{minipage}
+ \hspace{.0\linewidth}% Abstand zwischen Bilder
+ \begin{minipage}[b]{.45\textwidth} % [b] => Ausrichtung an \caption
+   \begin{figure}[htb]
+\includegraphics{plot-007}
+   \end{figure}
+ \end{minipage}
+\end{figure}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[containsverbatim]
+  \frametitle{Simulation mit Copula:}
+
+\scriptsize{  
+\begin{Schunk}
+\begin{Sinput}
+> r <- rarchmCopula(n = length(x), alpha = theta, type = 5)
+> u = r[, 1]
+> v = r[, 2]
+> a = qnorm(u, ifm$margin1[1], ifm$margin1[2])
+> b = qnorm(v, ifm$margin2[1], ifm$margin2[2])
+\end{Sinput}
+\end{Schunk}
+} 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[containsverbatim]
+  \frametitle{Vergleich der Plots:}
+\begin{figure}
+\begin{minipage}[b]{\textheight} % [b] => Ausrichtung an \caption
+  \begin{figure}[htb]
+    \centering
+
+\includegraphics{plot-009}
+  \end{figure}
+\end{minipage}
+\end{figure}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
