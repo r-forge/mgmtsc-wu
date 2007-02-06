@@ -1,0 +1,132 @@
+\documentclass[a4paper]{article}
+
+% PREAMBLE
+%\usepackage[austrian]{babel}
+%\usepackage[utf8]{inputenc}
+\usepackage[authoryear,round]{natbib}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title{Rforge - User's manual v0.1}
+\author{Stefan Theussl}
+%\institute{Department of Statistics and Mathematics\newline
+%Vienna University of Economics and Business Administration}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\textbf{Rforge} is a service for the R community based on
+\textbf{Gforge} which is a framework for collaborative software
+development. There are various tools which allow the users to
+communicate and organize their work. This manual is a quick guide to
+this system.
+\end{abstract}
+
+\tableofcontents
+
+\newpage
+\section{Introduction}
+\label{sec:intro}
+As it is one of the keywords 2007, collaborative development becomes
+more and more important. \textbf{Rforge} provides a framework based on
+\textbf{Gforge} to the R Community which integrates various tools like
+``subversion'' or mailinglists, etc. into one platform. It is a
+place where all R developers and users can come together and exchange
+their knowledge. For a detailed documentation
+see~\cite{manual:gforge}. In this manual only the most important steps to get
+started with \textbf{Rforge} are going to be described. 
+
+\section{Registration}
+\label{sec:registration}
+
+\subsection{Registering a  new user}
+To register a new user, click on the ``New Account'' link on the top
+right side of the browser window.
+Fill out the form (there are descriptions and hints for each field on
+this site) and click on ``Submit'' afterwards. You get an email with
+a URL to your specified email address. After clicking on this link
+your account has been verified. Now you're able to login to the
+website.
+\newline
+\textbf{Important note:} The tab ``My Page'' is the most important
+page on \textbf{Rforge}. There you can configure your account, you can see your
+project memberships and see the items, which have been assigned to you
+(ie. bugs, feature requests and so forth).
+\newline
+Now you can start your own project (see section \ref{sec:newproject}
+for details) or you become a member of an existing project. The second
+can be done as follows:
+
+\begin{enumerate}
+\item First you need the name of the project you want to become a
+  member of. You can ``search'' for the project (top middle side of the
+  browser window) or you click on one of the ``Recently Registered
+  Projects'' (if it is there).
+\item Then you go to the project summary page (should be the default
+  entry point). There is a window on the right side called
+  ``Developer Info''. To join this project you need the permission of
+  the project admin. So click on ``Request to join'' to send the
+  project admin an email.
+\item If the project admin decides to add you as developer you get an
+  email which verifies your developer account. Now you have full SVN
+  access (see section \ref{sec:scm} for details)
+\end{enumerate}
+
+\subsection{Registering a new project}
+\label{sec:newproject}
+
+Registering a new project is easy: Go to the Rforge website, login and
+go to ``My Page'' section. You have a ``Register Project'' link in the
+menu at the top of your page. Now insert the form and submit your
+project.
+
+\section{Source Code Management}
+\label{sec:scm}
+
+\subsection{How to get SCM to work}
+\label{sec:scmhowto}
+\textbf{Rforge} uses \textbf{Subversion}~\cite{subversion} for source code
+management. Therefore you need a svn client (ie. ``tortoise svn'' on
+windows machines~\cite{tortoisesvn}). For security reasons we use ssh tunneling for
+developer accounts. This means you have to setup your machine
+accordingly.
+
+\subsubsection{Windows}
+The software mentioned in this chapter can be found on~\cite{putty}.
+\begin{enumerate}
+\item First you need a ssh keypair: Generate and save the keys
+  using ``puttygen.exe''.  
+\item Upload the \textbf{public} key to \textbf{Rforge} using the webplatform: Go to
+  ``My Page'' and then click on ``Account maintenance''. At the bottom
+  of this page you click on ``edit keys'' in the ``Shell Account
+  Information'' window (look at the hints on how to insert the key correctly).
+\item Next you need an authentication agent like ``peagant.exe''. Load
+  your \textbf{private} key with ``peagant.exe''.
+\item Finally check out the repository using the URL given on the
+  project website (tab ``SCM'') under ``developer account'' with
+  ``Tortoise SVN'' or some other client.
+\end{enumerate}
+
+\subsubsection{Unix}
+
+\begin{enumerate}
+\item First you need a ssh keypair: Generate and save the keys
+  using ``ssh-keygen'' on the command line.  
+\item Upload the \textbf{public} key to \textbf{Rforge} using the
+  webplatform: Go to
+  ``My Page'' and then click on ``Account maintenance''. At the bottom
+  of this page you click on ``edit keys'' in the ``Shell Account
+  Information'' window (follow the instructions on how to insert the
+  key correctly).
+\item Finally check out the repository using the URL given on the
+  project website (tab ``SCM'') under ``developer account'' with
+  ``svn checkout''.
+\end{enumerate}
+
+\bibliographystyle{plainnat}
+\bibliography{rforge-manual}
+
+\end{document}
