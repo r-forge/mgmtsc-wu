@@ -7,6 +7,9 @@
 ## gilt zB: U = F(DJI) und V = G(DAX) wobei F und G fuer die je-
 ## weilige Verteilungsfunktion steht.
 
+library(fMultivar)
+library(fSeries)
+
 
 .checkValuesFGM <- function(u, v, theta){
     if(any(u < 0) || any(u > 1)) {
