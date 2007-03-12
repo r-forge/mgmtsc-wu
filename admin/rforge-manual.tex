@@ -128,8 +128,11 @@ on \url{http://www.chiark.greenend.org.uk/~sgtotham/putty/}.
 \item Upload the \textbf{public} key to \textbf{R-Forge} using the webplatform: Go to
   ``My Page'' and then click on ``Account maintenance''. At the bottom
   of this page you click on ``edit keys'' in the ``Shell Account
-  Information'' window (follow the instructions on how to insert the
-  key correctly!!).
+  Information'' window. The key you enter here is typically of the
+  form: ssh-dsa~AAAA\ldots~user@example.com. The first field
+  describes the type of key, the second field is the key itself, and
+  the third field is a comment (it is important that there are no
+  newlines within a key).
 \item Next you need an authentication agent like ``peagant.exe''. Load
   your \textbf{private} key with ``peagant.exe''.
 \item Finally check out the repository using the URL given on the
@@ -146,8 +149,11 @@ on \url{http://www.chiark.greenend.org.uk/~sgtotham/putty/}.
   webplatform: Go to
   ``My Page'' and then click on ``Account maintenance''. At the bottom
   of this page you click on ``edit keys'' in the ``Shell Account
-  Information'' window (follow the instructions on how to insert the
-  key correctly!!).
+  Information'' window. The key you enter here is typically of the
+  form: ssh-dsa~AAAA\ldots~user@example.com. The first field
+  describes the type of key, the second field is the key itself, and
+  the third field is a comment (it is important that there are no
+  newlines within a key).
 \item Finally check out the repository using the URL given on the
   project website (tab ``SCM'') under ``developer account'' with
   ``svn checkout''.
