@@ -7,8 +7,10 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 
-\title{R-Forge user's manual - 0.1}
+
+\title{R-Forge user's manual}
 \author{Stefan Theussl}
+%\email{R-Forge@R-project.org}
 %\institute{Department of Statistics and Mathematics\newline
 %Vienna University of Economics and Business Administration}
 \date{\today}
@@ -21,40 +23,69 @@
 
 \section{Introduction}
 \label{sec:intro}
-Collaborative development is a hot topic nowadays and therefore becomes
-more and more important. \textbf{R-Forge}
-(\url{http://R-Forge.R-project.org}) provides a framework based on
-\textbf{GForge} to the R Community which integrates various tools like
-``SVN'' or mailinglists, etc. into one platform. It is a
+For a decade the R Development Core Team has used collaborative
+development tools like Subversion (SVN) provided by ETH Z\"urich. 
+Many package
+developers around the world use similar infrastructure as
+collaborative development has become more and more important.
+Now, the \textbf{R-project} wants to provide infrastructure not only
+for the R-base developers but also for the entire R Community.
+
+\textbf{R-Forge} (\url{http://R-Forge.R-project.org}) is the new
+framework based on 
+\textbf{GForge} which integrates various tools like
+``SVN'' for collaborative work on source code or mailinglists,
+etc. into one platform. It is a
 place where all R developers and users can come together and exchange
-their knowledge. In this manual only the most important steps to get
+their knowledge. The advantage of having the new meeting (or coding)
+point is, that your package is going to be built and checked every day
+with not only with the latest patched and release version but also the
+newest devel version of R. You don't have to set up your own
+build and check environment. That means you have your devel version of
+your package on R-Forge and if you decide to release a new
+version on CRAN, this can be done in a standardized way.
+
+Furthermore, all package developers now have a
+platform which allows presenting their work on the basis of project
+websites or
+news anouncements. Mailinglists or forums give developers convinient
+instruments for communicating information to their partners or
+interested people.
+With the possibility to categorize your project in the project tree we
+try to offer a way of searching packages not only by name but also by
+topic. It is clear that these tree can't be complete, so people are
+welcome to make suggestions on how we could improve it.
+ 
+In this manual all relevant steps to get
 started with \textbf{R-Forge} are going to be described. For a detailed
-documentation see~\cite{manual:gforge}.\newline
+documentation regarding the \textbf{GForge} system itself I refer
+to~\cite{manual:gforge}.\newline
 \newline
-Current features provided by \textbf{R-Forge} are:
+The main features provided by \textbf{R-Forge} are:
 \begin{description}
 \item[SCM] means 'Source Code Management' and provides the most
   important feature namely ``SVN''.
-\item[Daily build packages] can then be downloaded from
-  \url{download.R-Forge.wu-wien.ac.at}.
-\item[Project Tree] offers you to assign your project to one or more
-  topics (i.e.: finance, biostatistics, regression analysis, ...)
-\item[Forums] are places to discuss certain topics with package
-  developers.
-\item[Mailinglists] can be managed by package admins.
-\item[News] can be put on the front page if the R-Forge admins approve
-  them.
+\item[Daily package builds] can then be downloaded via\newline
+  \url{install.packages("foo",url="R-Forge.R-project.org")}.
 \end{description}
+in addition there are other useful tools available
+\begin{itemize}
+\item The project tree offers you to assign your project to one or more
+  topics (i.e.: finance, biostatistics, regression analysis, ...)
+\item Forums are places to discuss certain topics with package
+  developers.
+\item Mailinglists can be managed by package admins.
+\item News can be put on the front page if the R-Forge admins approve
+  them.
+\end{itemize}
 Upcoming features:
 \begin{itemize}
-\item bug tracking system
-\item wiki
-\item task management
-\item code snippets
-\item project help board
+\item Bug tracking system
+\item Wiki
+\item Task management
+\item Code snippets
+\item Project help board
 \end{itemize}
-
-
 
 \section{Registration}
 \label{sec:registration}
@@ -64,7 +95,8 @@ Upcoming features:
 To register a new user, click on the ``New Account'' link on the top
 right side of the browser window (\url{http://R-Forge.R-project.org}).
 Fill out the form (there are descriptions and hints for each field on
-this site) and click on ``Submit'' afterwards. You get an email with
+this site) and click on ``Submit'' afterwards. You will receive an
+email with
 a URL to your specified email address. After clicking on this link
 your account has been verified. Now you're able to login to the
 website.
@@ -73,13 +105,16 @@ website.
 \textbf{Important note:} The tab ``My Page'' is the most important
 page on \textbf{R-Forge}. There you can configure your account, you can see your
 project memberships and see the items, which have been assigned to you
-(ie. bugs, feature requests and so forth).
+(i.e. bugs, feature requests, etc.).
 \newline
 
-Now you can start your own project (see Section \ref{sec:newproject}
-for details) or become a member of an existing project. The second
-can be done as follows:
+Now you can start your own project (see section \ref{sec:newproject}
+for details) or become a member of an existing project (section \ref{sec:joinproject}).
 
+\subsection{Joining a project}
+\label{sec:joinproject}
+If you like to join an existing project you achieve this by doing the
+following steps:
 \begin{enumerate}
 \item First you need the name of the project you want to become a
   member of. You can ``search'' for the project (top middle side of the
@@ -90,9 +125,9 @@ can be done as follows:
   ``Developer Info''. To join this project you need the permission of
   the project admin. So click on ``Request to join'' to send the
   project admin an email.
-\item If the project admin decides to add you as developer you get an
-  email which verifies your developer account. Now you have full SVN
-  access (see section \ref{sec:scm} for details)
+\item If the project admin decides to add you as developer you will
+  receive an email which verifies your developer account. Now you have
+  full SVN access (see section \ref{sec:scm} for details).
 \end{enumerate}
 
 \subsection{Registering a new project}
@@ -111,30 +146,37 @@ by email and you will be able to start with your project on R-Forge.
 \label{sec:scmhowto}
 
 \textbf{R-Forge} uses
-\textbf{Subversion}~\url{http://subversion.tigirs.org} for source code
-management. Therefore you need a SVN client (ie. ``tortoise svn'' on
-windows machines~\url{http://tortoisesvn.tigris.org}). For security
-reasons we use ssh tunneling for
+\textbf{Subversion}~(SVN, \url{http://subversion.tigirs.org}) for
+source code management.
+Therefore you need an SVN client (i.e. ``Tortoise SVN'' on
+windows machines,~\url{http://tortoisesvn.tigris.org}). For security
+reasons we use ssh tunneling\footnote{Secure shell (ssh) tunneling
+  means that all network traffic is encrypted} for
 developer accounts. This means you have to setup your machine
 accordingly.
 
 \subsubsection{Windows}
 
-The software mentioned in this chapter can be found
-on \url{http://www.chiark.greenend.org.uk/~sgtotham/putty/}.
+The software mentioned in this section can be found
+on\newline
+\url{http://www.chiark.greenend.org.uk/~sgtotham/putty/}.
 \begin{enumerate}
-\item First you need a ssh keypair: Generate and save the keys
-  using ``puttygen.exe''.  
+\item First you need an ssh keypair: Generate and save the keys
+  using \texttt{puttygen.exe}.   
 \item Upload the \textbf{public} key to \textbf{R-Forge} using the webplatform: Go to
   ``My Page'' and then click on ``Account maintenance''. At the bottom
   of this page you click on ``edit keys'' in the ``Shell Account
   Information'' window. The key you enter here is typically of the
-  form: ssh-dsa~AAAA\ldots~user@example.com. The first field
+  form:
+\begin{verbatim}
+ssh-dsa AAAA\ldots foo@bar
+\end{verbatim}
+  The first field
   describes the type of key, the second field is the key itself, and
   the third field is a comment (it is important that there are no
   newlines within a key).
-\item Next you need an authentication agent like ``peagant.exe''. Load
-  your \textbf{private} key with ``peagant.exe''.
+\item Next you need an authentication agent like \texttt{peagant.exe}. Load
+  your \textbf{private} key with \texttt{peagant.exe}.
 \item Finally check out the repository using the URL given on the
   project website (tab ``SCM'') under ``developer account'' with
   ``Tortoise SVN'' or some other client.
@@ -144,20 +186,60 @@ on \url{http://www.chiark.greenend.org.uk/~sgtotham/putty/}.
 
 \begin{enumerate}
 \item First you need a ssh keypair: Generate and save the keys
-  using ``ssh-keygen'' on the command line or use your existing keypair.  
+  using \texttt{ssh-keygen} on the command line or use your existing keypair.  
 \item Upload the \textbf{public} key to \textbf{R-Forge} using the
   webplatform: Go to
   ``My Page'' and then click on ``Account maintenance''. At the bottom
   of this page you click on ``edit keys'' in the ``Shell Account
   Information'' window. The key you enter here is typically of the
-  form: ssh-dsa~AAAA\ldots~user@example.com. The first field
+  form:
+\begin{verbatim}
+ssh-dsa AAAA\ldots foo@bar
+\end{verbatim}
+  The first field
   describes the type of key, the second field is the key itself, and
   the third field is a comment (it is important that there are no
   newlines within a key).
 \item Finally check out the repository using the URL given on the
   project website (tab ``SCM'') under ``developer account'' with
-  ``svn checkout''.
+  \texttt{svn checkout}.
 \end{enumerate}
+
+\subsection{Your project directory}
+If you have checked out the repository of your project (see
+section~\ref{sec:scmhowto} how to achieve this) for the first
+time it contains two important pre-defined directories namely
+\texttt{www} and \texttt{pkg}. They must not be
+deleted otherwise R-Forge's core functionality will not be available.
+(daily check and build of your package or project websites).
+These two
+directories are standardized and therefore are going to be described
+in this section. The rest of your repository can be used as you like.
+
+\subsubsection{/pkg directory}
+Typically this directory contains the R package with the usual
+\texttt{DESCRIPTION} and \texttt{R/}, \texttt{man/}, \texttt{data/}
+directories etc (see \cite{Rcore:writing_R_extensions}
+for more details).
+In the future it will also be possible to have multiple
+packages managed by a control file, however currently this feature is still
+under development.
+
+Furthermore, this directory will be checked out daily, the package is
+checked and if it passes this procedure it is build and made available at\newline
+\url{http://R-Forge.R-project.org/src/contrib/} (as source tar.gz and win32
+.zip). It should be possible to install the package via
+\texttt{install.packages("foo",url="R-Forge.R-project.org")} within R
+then.
+
+\subsubsection{/www directory}
+This directory contains your project homepage which is available at
+\texttt{http://<projectname>.R-Forge.R-project.org}.
+Note that it will be checked out daily, so please take
+into consideration that it will not be available right after you
+commit your changes or updates. 
+
+
 
 \bibliographystyle{plainnat}
 \bibliography{rforge-manual}
