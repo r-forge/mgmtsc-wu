@@ -39,7 +39,7 @@ etc. into one platform. It is a
 place where all R developers and users can come together and exchange
 their knowledge. The advantage of having the new meeting (or coding)
 point is, that your package is going to be built and checked every day
-with not only with the latest patched and release version but also the
+not only with the latest patched and release version but also the
 newest devel version of R. You don't have to set up your own
 build and check environment. That means you have your devel version of
 your package on R-Forge and if you decide to release a new
@@ -166,8 +166,12 @@ on\newline
 \item Upload the \textbf{public} key to \textbf{R-Forge} using the webplatform: Go to
   ``My Page'' and then click on ``Account maintenance''. At the bottom
   of this page you click on ``edit keys'' in the ``Shell Account
-  Information'' window. The key you enter here is typically of the
-  form:
+  Information'' window (\textbf{Important note:} you must be a project admin
+  or member of a project to do this, otherwise there won't be an
+  option ``Shell Account Information'', see section
+  \ref{sec:joinproject} for joining a project or section
+  \ref{sec:newproject} for registering a project).
+  The key you enter here is typically of the form:
 \begin{verbatim}
 ssh-dsa AAAA\ldots foo@bar
 \end{verbatim}
@@ -177,9 +181,16 @@ ssh-dsa AAAA\ldots foo@bar
   newlines within a key).
 \item Next you need an authentication agent like \texttt{peagant.exe}. Load
   your \textbf{private} key with \texttt{peagant.exe}.
+\item Before you do your first checkout you need the host
+  key information of R-Forge. Therefore you fetch the registry key
+  from
+  \url{http://download.r-forge.r-project.org/r-forge-hostname.reg} and
+  add it to the registry by double clicking on the file.
 \item Finally check out the repository using the URL given on the
   project website (tab ``SCM'') under ``developer account'' with
-  ``Tortoise SVN'' or some other client.
+  ``Tortoise SVN'' or some other client. (Note: if this last step
+  fails for some reason, wait an hour an try again. The logins are
+  created once an hour only)
 \end{enumerate}
 
 \subsubsection{Unix}
@@ -187,12 +198,15 @@ ssh-dsa AAAA\ldots foo@bar
 \begin{enumerate}
 \item First you need a ssh keypair: Generate and save the keys
   using \texttt{ssh-keygen} on the command line or use your existing keypair.  
-\item Upload the \textbf{public} key to \textbf{R-Forge} using the
-  webplatform: Go to
+\item Upload the \textbf{public} key to \textbf{R-Forge} using the webplatform: Go to
   ``My Page'' and then click on ``Account maintenance''. At the bottom
   of this page you click on ``edit keys'' in the ``Shell Account
-  Information'' window. The key you enter here is typically of the
-  form:
+  Information'' window (\textbf{Important note:} you need to be a project admin
+  or member of a project to do this, otherwise there won't be an
+  option ``Shell Account Information'', see section
+  \ref{sec:joinproject} for joining a project or section
+  \ref{sec:newproject} for registering a project).
+  The key you enter here is typically of the form:
 \begin{verbatim}
 ssh-dsa AAAA\ldots foo@bar
 \end{verbatim}
@@ -202,7 +216,9 @@ ssh-dsa AAAA\ldots foo@bar
   newlines within a key).
 \item Finally check out the repository using the URL given on the
   project website (tab ``SCM'') under ``developer account'' with
-  \texttt{svn checkout}.
+  \texttt{svn checkout}. (Note: if this last step
+  fails for some reason, wait an hour an try again. The logins are
+  created once an hour only)
 \end{enumerate}
 
 \subsection{Your project directory}
